@@ -1,0 +1,288 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1865EAB6136EA3C8009E5CAF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1865EAB5136EA3C8009E5CAF /* UIKit.framework */; };
+		1865EAB8136EA3C8009E5CAF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1865EAB7136EA3C8009E5CAF /* Foundation.framework */; };
+		1865EABA136EA3C8009E5CAF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1865EAB9136EA3C8009E5CAF /* CoreGraphics.framework */; };
+		1865EAC0136EA3C8009E5CAF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1865EABE136EA3C8009E5CAF /* InfoPlist.strings */; };
+		1865EAC3136EA3C8009E5CAF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1865EAC2136EA3C8009E5CAF /* main.m */; };
+		1865EAC6136EA3C8009E5CAF /* GTTableViewAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1865EAC5136EA3C8009E5CAF /* GTTableViewAppDelegate.m */; };
+		1865EAC9136EA3C8009E5CAF /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1865EAC7136EA3C8009E5CAF /* MainWindow.xib */; };
+		1865EACC136EA3C8009E5CAF /* GTTableViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1865EACB136EA3C8009E5CAF /* GTTableViewViewController.m */; };
+		1865EACF136EA3C8009E5CAF /* GTTableViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1865EACD136EA3C8009E5CAF /* GTTableViewViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1865EAB1136EA3C8009E5CAF /* GTTableView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTTableView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1865EAB5136EA3C8009E5CAF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		1865EAB7136EA3C8009E5CAF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1865EAB9136EA3C8009E5CAF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		1865EABD136EA3C8009E5CAF /* GTTableView-Info.plist */ = {isa = PBXFileReference; path = "GTTableView-Info.plist"; sourceTree = "<group>"; };
+		1865EABF136EA3C8009E5CAF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1865EAC1136EA3C8009E5CAF /* GTTableView-Prefix.pch */ = {isa = PBXFileReference; path = "GTTableView-Prefix.pch"; sourceTree = "<group>"; };
+		1865EAC2136EA3C8009E5CAF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1865EAC4136EA3C8009E5CAF /* GTTableViewAppDelegate.h */ = {isa = PBXFileReference; path = GTTableViewAppDelegate.h; sourceTree = "<group>"; };
+		1865EAC5136EA3C8009E5CAF /* GTTableViewAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTTableViewAppDelegate.m; sourceTree = "<group>"; };
+		1865EAC8136EA3C8009E5CAF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		1865EACA136EA3C8009E5CAF /* GTTableViewViewController.h */ = {isa = PBXFileReference; path = GTTableViewViewController.h; sourceTree = "<group>"; };
+		1865EACB136EA3C8009E5CAF /* GTTableViewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTTableViewViewController.m; sourceTree = "<group>"; };
+		1865EACE136EA3C8009E5CAF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/GTTableViewViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1865EAAE136EA3C8009E5CAF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1865EAB6136EA3C8009E5CAF /* UIKit.framework in Frameworks */,
+				1865EAB8136EA3C8009E5CAF /* Foundation.framework in Frameworks */,
+				1865EABA136EA3C8009E5CAF /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1865EAA6136EA3C8009E5CAF = {
+			isa = PBXGroup;
+			children = (
+				1865EABB136EA3C8009E5CAF /* GTTableView */,
+				1865EAB4136EA3C8009E5CAF /* Frameworks */,
+				1865EAB2136EA3C8009E5CAF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1865EAB2136EA3C8009E5CAF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1865EAB1136EA3C8009E5CAF /* GTTableView.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1865EAB4136EA3C8009E5CAF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1865EAB5136EA3C8009E5CAF /* UIKit.framework */,
+				1865EAB7136EA3C8009E5CAF /* Foundation.framework */,
+				1865EAB9136EA3C8009E5CAF /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1865EABB136EA3C8009E5CAF /* GTTableView */ = {
+			isa = PBXGroup;
+			children = (
+				1865EAC4136EA3C8009E5CAF /* GTTableViewAppDelegate.h */,
+				1865EAC5136EA3C8009E5CAF /* GTTableViewAppDelegate.m */,
+				1865EAC7136EA3C8009E5CAF /* MainWindow.xib */,
+				1865EACA136EA3C8009E5CAF /* GTTableViewViewController.h */,
+				1865EACB136EA3C8009E5CAF /* GTTableViewViewController.m */,
+				1865EACD136EA3C8009E5CAF /* GTTableViewViewController.xib */,
+				1865EABC136EA3C8009E5CAF /* Supporting Files */,
+			);
+			path = GTTableView;
+			sourceTree = "<group>";
+		};
+		1865EABC136EA3C8009E5CAF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1865EABD136EA3C8009E5CAF /* GTTableView-Info.plist */,
+				1865EABE136EA3C8009E5CAF /* InfoPlist.strings */,
+				1865EAC1136EA3C8009E5CAF /* GTTableView-Prefix.pch */,
+				1865EAC2136EA3C8009E5CAF /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1865EAB0136EA3C8009E5CAF /* GTTableView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1865EAD2136EA3C8009E5CAF /* Build configuration list for PBXNativeTarget "GTTableView" */;
+			buildPhases = (
+				1865EAAD136EA3C8009E5CAF /* Sources */,
+				1865EAAE136EA3C8009E5CAF /* Frameworks */,
+				1865EAAF136EA3C8009E5CAF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GTTableView;
+			productName = GTTableView;
+			productReference = 1865EAB1136EA3C8009E5CAF /* GTTableView.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1865EAA8136EA3C8009E5CAF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = mackross.net;
+			};
+			buildConfigurationList = 1865EAAB136EA3C8009E5CAF /* Build configuration list for PBXProject "GTTableView" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 1865EAA6136EA3C8009E5CAF;
+			productRefGroup = 1865EAB2136EA3C8009E5CAF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1865EAB0136EA3C8009E5CAF /* GTTableView */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1865EAAF136EA3C8009E5CAF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1865EAC0136EA3C8009E5CAF /* InfoPlist.strings in Resources */,
+				1865EAC9136EA3C8009E5CAF /* MainWindow.xib in Resources */,
+				1865EACF136EA3C8009E5CAF /* GTTableViewViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1865EAAD136EA3C8009E5CAF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1865EAC3136EA3C8009E5CAF /* main.m in Sources */,
+				1865EAC6136EA3C8009E5CAF /* GTTableViewAppDelegate.m in Sources */,
+				1865EACC136EA3C8009E5CAF /* GTTableViewViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		1865EABE136EA3C8009E5CAF /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1865EABF136EA3C8009E5CAF /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1865EAC7136EA3C8009E5CAF /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1865EAC8136EA3C8009E5CAF /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		1865EACD136EA3C8009E5CAF /* GTTableViewViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1865EACE136EA3C8009E5CAF /* en */,
+			);
+			name = GTTableViewViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1865EAD0136EA3C8009E5CAF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		1865EAD1136EA3C8009E5CAF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Release;
+		};
+		1865EAD3136EA3C8009E5CAF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GTTableView/GTTableView-Prefix.pch";
+				INFOPLIST_FILE = "GTTableView/GTTableView-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		1865EAD4136EA3C8009E5CAF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GTTableView/GTTableView-Prefix.pch";
+				INFOPLIST_FILE = "GTTableView/GTTableView-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1865EAAB136EA3C8009E5CAF /* Build configuration list for PBXProject "GTTableView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1865EAD0136EA3C8009E5CAF /* Debug */,
+				1865EAD1136EA3C8009E5CAF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1865EAD2136EA3C8009E5CAF /* Build configuration list for PBXNativeTarget "GTTableView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1865EAD3136EA3C8009E5CAF /* Debug */,
+				1865EAD4136EA3C8009E5CAF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1865EAA8136EA3C8009E5CAF /* Project object */;
+}
