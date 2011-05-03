@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-
+@class GTTableViewItem;
+@class GTTableView;
 @interface GTTableViewCell : UITableViewCell {
-    
+    GTTableView *tableView; /**< Use this in subclasses to access the tableview. */
 }
 
-
+@property (nonatomic, retain) UIColor *selectionBackgroundColor;
+@property (nonatomic, readonly) GTTableViewItem *item;
 @end

@@ -7,10 +7,13 @@
 //
 
 #import "GTTableViewCell.h"
-
+#import "GTTableView.h"
 
 @implementation GTTableViewCell
-
+#pragma mark - Accessors -
+- (GTTableViewItem *)item {
+    return [tableView itemForRowAtIndexPath:[tableView indexPathForCell:self]];
+}
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -32,5 +35,17 @@
     [super dealloc];
 }
 
+
+- (UIColor *)selectionBackgroundColor {
+    return [[self selectedBackgroundView] backgroundColor];
+}
+
+- (void)setSelectionBackgroundColor:(UIColor *)selectionBackgroundColor {
+    if (![self selectedBackgroundView])
+    {
+        self.selectedBackgroundView =  [[[UIView alloc] initWithFrame:self.backgroundView.frame] autorelease];
+    }
+    self.selectedBackgroundView.backgroundColor = selectionBackgroundColor;
+}
 
 @end

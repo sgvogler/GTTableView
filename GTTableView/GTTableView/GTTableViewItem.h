@@ -67,7 +67,7 @@
 - (void)resetEditingAccessoryType;
 @property (nonatomic, assign) UITableViewCellSelectionStyle selectionStyle;
 - (void)resetSelectionStyle;
-@property (nonatomic, assign) NSInteger indentationLevel;
+@property (nonatomic, assign) NSInteger indentationLevel; /**< Be sure to call beginUpdates and endUpdates to get tableview to updatde height. */
 - (void)resetIndentationLevel;
 @property (nonatomic, retain) UILabel *labelStyle;
 - (void)resetLabelStyle;
@@ -78,5 +78,5 @@
 @property (nonatomic, retain) UIColor *selectionBackgroundColor;
 - (void)resetSelectionBackgroundColor;
 
-- (id)item;
++ (id)item;
 @end

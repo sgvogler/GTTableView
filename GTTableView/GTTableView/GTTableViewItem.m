@@ -30,13 +30,34 @@
 @end
 
 @implementation GTTableViewItem
+
+
+#pragma mark - Object Lifecylce -
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        properties_ = [[NSMutableDictionary alloc] init];    
+    }
+    return self;
+}
+
++ (id)tableViewItem {
+    return [[[GTTableViewItem alloc] init] autorelease];
+}
+
+- (void)dealloc {
+    [properties_ release];
+    [super dealloc];
+}
+
 #pragma mark - Accessors -
 - (GTTableViewCell *)cell {
     return (GTTableViewCell*)[tableView cellForRowAtIndexPath:[tableView indexPathForItem:self]];
 }
 
 #pragma mark selected
- NSString  * const kSelectedKey = @"kSelectedKey";
+NSString  * const kSelectedKey = @"kSelectedKey";
 - (BOOL)isSelected {
     if ([self hasKeyBeenSet_:kSelectedKey])
         return [self boolForKey_:kSelectedKey];
@@ -47,16 +68,14 @@
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [self setBool:selected forKey_:kSelectedKey];
-    if (self.cell)
-        [self.cell setSelected:selected animated:animated];
+    [self.cell setSelected:selected animated:animated];
 }
 - (void)resetSelected {
     [self resetSelectedAnimated:NO];
 }
 - (void)resetSelectedAnimated:(BOOL)animated {
     [self resetKey_:kSelectedKey];
-    if (self.cell)
-        [self.cell setSelected:[self isSelected] animated:animated];
+    [self.cell setSelected:[self isSelected] animated:animated];
 }
 
 #pragma mark canEdit
@@ -158,13 +177,11 @@ NSString * const kIndentationWidthKey = @"kIndentationWidthKey";
 }
 - (void)setIndentationWidth:(CGFloat)indentationWidth {
     [self setDouble:indentationWidth forKey_:kIndentationWidthKey];
-    if (self.cell)
-        [self.cell setIndentationWidth:indentationWidth];
+    [self.cell setIndentationWidth:indentationWidth];
 }
 - (void)resetIndentationWidth {
     [self resetKey_:kIndentationWidthKey];
-    if (self.cell)
-        [self.cell setIndentationWidth:[self indentationWidth]];
+    [self.cell setIndentationWidth:[self indentationWidth]];
 }
 
 #pragma mark shouldIndentWhileEditing
@@ -176,13 +193,11 @@ NSString * const kShouldIndentWhileEditingKey = @"kShouldIndentWhileEditingKey";
 }
 - (void)setShouldIndentWhileEditing:(BOOL)shouldIndentWhileEditing {
     [self setBool:shouldIndentWhileEditing forKey_:kShouldIndentWhileEditingKey];
-    if (self.cell)
-        [self.cell setShouldIndentWhileEditing:shouldIndentWhileEditing];
+    [self.cell setShouldIndentWhileEditing:shouldIndentWhileEditing];
 }
 - (void)resetShouldIndentWhileEditing {
     [self resetKey_:kShouldIndentWhileEditingKey];
-    if (self.cell)
-        [self.cell setShouldIndentWhileEditing:[self shouldIndentWhileEditing]];
+    [self.cell setShouldIndentWhileEditing:[self shouldIndentWhileEditing]];
 }
 
 #pragma mark shouldShowReoderControl
@@ -194,21 +209,17 @@ NSString * const kShouldShowReoderControlKey = @"kShouldShowReoderControlKey";
 }
 - (void)setShouldShowReorderControl:(BOOL)shouldShowReorderControl {
     [self setBool:shouldShowReorderControl forKey_:kShouldShowReoderControlKey];
-    if (self.cell)
-        [self.cell setShowsReorderControl:shouldShowReorderControl];
+    [self.cell setShowsReorderControl:shouldShowReorderControl];
 }
 - (void)resetShouldShowReorderControl {
     [self resetKey_:kShouldShowReoderControlKey];
-    if (self.cell)
-        [self.cell setShowsReorderControl:[self shouldShowReorderControl]];
+    [self.cell setShowsReorderControl:[self shouldShowReorderControl]];
 }
 
 #pragma mark deleteConfirmationTitle
 NSString * const kDeleteConfirmationTitleKey = @"kDeleteConfirmationTitleKey";
 - (NSString *)deleteConfirmationTitle {
-    if ([self hasKeyBeenSet_:kDeleteConfirmationTitleKey])
-        return [self objectForKey_:kDeleteConfirmationTitleKey];
-    return nil;
+    return [self objectForKey_:kDeleteConfirmationTitleKey];
 }
 - (void)setDeleteConfirmationTitle:(NSString *)deleteConfirmationTitle {
     [self setObject:deleteConfirmationTitle ForKey_:kDeleteConfirmationTitleKey];
@@ -232,58 +243,138 @@ NSString * const kStyleKey = @"kStyleKey";
 }
 
 #pragma mark editingStyle
-NSString * const kEditingStyle = @"kEditingStyle";
+NSString * const kEditingStyleKey = @"kEditingStyleKey";
 - (UITableViewCellEditingStyle)editingStyle {
-    if ([self hasKeyBeenSet_:kEditingStyle])
-        return (UITableViewCellEditingStyle)[self intForKey_:kEditingStyle];
+    if ([self hasKeyBeenSet_:kEditingStyleKey])
+        return (UITableViewCellEditingStyle)[self intForKey_:kEditingStyleKey];
     return [tableView defaultCellEditingStyle];
 }
 - (void)setEditingStyle:(UITableViewCellEditingStyle)editingStyle {
-    [self setInt:(NSInteger)editingStyle ForKey_:kEditingStyle];
+    [self setInt:(NSInteger)editingStyle ForKey_:kEditingStyleKey];
 }
 - (void)resetEditingStyle {
-    [self resetKey_:kEditingStyle];
+    [self resetKey_:kEditingStyleKey];
 }
 
 #pragma mark accessoryType
-NSString * const kAccessoryType = @"kAccessoryType";
+NSString * const kAccessoryTypeKey = @"kAccessoryTypeKey";
 - (UITableViewCellAccessoryType)accessoryType {
-    
+    if ([self hasKeyBeenSet_:kAccessoryTypeKey])
+        return (UITableViewCellAccessoryType)[self intForKey_:kAccessoryTypeKey];
+    return [tableView defaultCellAccessoryType];
+}
+- (void)setAccessoryType:(UITableViewCellAccessoryType)accessoryType {
+    [self setInt:(NSInteger)accessoryType ForKey_:kAccessoryTypeKey];
+    [self.cell setAccessoryType:accessoryType];
+}
+- (void)resetAccessoryType {
+    [self resetKey_:kAccessoryTypeKey];
+    [self.cell setAccessoryType:[self accessoryType]];
 }
 
-
-#pragma mark - Object Lifecylce -
-- (id)init
-{
-    NSLog(@"Use custom initializer initWithDefaultsFromTableView:");
-    abort();
+#pragma mark editingAccessoryType
+NSString * const kEditingAccessoryTypeKey = @"kEditingAccessoryTypeKey";
+- (UITableViewCellAccessoryType)editingAccessoryType {
+    if ([self hasKeyBeenSet_:kEditingAccessoryTypeKey])
+        return (UITableViewCellAccessoryType)[self intForKey_:kEditingAccessoryTypeKey];
+    return [tableView defaultCellEditingAccessoryType];
+}
+- (void)setEditingAccessoryType:(UITableViewCellAccessoryType)editingAccessoryType {
+    [self setInt:(NSInteger)editingAccessoryType ForKey_:kEditingAccessoryTypeKey];
+    [self.cell setEditingAccessoryType:editingAccessoryType];
+}
+- (void)resetAccessoryType {
+    [self resetKey_:kEditingAccessoryTypeKey];
+    [self.cell setEditingAccessoryType:[self editingAccessoryType]];
 }
 
-- (id) initWithDefaultsFromTableView:(GTTableView*)aTableView
-{
-    self = [super init];
-    if (self) {
-        [self setupFromTableView_:aTableView];
-    }
-    return self;
+#pragma mark selectionStyle
+NSString * const kSelectionStyleKey = @"kSelectionStyleKey";
+- (UITableViewCellSelectionStyle)selectionStyle {
+    if ([self hasKeyBeenSet_:kSelectionStyleKey])
+        return (UITableViewCellSelectionStyle)[self intForKey_:kSelectionStyleKey];
+    return [tableView defaultCellSelectionStyle];
+}
+- (void)setSelectionStyle:(UITableViewCellSelectionStyle)selectionStyle {
+    [self setInt:(NSInteger)selectionStyle ForKey_:kSelectionStyleKey];
+    [self.cell setSelectionStyle:selectionStyle];
+}
+- (void)resetSelectionStyle {
+    [self resetKey_:kSelectionStyleKey];
+    [self.cell setSelectionStyle:[self selectionStyle]];
 }
 
-- (id)tableViewItemWithDefaultsFromTableView:(GTTableView *)aTableView
-{
-    return [[[GTTableViewItem alloc] initWithDefaultsFromTableView:aTableView] autorelease];
+#pragma mark indentationLevel
+NSString const * kIndentationLevelKey = @"kIndentationLevelKey";
+- (NSInteger)indentationLevel {
+    if ([self hasKeyBeenSet_:kIndentationLevelKey])
+        return [self intForKey_:kIndentationLevelKey];
+}
+- (void)setIndentationLevel:(NSInteger)indentationLevel {
+    [self setInt:indentationLevel ForKey_:kIndentationLevelKey];
+    /**< Not setting indentation level directly on the cell even though the method exists. The tableview delegate method will pick up this change as long as beginUpdates and endUpdates is called. This animates the change too. */
+}
+- (void)resetIndentationLevel {
+    [self resetKey_:kIndentationLevelKey];
 }
 
-- (void) setupFromTableView_:(GTTableView*)aTableView
-{
-    NSParameterAssert(aTableView);
-    properties_ = [[NSMutableDictionary alloc] init];
+#pragma mark labelStyle
+NSString const * kLabelStyleKey = @"kLabelStyleKey";
+- (UILabel *)labelStyle {
+    return [self objectForKey_:kLabelStyleKey];
+}
+- (void)setLabelStyle:(UILabel *)labelStyle {
+    [self setObject:labelStyle ForKey_:kLabelStyleKey];   
+#warning Need to implement style copy.
+}
+- (void)resetLabelStyle {
+    [self resetKey_:kLabelStyleKey];
+#warning Need to implement style copy.
 }
 
-- (void)dealloc {
-    [properties_ release];
-    [super dealloc];
+#pragma mark subtitleLabelStyle
+NSString const * kSubtitleLabelStyleKey = @"kSubtitleLabelStyleKey";
+- (UILabel *)subtitleLabelStyle {
+    [self objectForKey_:kSubtitleLabelStyleKey];
 }
-#pragma mark - Properties Accessors -
+- (void)setSubtitleLabelStyle:(UILabel *)subtitleLabelStyle {
+    [self setObject:subtitleLabelStyle ForKey_:kSubtitleLabelStyleKey];
+#warning Need to implement style copy.
+}
+- (void)resetSubtitleLabelStyle {
+    [self resetKey_:kSubtitleLabelStyleKey];
+#warning Need to implement style copy.
+}
+
+#pragma mark backgroundColor
+NSString * const kBackgroundColorKey = @"kBackgroundColorKey";
+- (UIColor *)backgroundColor {
+    [self objectForKey_:kBackgroundColorKey];
+}
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    [self setObject:backgroundColor ForKey_:kBackgroundColorKey];
+    [self.cell setBackgroundColor:backgroundColor];
+}
+- (void) resetBackgroundColor {
+    [self resetKey_:kBackgroundColorKey];
+    [self.cell setBackgroundColor:[self backgroundColor]];
+}
+
+#pragma mark selectionBackgroundColor
+NSString const * kSelectionBackgroundColorKey = @"kSelectionBackgroundColorKey";
+-(UIColor *)selectionBackgroundColor {
+    return [self objectForKey_:kSelectionBackgroundColorKey];
+}
+- (void)setSelectionBackgroundColor:(UIColor *)selectionBackgroundColor {
+    [self setObject:selectionBackgroundColor ForKey_:kSelectionBackgroundColorKey];
+    [self.cell setSelectionBackgroundColor:selectionBackgroundColor];
+}
+- (void)resetBackgroundColor {
+    [self resetKey_:kSelectionBackgroundColorKey];
+    [self.cell setSelectionBackgroundColor:[self selectionBackgroundColor]];
+}
+
+#pragma mark - Dictionary Backed Property Accessors -
 - (BOOL)hasKeyBeenSet_:(NSString*)key { return ([[properties_ allKeys] containsObject:key]); }
 - (void)resetKey_:(NSString*)key { [properties_ removeObjectForKey:key]; }
 
