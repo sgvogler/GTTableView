@@ -14,8 +14,12 @@
 		1865EAC3136EA3C8009E5CAF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1865EAC2136EA3C8009E5CAF /* main.m */; };
 		1865EAC6136EA3C8009E5CAF /* GTTableViewAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1865EAC5136EA3C8009E5CAF /* GTTableViewAppDelegate.m */; };
 		1865EAC9136EA3C8009E5CAF /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1865EAC7136EA3C8009E5CAF /* MainWindow.xib */; };
-		1865EACC136EA3C8009E5CAF /* GTTableViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1865EACB136EA3C8009E5CAF /* GTTableViewViewController.m */; };
-		1865EACF136EA3C8009E5CAF /* GTTableViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1865EACD136EA3C8009E5CAF /* GTTableViewViewController.xib */; };
+		1865EACC136EA3C8009E5CAF /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1865EACB136EA3C8009E5CAF /* DemoViewController.m */; };
+		1865EACF136EA3C8009E5CAF /* DemoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1865EACD136EA3C8009E5CAF /* DemoViewController.xib */; };
+		1865EADB136EB13A009E5CAF /* GTTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1865EADA136EB13A009E5CAF /* GTTableView.m */; };
+		1865EADE136F8BD8009E5CAF /* GTTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1865EADD136F8BD8009E5CAF /* GTTableViewCell.m */; };
+		1865EAE1136F8CEA009E5CAF /* GTTableViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1865EAE0136F8CE9009E5CAF /* GTTableViewItem.m */; };
+		1865EAEA136F8DF6009E5CAF /* GTTableViewHeaderFooterItem_.m in Sources */ = {isa = PBXBuildFile; fileRef = 1865EAE9136F8DF6009E5CAF /* GTTableViewHeaderFooterItem_.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,16 +27,24 @@
 		1865EAB5136EA3C8009E5CAF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1865EAB7136EA3C8009E5CAF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1865EAB9136EA3C8009E5CAF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		1865EABD136EA3C8009E5CAF /* GTTableView-Info.plist */ = {isa = PBXFileReference; path = "GTTableView-Info.plist"; sourceTree = "<group>"; };
+		1865EABD136EA3C8009E5CAF /* GTTableView-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GTTableView-Info.plist"; sourceTree = "<group>"; };
 		1865EABF136EA3C8009E5CAF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1865EAC1136EA3C8009E5CAF /* GTTableView-Prefix.pch */ = {isa = PBXFileReference; path = "GTTableView-Prefix.pch"; sourceTree = "<group>"; };
+		1865EAC1136EA3C8009E5CAF /* GTTableView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GTTableView-Prefix.pch"; sourceTree = "<group>"; };
 		1865EAC2136EA3C8009E5CAF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1865EAC4136EA3C8009E5CAF /* GTTableViewAppDelegate.h */ = {isa = PBXFileReference; path = GTTableViewAppDelegate.h; sourceTree = "<group>"; };
+		1865EAC4136EA3C8009E5CAF /* GTTableViewAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTTableViewAppDelegate.h; sourceTree = "<group>"; };
 		1865EAC5136EA3C8009E5CAF /* GTTableViewAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTTableViewAppDelegate.m; sourceTree = "<group>"; };
 		1865EAC8136EA3C8009E5CAF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
-		1865EACA136EA3C8009E5CAF /* GTTableViewViewController.h */ = {isa = PBXFileReference; path = GTTableViewViewController.h; sourceTree = "<group>"; };
-		1865EACB136EA3C8009E5CAF /* GTTableViewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTTableViewViewController.m; sourceTree = "<group>"; };
-		1865EACE136EA3C8009E5CAF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/GTTableViewViewController.xib; sourceTree = "<group>"; };
+		1865EACA136EA3C8009E5CAF /* DemoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController.h; sourceTree = "<group>"; };
+		1865EACB136EA3C8009E5CAF /* DemoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController.m; sourceTree = "<group>"; };
+		1865EACE136EA3C8009E5CAF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DemoViewController.xib; sourceTree = "<group>"; };
+		1865EAD9136EB13A009E5CAF /* GTTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTTableView.h; path = GTTableView/GTTableView.h; sourceTree = "<group>"; };
+		1865EADA136EB13A009E5CAF /* GTTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTTableView.m; path = GTTableView/GTTableView.m; sourceTree = "<group>"; };
+		1865EADC136F8BD8009E5CAF /* GTTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTTableViewCell.h; path = GTTableView/GTTableViewCell.h; sourceTree = "<group>"; };
+		1865EADD136F8BD8009E5CAF /* GTTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTTableViewCell.m; path = GTTableView/GTTableViewCell.m; sourceTree = "<group>"; };
+		1865EADF136F8CE9009E5CAF /* GTTableViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTTableViewItem.h; path = GTTableView/GTTableViewItem.h; sourceTree = "<group>"; };
+		1865EAE0136F8CE9009E5CAF /* GTTableViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTTableViewItem.m; path = GTTableView/GTTableViewItem.m; sourceTree = "<group>"; };
+		1865EAE8136F8DF6009E5CAF /* GTTableViewHeaderFooterItem_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTTableViewHeaderFooterItem_.h; path = GTTableView/GTTableViewHeaderFooterItem_.h; sourceTree = "<group>"; };
+		1865EAE9136F8DF6009E5CAF /* GTTableViewHeaderFooterItem_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTTableViewHeaderFooterItem_.m; path = GTTableView/GTTableViewHeaderFooterItem_.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,9 +94,10 @@
 				1865EAC4136EA3C8009E5CAF /* GTTableViewAppDelegate.h */,
 				1865EAC5136EA3C8009E5CAF /* GTTableViewAppDelegate.m */,
 				1865EAC7136EA3C8009E5CAF /* MainWindow.xib */,
-				1865EACA136EA3C8009E5CAF /* GTTableViewViewController.h */,
-				1865EACB136EA3C8009E5CAF /* GTTableViewViewController.m */,
-				1865EACD136EA3C8009E5CAF /* GTTableViewViewController.xib */,
+				1865EACA136EA3C8009E5CAF /* DemoViewController.h */,
+				1865EACB136EA3C8009E5CAF /* DemoViewController.m */,
+				1865EACD136EA3C8009E5CAF /* DemoViewController.xib */,
+				1865EAD8136EB106009E5CAF /* GTTableView */,
 				1865EABC136EA3C8009E5CAF /* Supporting Files */,
 			);
 			path = GTTableView;
@@ -99,6 +112,21 @@
 				1865EAC2136EA3C8009E5CAF /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1865EAD8136EB106009E5CAF /* GTTableView */ = {
+			isa = PBXGroup;
+			children = (
+				1865EAD9136EB13A009E5CAF /* GTTableView.h */,
+				1865EADA136EB13A009E5CAF /* GTTableView.m */,
+				1865EADF136F8CE9009E5CAF /* GTTableViewItem.h */,
+				1865EAE0136F8CE9009E5CAF /* GTTableViewItem.m */,
+				1865EADC136F8BD8009E5CAF /* GTTableViewCell.h */,
+				1865EADD136F8BD8009E5CAF /* GTTableViewCell.m */,
+				1865EAE8136F8DF6009E5CAF /* GTTableViewHeaderFooterItem_.h */,
+				1865EAE9136F8DF6009E5CAF /* GTTableViewHeaderFooterItem_.m */,
+			);
+			name = GTTableView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,7 +181,7 @@
 			files = (
 				1865EAC0136EA3C8009E5CAF /* InfoPlist.strings in Resources */,
 				1865EAC9136EA3C8009E5CAF /* MainWindow.xib in Resources */,
-				1865EACF136EA3C8009E5CAF /* GTTableViewViewController.xib in Resources */,
+				1865EACF136EA3C8009E5CAF /* DemoViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,7 +194,11 @@
 			files = (
 				1865EAC3136EA3C8009E5CAF /* main.m in Sources */,
 				1865EAC6136EA3C8009E5CAF /* GTTableViewAppDelegate.m in Sources */,
-				1865EACC136EA3C8009E5CAF /* GTTableViewViewController.m in Sources */,
+				1865EACC136EA3C8009E5CAF /* DemoViewController.m in Sources */,
+				1865EADB136EB13A009E5CAF /* GTTableView.m in Sources */,
+				1865EADE136F8BD8009E5CAF /* GTTableViewCell.m in Sources */,
+				1865EAE1136F8CEA009E5CAF /* GTTableViewItem.m in Sources */,
+				1865EAEA136F8DF6009E5CAF /* GTTableViewHeaderFooterItem_.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,12 +221,12 @@
 			name = MainWindow.xib;
 			sourceTree = "<group>";
 		};
-		1865EACD136EA3C8009E5CAF /* GTTableViewViewController.xib */ = {
+		1865EACD136EA3C8009E5CAF /* DemoViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				1865EACE136EA3C8009E5CAF /* en */,
 			);
-			name = GTTableViewViewController.xib;
+			name = DemoViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -281,6 +313,7 @@
 				1865EAD4136EA3C8009E5CAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

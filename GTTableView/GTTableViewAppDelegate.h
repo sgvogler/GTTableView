@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class GTTableViewViewController;
+@class DemoViewController;
 
 @interface GTTableViewAppDelegate : NSObject <UIApplicationDelegate> {
 
@@ -16,6 +16,6 @@
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 
-@property (nonatomic, retain) IBOutlet GTTableViewViewController *viewController;
+@property (nonatomic, retain) IBOutlet DemoViewController *viewController;
 
 @end

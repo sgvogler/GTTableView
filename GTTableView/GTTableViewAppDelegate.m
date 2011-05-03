@@ -8,7 +8,7 @@
 
 #import "GTTableViewAppDelegate.h"
 
-#import "GTTableViewViewController.h"
+#import "DemoViewController.h"
 
 @implementation GTTableViewAppDelegate
 

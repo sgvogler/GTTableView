@@ -6,9 +6,9 @@
 //  Copyright 2011 mackross.net. All rights reserved.
 //
 
-#import "GTTableViewViewController.h"
+#import "DemoViewController.h"
 
-@implementation GTTableViewViewController
+@implementation DemoViewController
 
 - (void)dealloc
 {
