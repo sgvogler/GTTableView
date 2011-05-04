@@ -9,8 +9,9 @@
 #import <Foundation/Foundation.h>
 static const CGFloat GTTableViewHeaderFooterDefaultHeight = DBL_MIN;
 #pragma mark Abstract Parent Class -
+@class GTTableView;
 @interface GTTableViewHeaderFooterItem_ : NSObject {
-    
+    GTTableView *tableView;
 }
 @property (nonatomic, retain) UIView *view;
 @property (nonatomic, copy) NSString *text;

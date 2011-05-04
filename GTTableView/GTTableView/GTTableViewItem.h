@@ -30,12 +30,15 @@
 }
 @property (nonatomic, readonly) GTTableViewCell *cell;
 
++ (NSString*)reuseIdentifier; /**< Subclasses should override this, will automatically use this reuse identifier to try load nibs of the same name. */
+- (GTTableViewCell*)newTableViewCell; /**< If this isn't overriden will try load nib with same name as reuseIdentifier. If this fails will init cell with style. */
+
+
 /**
  Setting properteis overrides the default value set by the GTTableView.
  Resetting properties makes them take on the default value set by the GTTableView.
  */
 @property (nonatomic, assign, getter = isSelected) BOOL selected;
-
 - (void)resetSelected;
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated;
 - (void)resetSelectedAnimated:(BOOL)animated;

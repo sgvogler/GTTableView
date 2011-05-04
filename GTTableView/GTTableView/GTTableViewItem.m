@@ -12,6 +12,8 @@
 
 @interface GTTableViewItem ()
 
+#pragma mark Dictionary Backed Accessors
+
 - (BOOL)hasKeyBeenSet_:(NSString*)key;
 - (void)resetKey_:(NSString*)key;
 
@@ -373,6 +375,7 @@ NSString const * kSelectionBackgroundColorKey = @"kSelectionBackgroundColorKey";
     [self resetKey_:kSelectionBackgroundColorKey];
     [self.cell setSelectionBackgroundColor:[self selectionBackgroundColor]];
 }
+
 
 #pragma mark - Dictionary Backed Property Accessors -
 - (BOOL)hasKeyBeenSet_:(NSString*)key { return ([[properties_ allKeys] containsObject:key]); }

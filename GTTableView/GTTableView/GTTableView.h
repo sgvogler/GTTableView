@@ -24,8 +24,10 @@
 @private
     NSMutableArray *items_;
     NSMutableArray *cachedIndexPaths_;
-    NSDictionary *headerItems_;
-    NSDictionary *footerItems_;
+    NSMutableArray *cachedVisibleIndexPaths_;
+    NSMutableArray *headerItems_;
+    NSMutableArray *footerItems_;
+    NSMutableSet *cells_;
 }
 @property (nonatomic, assign) id<GTTableViewDelegate> GTTableViewDelegate;
 
@@ -67,14 +69,13 @@
 /**
  These methods are used for controlling the data displayed in the table view.
  */
-- (NSInteger)numberOfSections; /**< Does not include include items with visible set to NO. */
-- (NSInteger)numberOfSections onlyVisible:(BOOL)visible;
+- (NSInteger)numberOfItemSections;
 
 - (NSInteger)numberOfItemsInSection:(NSInteger)section; /**< Does not include include items with visible set to NO. */
 - (NSInteger)numberOfItemsInSection:(NSInteger)section onlyVisible:(BOOL)visible;
 
 - (NSArray*)items; /**< Collection of all GTTableViewItem instances in all sections. Include items with visible set to NO. */
-- (NSArray*)items onlyVisible:(BOOL)visible;
+- (NSArray*)itemsOnlyVisible:(BOOL)visible;
 
 - (NSArray*)itemsInSection:(NSInteger)section; /**< Collection of GTTableViewItem instances in section. Does not include items with visible set to NO. */
 - (NSArray*)itemsInSection:(NSInteger)section onlyVisible:(BOOL)visible;
@@ -89,9 +90,7 @@
  Call tableView beginUpdates and endUpdates before and after these methods.
  */
 - (void)insertSectionAtIndex:(NSInteger)index animation:(UITableViewRowAnimation)animation;
-- (void)insertSectionAtIndex:(NSInteger)index animation:(UITableViewRowAnimation)animation onlyVisible:(BOOL)visible;
 - (void)removeSectionAtIndex:(NSInteger)section animation:(UITableViewRowAnimation)animation;
-- (void)removeSectionAtIndex:(NSInteger)section animation:(UITableViewRowAnimation)animation onlyVisible:(BOOL)visible;
 
 - (void)insertItem:(GTTableViewItem*) inSection:(NSInteger)section atRow:(NSInteger)row animation:(UITableViewRowAnimation)animation;
 - (void)insertItem:(GTTableViewItem*) inSection:(NSInteger)section atRow:(NSInteger)row animation:(UITableViewRowAnimation)animation onlyVisible:(BOOL)visible;
@@ -105,12 +104,8 @@
 - (void)removeItemsInSections:(NSInteger)section atRows:(NSIndexSet*)rows animation:(UITableViewRowAnimation)animation onlyVisible:(BOOL)visible;
 
 - (GTTableViewHeaderItem*)tableViewHeaderItemForSection:(NSInteger)section;
-- (GTTableViewHeaderItem*)tableViewHeaderItemForSection:(NSInteger)section onlyVisible:(BOOL)visible;
-- (void)setTableViewHeaderItemForSection:(NSInteger)section;
-- (void)setTableViewHeaderItemForSection:(NSInteger)section onlyVisible:(BOOL)visible;
+- (void)setTableViewHeaderItem:(GTTableViewHeaderItem*)item forSection:(NSInteger)section;
 
 - (GTTableViewFooterItem*)tableViewFooterItemForSection:(NSInteger)section;
-- (GTTableViewFooterItem*)tableViewFooterItemForSection:(NSInteger)section onlyVisible:(BOOL)visible;
-- (void)setTableViewFooterItemForSection:(NSInteger)section;
-- (void)setTableViewFooterItemForSection:(NSInteger)section onlyVisible:(BOOL)visible;
+- (void)setTableViewFooterItem:(GTTableViewFooterItem*)item forSection:(NSInteger)section;
 @end
