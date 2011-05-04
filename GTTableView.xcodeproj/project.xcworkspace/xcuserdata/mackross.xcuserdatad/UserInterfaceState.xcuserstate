@@ -1241,10 +1241,10 @@
 		<string>PrimaryDocumentVisibleCharacterRange</string>
 		<string>HideAllIssues</string>
 		<string>PrimaryDocumentSelectedCharacterRange</string>
-		<real>326177644.375283</real>
-		<string>{8964, 2746}</string>
+		<real>326183091.03562301</real>
+		<string>{9170, 3589}</string>
 		<false/>
-		<string>{11632, 0}</string>
+		<string>{12450, 0}</string>
 		<string>-tableView:moveRowAtIndexPath:toIndexPath:</string>
 		<string>Xcode.IDEKit.EditorDocument.SourceCode</string>
 		<dict>
@@ -4902,8 +4902,8 @@
 				</dict>
 			</array>
 		</dict>
-		<real>326173780.40513098</real>
-		<string>{10993, 3141}</string>
+		<real>326181601.63003701</real>
+		<string>{10991, 3143}</string>
 		<string>{262, 0}</string>
 		<dict>
 			<key>$class</key>
@@ -5233,9 +5233,9 @@
 				</dict>
 			</array>
 		</dict>
-		<real>326173771.91069001</real>
-		<string>{3, 3877}</string>
-		<string>{1176, 0}</string>
+		<real>326181599.50765502</real>
+		<string>{41, 4235}</string>
+		<string>{1181, 73}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -5281,9 +5281,9 @@
 				</dict>
 			</array>
 		</dict>
-		<real>326177644.37402201</real>
-		<string>{8964, 2746}</string>
-		<string>{11632, 0}</string>
+		<real>326183091.03416198</real>
+		<string>{9170, 3589}</string>
+		<string>{12450, 0}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -5620,7 +5620,7 @@
 				<integer>477</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/mackross/Desktop/GTTableView/GTTableView/GTTableView/GTTableViewHeaderFooterItem_.h</string>
+		<string>file://localhost/Users/mackross/Desktop/GTTableView/GTTableView/GTTableView/GTTableViewItem.m</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -5638,7 +5638,7 @@
 				<integer>479</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/mackross/Desktop/GTTableView/GTTableView/GTTableView/GTTableView.h</string>
+		<string>file://localhost/Users/mackross/Desktop/GTTableView/GTTableView/GTTableView/GTTableViewItem.h</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -5656,7 +5656,7 @@
 				<integer>481</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/mackross/Desktop/GTTableView/GTTableView/GTTableView/GTTableViewCell.m</string>
+		<string>file://localhost/Users/mackross/Desktop/GTTableView/GTTableView/GTTableView/GTTableViewHeaderFooterItem_.h</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -5674,7 +5674,7 @@
 				<integer>483</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/mackross/Desktop/GTTableView/GTTableView/GTTableView/GTTableViewItem.m</string>
+		<string>file://localhost/Users/mackross/Desktop/GTTableView/GTTableView/GTTableView/GTTableView.h</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -5692,7 +5692,7 @@
 				<integer>485</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/mackross/Desktop/GTTableView/GTTableView/GTTableView/GTTableViewItem.h</string>
+		<string>file://localhost/Users/mackross/Desktop/GTTableView/GTTableView/GTTableView/GTTableViewCell.m</string>
 		<dict>
 			<key>$class</key>
 			<dict>

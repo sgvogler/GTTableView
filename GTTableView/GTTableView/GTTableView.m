@@ -209,7 +209,7 @@
 - (NSInteger)numberOfItemSections
 {
     return [cachedVisibleIndexPaths_ count];
-
+    
 }
 - (NSInteger)numberOfItemsInSection:(NSInteger)section onlyVisible:(BOOL)visible {
     NSInteger numberOfItems = 0;
@@ -348,19 +348,28 @@
     return [item canMove];  
 }
 
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceVisibleIndexPath toIndexPath:(NSIndexPath *)destinationVisibleIndexPath
 {
-    if ([sourceIndexPath compare:destinationIndexPath] == NSOrderedSame) return;
-    if (sourceIndexPath.section != destinationIndexPath.section)
-    {
-        GTTableViewItem *item = [self itemForRowAtIndexPath:sourceIndexPath onlyVisible:YES];
-        NSIndexPath *actualSourceIndexPath = [self indexPathForItem:item onlyVisible:NO];
-        NSArray *sourceSectionItems = 
+    if ([sourceVisibleIndexPath compare:destinationVisibleIndexPath] == NSOrderedSame) return;
+    GTTableViewItem *movingItem = [self itemForRowAtIndexPath:sourceVisibleIndexPath onlyVisible:YES];
+    NSIndexPath *sourceIndexPath = [self indexPathForItem:movingItem onlyVisible:NO];
+    NSIndexPath *destinationIndexPath = nil;
+    GTTableViewItem *itemForCellAboveNewLocation = [self itemForRowAtIndexPath:[NSIndexPath indexPathForRow:(destinationVisibleIndexPath.row - 1) inSection:destinationVisibleIndexPath.section] onlyVisible:YES];
+    GTTableViewItem *itemForCellAtNewLocation = [self itemForRowAtIndexPath:destinationVisibleIndexPath onlyVisible:YES];    
+    
+    /**
+     This method 
+     */
+    NSMutableSet *possibleIndexPaths = [NSMutableSet set];
+    NSInteger realRowAboveNewLocationRow = (itemForCellAboveNewLocation) ? [self indexPathForItem:itemForCellAboveNewLocation onlyVisible:NO].row + 1: 0;
+    NSInteger realRowAtNewLocationRow = (itemForCellAtNewLocation) ? [self indexPathForItem:itemForCellAtNewLocation onlyVisible:NO].row : [[items_ objectAtIndex:destinationVisibleIndexPath.section] count];
+    for (int i = realRowAboveNewLocationRow; i <= realRowAtNewLocationRow; i++) {
+        [possibleIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:destinationVisibleIndexPath.section]];
     }
-    else
-    {
-        
-    }
+    destinationIndexPath = [movingItem moveToIndexPathFromChoiceOfIndexPaths:possibleIndexPaths];
+    
+    
+    
 }
 
 #pragma mark - TableView Delegate -

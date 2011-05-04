@@ -33,7 +33,7 @@
 + (NSString*)reuseIdentifier; /**< Subclasses should override this, will automatically use this reuse identifier to try load nibs of the same name. */
 - (GTTableViewCell*)newTableViewCell; /**< If this isn't overriden will try load nib with same name as reuseIdentifier. If this fails will init cell with style. */
 
-
+- (NSIndexPath*)moveToIndexPathFromChoiceOfIndexPaths:(NSSet*)indexPaths; /**< This is used for when invisible items are present in the tableview. This method can choose an invisble index path from the choice of index paths. This wont have any affect on the move unless some cells that were not visible become visible. Override this for custom behaviour. */
 /**
  Setting properteis overrides the default value set by the GTTableView.
  Resetting properties makes them take on the default value set by the GTTableView.
