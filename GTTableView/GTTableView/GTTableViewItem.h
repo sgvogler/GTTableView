@@ -7,11 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "GTTableView+GTTableViewCell.h"
 
 @class GTTableView;
 @class GTTableViewCell;
-@interface GTTableViewItem : NSObject {
+@interface GTTableViewItem : NSObject <NSCopying> {
 @protected
     GTTableView *tableView; /**< Subclasses should use this to access the current GTTableView. */
 @private
@@ -29,11 +28,37 @@
     BOOL visibleSet_;
 }
 @property (nonatomic, readonly) GTTableViewCell *cell;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *subtitle;
 
 + (NSString*)reuseIdentifier; /**< Subclasses should override this, will automatically use this reuse identifier to try load nibs of the same name. */
+@property (nonatomic, copy) NSString* reuseIdentifier; /**< Use this to customize the reuse identifer per cell. */
 - (GTTableViewCell*)newTableViewCell; /**< If this isn't overriden will try load nib with same name as reuseIdentifier. If this fails will init cell with style. */
 
-- (NSIndexPath*)moveToIndexPathFromChoiceOfIndexPaths:(NSSet*)indexPaths; /**< This is used for when invisible items are present in the tableview. This method can choose an invisble index path from the choice of index paths. This wont have any affect on the move unless some cells that were not visible become visible. Override this for custom behaviour. */
+
+
+- (NSIndexPath*)shouldMoveFromVisibleIndexPath:(NSIndexPath*)sourceIndexPath toVisibleIndexPath:(NSIndexPath*)destinationIndexPath; /**< Return the index path that item should move to. Most common implementation is to return sourceIndexPath if out of bounds and proposedIndexPath if the move should occur. */
+
+- (NSIndexPath*)selectNewIndexPathFromIndexPaths:(NSSet*)indexPaths; /**< Use this when invisible items are present in the tableview. This method should return the chosen index path from within a group of invisible index paths that the item should move to. If invisible items are not used just return the only index path */
+- (void)configureCell:(GTTableViewCell*)tableViewCell;
+- (void)sectionWillMove;
+- (void)sectionDidMove;
+- (void)rowWillMove;
+- (void)rowDidMove;
+- (BOOL)commitDelete; /**< This can be overriden to customize the delete behaviour. By default this is implemented with removeItem:inSection:atRow:animation:. */
+- (void)commitInsert; /**< This should be overriden to provide the insert behaviour. Usually this is implemented with insertItem:inSection:atRow:animation:. */
+
+- (NSIndexPath*)willBecomeSelected; /**< Returns an index-path object that confirms or alters the selected row. Return an NSIndexPath object other than indexPath if you want another cell to be selected. Return nil if you don't want the row selected. This method is not called until users touch a row and then lift their finger; the row isn't selected until then, although it is highlighted on touch-down. You can use UITableViewCellSelectionStyleNone to disable the appearance of the cell highlight on touch-down. This method isn’t called when the editing property of the table is set to YES (that is, the table view is in editing mode). Default returns the visible index path of self */
+- (void)didBecomeSelecected; /**< This method isn't called when a tableview is editing. This should be overriden to provide any custom behaviour expected when the cell is selected. */
+
+- (NSIndexPath*)willBecomeDeselected; /**< Works in the same way as willBecomeSelected but for deselection. */
+- (void)didBecomeDeselected;
+
+- (void)accessoryButtonTapped;
+
+- (void)willBeginEditing;
+- (void)didEndEditing;
+
 /**
  Setting properteis overrides the default value set by the GTTableView.
  Resetting properties makes them take on the default value set by the GTTableView.
@@ -80,6 +105,9 @@
 - (void)resetBackgroundColor;
 @property (nonatomic, retain) UIColor *selectionBackgroundColor;
 - (void)resetSelectionBackgroundColor;
+
+@property (nonatomic, assign) id<NSObject> target;
+@property (nonatomic, assign) SEL action;
 
 + (id)item;
 @end

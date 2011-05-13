@@ -9,9 +9,14 @@
 #import "GTTableViewItem.h"
 #import "GTTableViewCell.h"
 #import "GTTableView.h"
+#import "UILabel+CopyStyle.h"
+
+@interface GTTableView ()
+- (void)updateCachedIndexPaths_;
+@end
 
 @interface GTTableViewItem ()
-
+@property (nonatomic, assign) GTTableView *tableView;
 #pragma mark Dictionary Backed Accessors
 
 - (BOOL)hasKeyBeenSet_:(NSString*)key;
@@ -32,9 +37,111 @@
 @end
 
 @implementation GTTableViewItem
+@synthesize tableView;
+@synthesize title=title_;
+@synthesize subtitle=subtitle_;
+@synthesize target;
+@synthesize action;
+#pragma mark - Methods -
++ (NSString*)reuseIdentifier
+{
+    return @"GTTableViewCell";
+}
+- (GTTableViewCell*)newTableViewCell /**< If this isn't overriden will try load nib with same name as reuseIdentifier. If this fails will init cell with style. */
+{
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[[NSBundle mainBundle] pathForResource:[self reuseIdentifier] ofType:@"xib"]])
+    {
+        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:[self reuseIdentifier] owner:self options:nil];
+        for (id object in objects) if ([object isKindOfClass:[GTTableViewCell class]]) return object;
+    }
+    return [[GTTableViewCell alloc] initWithStyle:[self style] reuseIdentifier:[self reuseIdentifier]];
+}
 
+
+- (NSIndexPath*)shouldMoveFromVisibleIndexPath:(NSIndexPath*)sourceIndexPath toVisibleIndexPath:(NSIndexPath*)destinationIndexPath 
+{
+    return destinationIndexPath;
+}
+
+- (NSIndexPath*)selectNewIndexPathFromIndexPaths:(NSSet*)indexPaths;
+{
+    return [indexPaths anyObject];
+}
+
+- (void)sectionWillMove
+{
+    // do nothing
+}
+
+- (void)sectionDidMove
+{
+    // do nothing
+}
+
+- (void)rowWillMove
+{
+    // do nothing
+}
+
+- (void)rowDidMove
+{
+    // do nothing
+}
+
+- (BOOL)commitDelete
+{
+    return YES;
+}
+- (void)commitInsert
+{
+    // do nothing
+}
+
+- (NSIndexPath*)willBecomeSelected 
+{
+    return [[[tableView indexPathForItem:self] retain] autorelease];
+}
+- (void)didBecomeSelecected
+{
+    // do nothing
+}
+
+- (NSIndexPath*)willBecomeDeselected
+{
+    return [[[tableView indexPathForItem:self] retain] autorelease];     
+}
+
+- (void)didBecomeDeselected
+{
+    // do nothing
+}
+
+- (void)accessoryButtonTapped
+{
+    // do nothing
+}
+
+- (void)willBeginEditing
+{
+    // do nothing
+}
+
+- (void)didEndEditing
+{
+    // do nothing
+}
+
+- (void)configureCell:(GTTableViewCell *)tableViewCell
+{
+    [tableViewCell.textLabel setText:self.title];
+    [tableViewCell.detailTextLabel setText:self.subtitle];
+}
 
 #pragma mark - Object Lifecylce -
++ (id)item
+{
+    return [[[GTTableViewItem alloc] init] autorelease];
+}
 - (id)init
 {
     self = [super init];
@@ -50,12 +157,37 @@
 
 - (void)dealloc {
     [properties_ release];
+    target = nil;
+    action = nil;
     [super dealloc];
+}
+
+#pragma mark NSCopying
+- (id)copyWithZone:(NSZone *)zone 
+{
+    return [self retain];
+}
+- (BOOL)isEqual:(id)object
+{
+    return (self == object);
 }
 
 #pragma mark - Accessors -
 - (GTTableViewCell *)cell {
     return (GTTableViewCell*)[tableView cellForRowAtIndexPath:[tableView indexPathForItem:self]];
+}
+
+#pragma mark reuseIdentifier
+NSString  * const kReuseIdentifieryKey = @"kReuseIdentifieryKey";
+- (void)setReuseIdentifier:(NSString*)reuseIdentifier {
+    if (reuseIdentifier)
+        [self setObject:reuseIdentifier ForKey_:kReuseIdentifieryKey];
+    else 
+        [self resetKey_:kReuseIdentifieryKey];
+}
+- (NSString*)reuseIdentifier {
+    NSString *retVal = [self objectForKey_:kReuseIdentifieryKey];
+    return (retVal) ? retVal : [[self class] reuseIdentifier];
 }
 
 #pragma mark selected
@@ -120,20 +252,26 @@ NSString * const kVisibleKey = @"kVisibleKey";
 }
 - (void)setVisible:(BOOL)willBeVisible animation:(UITableViewRowAnimation)animation {
     BOOL wasVisible =  [self isVisible];
+    visibleSet_ = YES;
+
     /**
      We have to update the table view rows if the cells are visible. The order of setting the variable and getting the index path counts. 
      */
     if (wasVisible && !willBeVisible) {
         NSIndexPath *indexPath = [tableView indexPathForItem:self];
-        visible_ = YES;
-        visibleSet_ = YES;
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:animation];
-    }
-    else if (!wasVisible && willBeVisible) {
         visible_ = NO;
-        visibleSet_ = YES;
-        NSIndexPath *indexPath = [tableView indexPathForItem:self];
-        [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:animation];
+        if (tableView.finishedLoading) {
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:animation];
+            [tableView updateCachedIndexPaths_];
+        }
+        }
+    else if (!wasVisible && willBeVisible) {
+        visible_ = YES;
+        if (tableView.finishedLoading) { 
+            [tableView updateCachedIndexPaths_];
+            NSIndexPath *indexPath = [tableView indexPathForItem:self];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:animation]; 
+        }
     }
     
 }
@@ -142,16 +280,22 @@ NSString * const kVisibleKey = @"kVisibleKey";
 }
 - (void)resetVisibleAnimation:(UITableViewRowAnimation)animation {
     BOOL wasVisible = [self isVisible];
-    BOOL willBeVisible = [tableView defaultItemIsVisible];
+    BOOL willBeVisible = YES;
+    visibleSet_ = NO;
+
     if (wasVisible && !willBeVisible) {
         NSIndexPath *indexPath = [tableView indexPathForItem:self];
-        visibleSet_ = NO;
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:animation];
+        if (tableView.finishedLoading) {
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:animation];
+            [tableView updateCachedIndexPaths_];
+        }
     }
     else if (!wasVisible && willBeVisible) {
-        visibleSet_ = NO;
         NSIndexPath *indexPath = [tableView indexPathForItem:self];
-        [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:animation];
+        if (tableView.finishedLoading) {
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:animation];
+            [tableView updateCachedIndexPaths_];
+        }   
     }
 }
 
@@ -221,7 +365,8 @@ NSString * const kShouldShowReoderControlKey = @"kShouldShowReoderControlKey";
 #pragma mark deleteConfirmationTitle
 NSString * const kDeleteConfirmationTitleKey = @"kDeleteConfirmationTitleKey";
 - (NSString *)deleteConfirmationTitle {
-    return [self objectForKey_:kDeleteConfirmationTitleKey];
+    NSString *retVal = [self objectForKey_:kDeleteConfirmationTitleKey];
+    return (retVal) ? retVal : [tableView defaultCellDeleteConfirmationButtonTitle];
 }
 - (void)setDeleteConfirmationTitle:(NSString *)deleteConfirmationTitle {
     [self setObject:deleteConfirmationTitle ForKey_:kDeleteConfirmationTitleKey];
@@ -234,7 +379,7 @@ NSString * const kDeleteConfirmationTitleKey = @"kDeleteConfirmationTitleKey";
 NSString * const kStyleKey = @"kStyleKey";
 - (UITableViewCellStyle)style {
     if ([self hasKeyBeenSet_:kStyleKey])
-        return (UITableViewCellStyle*)[self intForKey_:kStyleKey];
+        return (UITableViewCellStyle)[self intForKey_:kStyleKey];
     return [tableView defaultCellStyle];
 }
 - (void)setStyle:(UITableViewCellStyle)style {
@@ -285,7 +430,7 @@ NSString * const kEditingAccessoryTypeKey = @"kEditingAccessoryTypeKey";
     [self setInt:(NSInteger)editingAccessoryType ForKey_:kEditingAccessoryTypeKey];
     [self.cell setEditingAccessoryType:editingAccessoryType];
 }
-- (void)resetAccessoryType {
+- (void)resetEditingAccessoryType {
     [self resetKey_:kEditingAccessoryTypeKey];
     [self.cell setEditingAccessoryType:[self editingAccessoryType]];
 }
@@ -307,10 +452,11 @@ NSString * const kSelectionStyleKey = @"kSelectionStyleKey";
 }
 
 #pragma mark indentationLevel
-NSString const * kIndentationLevelKey = @"kIndentationLevelKey";
+NSString * const kIndentationLevelKey = @"kIndentationLevelKey";
 - (NSInteger)indentationLevel {
     if ([self hasKeyBeenSet_:kIndentationLevelKey])
         return [self intForKey_:kIndentationLevelKey];
+    return [tableView defaultCellIndentationLevel];
 }
 - (void)setIndentationLevel:(NSInteger)indentationLevel {
     [self setInt:indentationLevel ForKey_:kIndentationLevelKey];
@@ -321,37 +467,40 @@ NSString const * kIndentationLevelKey = @"kIndentationLevelKey";
 }
 
 #pragma mark labelStyle
-NSString const * kLabelStyleKey = @"kLabelStyleKey";
+NSString * const kLabelStyleKey = @"kLabelStyleKey";
 - (UILabel *)labelStyle {
-    return [self objectForKey_:kLabelStyleKey];
+    UILabel *retVal =  [self objectForKey_:kLabelStyleKey];
+    return (retVal) ? retVal : [tableView defaultCellLabel];
 }
 - (void)setLabelStyle:(UILabel *)labelStyle {
     [self setObject:labelStyle ForKey_:kLabelStyleKey];   
-#warning Need to implement style copy.
+    [self.cell.textLabel copyStyleFromLabel:labelStyle];
 }
 - (void)resetLabelStyle {
     [self resetKey_:kLabelStyleKey];
-#warning Need to implement style copy.
+    [self.cell.textLabel copyStyleFromLabel:[self labelStyle]];
 }
 
 #pragma mark subtitleLabelStyle
-NSString const * kSubtitleLabelStyleKey = @"kSubtitleLabelStyleKey";
+NSString * const kSubtitleLabelStyleKey = @"kSubtitleLabelStyleKey";
 - (UILabel *)subtitleLabelStyle {
-    [self objectForKey_:kSubtitleLabelStyleKey];
+   UILabel *retVal = [self objectForKey_:kSubtitleLabelStyleKey];
+    return (retVal) ? retVal : [tableView defaultCellSubtitleLabel];
 }
 - (void)setSubtitleLabelStyle:(UILabel *)subtitleLabelStyle {
     [self setObject:subtitleLabelStyle ForKey_:kSubtitleLabelStyleKey];
-#warning Need to implement style copy.
+    [self.cell.detailTextLabel copyStyleFromLabel:subtitleLabelStyle];
 }
 - (void)resetSubtitleLabelStyle {
     [self resetKey_:kSubtitleLabelStyleKey];
-#warning Need to implement style copy.
+    [self.cell.detailTextLabel copyStyleFromLabel:[self subtitleLabelStyle]];
 }
 
 #pragma mark backgroundColor
 NSString * const kBackgroundColorKey = @"kBackgroundColorKey";
 - (UIColor *)backgroundColor {
-    [self objectForKey_:kBackgroundColorKey];
+    UIColor *retVal =  [self objectForKey_:kBackgroundColorKey];
+    return (retVal) ? retVal : [tableView defaultCellBackgroundColor];
 }
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
     [self setObject:backgroundColor ForKey_:kBackgroundColorKey];
@@ -363,15 +512,16 @@ NSString * const kBackgroundColorKey = @"kBackgroundColorKey";
 }
 
 #pragma mark selectionBackgroundColor
-NSString const * kSelectionBackgroundColorKey = @"kSelectionBackgroundColorKey";
+NSString * const kSelectionBackgroundColorKey = @"kSelectionBackgroundColorKey";
 -(UIColor *)selectionBackgroundColor {
-    return [self objectForKey_:kSelectionBackgroundColorKey];
+    UIColor *retVal = [self objectForKey_:kSelectionBackgroundColorKey];
+    return  (retVal) ? retVal : [tableView defaultCellSelectionBackgroundColor];
 }
 - (void)setSelectionBackgroundColor:(UIColor *)selectionBackgroundColor {
     [self setObject:selectionBackgroundColor ForKey_:kSelectionBackgroundColorKey];
     [self.cell setSelectionBackgroundColor:selectionBackgroundColor];
 }
-- (void)resetBackgroundColor {
+- (void)resetSelectionBackgroundColor {
     [self resetKey_:kSelectionBackgroundColorKey];
     [self.cell setSelectionBackgroundColor:[self selectionBackgroundColor]];
 }

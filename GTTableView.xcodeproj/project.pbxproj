@@ -20,6 +20,7 @@
 		1865EADE136F8BD8009E5CAF /* GTTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1865EADD136F8BD8009E5CAF /* GTTableViewCell.m */; };
 		1865EAE1136F8CEA009E5CAF /* GTTableViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1865EAE0136F8CE9009E5CAF /* GTTableViewItem.m */; };
 		1865EAEA136F8DF6009E5CAF /* GTTableViewHeaderFooterItem_.m in Sources */ = {isa = PBXBuildFile; fileRef = 1865EAE9136F8DF6009E5CAF /* GTTableViewHeaderFooterItem_.m */; };
+		18D3EC491378E7EF007AF9C4 /* UILabel+CopyStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D3EC481378E7EF007AF9C4 /* UILabel+CopyStyle.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,8 @@
 		1865EAE0136F8CE9009E5CAF /* GTTableViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTTableViewItem.m; path = GTTableView/GTTableViewItem.m; sourceTree = "<group>"; };
 		1865EAE8136F8DF6009E5CAF /* GTTableViewHeaderFooterItem_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTTableViewHeaderFooterItem_.h; path = GTTableView/GTTableViewHeaderFooterItem_.h; sourceTree = "<group>"; };
 		1865EAE9136F8DF6009E5CAF /* GTTableViewHeaderFooterItem_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTTableViewHeaderFooterItem_.m; path = GTTableView/GTTableViewHeaderFooterItem_.m; sourceTree = "<group>"; };
+		18D3EC471378E7EF007AF9C4 /* UILabel+CopyStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UILabel+CopyStyle.h"; path = "GTTableView/UILabel+CopyStyle.h"; sourceTree = "<group>"; };
+		18D3EC481378E7EF007AF9C4 /* UILabel+CopyStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UILabel+CopyStyle.m"; path = "GTTableView/UILabel+CopyStyle.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +128,8 @@
 				1865EADD136F8BD8009E5CAF /* GTTableViewCell.m */,
 				1865EAE8136F8DF6009E5CAF /* GTTableViewHeaderFooterItem_.h */,
 				1865EAE9136F8DF6009E5CAF /* GTTableViewHeaderFooterItem_.m */,
+				18D3EC471378E7EF007AF9C4 /* UILabel+CopyStyle.h */,
+				18D3EC481378E7EF007AF9C4 /* UILabel+CopyStyle.m */,
 			);
 			name = GTTableView;
 			sourceTree = "<group>";
@@ -199,6 +204,7 @@
 				1865EADE136F8BD8009E5CAF /* GTTableViewCell.m in Sources */,
 				1865EAE1136F8CEA009E5CAF /* GTTableViewItem.m in Sources */,
 				1865EAEA136F8DF6009E5CAF /* GTTableViewHeaderFooterItem_.m in Sources */,
+				18D3EC491378E7EF007AF9C4 /* UILabel+CopyStyle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

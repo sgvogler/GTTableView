@@ -16,4 +16,5 @@
 
 @property (nonatomic, retain) UIColor *selectionBackgroundColor;
 @property (nonatomic, readonly) GTTableViewItem *item;
+- (void) prepareCellForReuseForItem_:(GTTableViewItem*)item;
 @end

@@ -7,11 +7,19 @@
 //
 
 #import "GTTableViewCell.h"
+#import "GTTableViewItem.h"
 #import "GTTableView.h"
+#import "UILabel+CopyStyle.h"
+@interface GTTableViewCell ()
+@property (nonatomic, assign) GTTableView *tableView;
+@end
 
 @implementation GTTableViewCell
+@synthesize tableView;
 #pragma mark - Accessors -
 - (GTTableViewItem *)item {
+    NSLog(@"%@ >> %@",[tableView indexPathForCell:self],[tableView itemForRowAtIndexPath:[tableView indexPathForCell:self]]);
+
     return [tableView itemForRowAtIndexPath:[tableView indexPathForCell:self]];
 }
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -29,12 +37,23 @@
 
     // Configure the view for the selected state
 }
-
+- (void) prepareCellForReuseForItem_:(GTTableViewItem*)item 
+{
+    /** We use this instead of prepare for reuse because the item is not known until this point. */
+    [self.textLabel copyStyleFromLabel:item.labelStyle];
+    [self.detailTextLabel copyStyleFromLabel:item.subtitleLabelStyle];
+    self.accessoryType = item.accessoryType;
+    self.editingAccessoryType = item.editingAccessoryType;
+    self.backgroundColor = item.backgroundColor;
+    self.indentationLevel = item.indentationLevel;
+    self.indentationWidth = item.indentationWidth;
+    self.selectionStyle = item.selectionStyle;
+    self.selectionBackgroundColor = item.selectionBackgroundColor;
+}
 - (void)dealloc
 {
     [super dealloc];
 }
-
 
 - (UIColor *)selectionBackgroundColor {
     return [[self selectedBackgroundView] backgroundColor];

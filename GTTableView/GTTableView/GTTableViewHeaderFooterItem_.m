@@ -7,11 +7,14 @@
 //
 
 #import "GTTableViewHeaderFooterItem_.h"
+#import "GTTableView.h"
 @interface GTTableViewHeaderFooterItem_ ()
 - (void) setup_;
+@property (nonatomic, assign) GTTableView *tableView;
 @end
 
 @implementation GTTableViewHeaderFooterItem_
+@synthesize tableView;
 #pragma mark - Accessors -
 @synthesize view = view_;
 @synthesize text = text_;
