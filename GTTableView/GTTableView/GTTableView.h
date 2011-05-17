@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
+
 @class GTTableView;
 @protocol GTTableViewDelegate <NSObject>
 @optional
@@ -31,13 +32,22 @@
     NSMutableArray *headerItems_;
     NSMutableArray *footerItems_;
     NSMutableSet *cells_;
+    
+    /** These are used for managing items inbetween beginUpdates and endUpdates. */
+    NSMutableArray *updates_;
+    NSMutableSet *itemsMadeVisible_;
+    NSMutableSet *itemsMadeHidden_;
+    NSMutableIndexSet *deletedSections_;
+    NSMutableIndexSet *insertedSections_;
 }
-@property (nonatomic, assign) id<GTTableViewDelegate> GTTableViewDelegate;
-@property (nonatomic, assign) BOOL finishedLoading; /**< If this is set to YES items will cause animations and rowWillMove and rowDidMove method calls when objects are inserted and removed. reloadData should be called after setting this to yes */
-- (void) viewDidAppear:(BOOL)animated; /**< Monitors for first responders and flashes scroll bars if animated. */
+@property (nonatomic, assign) IBOutlet id<GTTableViewDelegate> GTTableViewDelegate;
+@property (nonatomic, readonly, getter=isUpdating) BOOL updating; /**< This responds to beginUpdates and endUpdates */
+- (void) viewDidAppear:(BOOL)animated; /**< Monitors for first responders and flashes scroll bars. */
 - (void) viewWillDisappear:(BOOL)animated; /**< Stops keyboard monitoring. */
 
 @property (nonatomic, retain) UIColor *backgroundColor; /**< This sets the backgroundView color. */
+@property (nonatomic, assign) UITableViewRowAnimation insertAnimation; /**< default is UITableViewRowAnimationRight. */
+@property (nonatomic, assign) UITableViewRowAnimation deleteAnimation; /**< default is UITTableViewRowAnimationRight. */
 /**
  These are the default values. They can be overriden individually on each GTTableViewItem. They should all be set prior to adding items to the tableview.
  */
@@ -58,8 +68,8 @@
 @property (nonatomic, assign) UITableViewCellAccessoryType defaultCellEditingAccessoryType; /**<  Default is  UITableViewCellAccessoryNone. */
 @property (nonatomic, assign) UITableViewCellSelectionStyle defaultCellSelectionStyle; /**< Default is UITableViewCellSelectionStyleBlue. */
 @property (nonatomic, assign) NSInteger defaultCellIndentationLevel; /**< Default is 0. */
-@property (nonatomic, retain) UILabel *defaultCellLabel; /**< Attributes are copied from this label if set. */
-@property (nonatomic, retain) UILabel *defaultCellSubtitleLabel; /**< Attributes are copied from this label if set. */
+@property (nonatomic, retain) IBOutlet UILabel *defaultCellLabel; /**< Attributes are copied from this label if set. */
+@property (nonatomic, retain) IBOutlet UILabel *defaultCellSubtitleLabel; /**< Attributes are copied from this label if set. */
 @property (nonatomic, retain) UIColor *defaultCellBackgroundColor; /**< This sets the background colour of a GTTableViewCell. */
 @property (nonatomic, retain) UIColor *defaultCellSelectionBackgroundColor; /**< This sets the content view background colour . */
 /**
@@ -68,7 +78,6 @@
 @property (nonatomic, assign) CGFloat defaultHeaderItemHeight;
 @property (nonatomic, assign) CGFloat defaultFooterItemHeight;
 @property (nonatomic, retain) NSArray *sectionIndexTitlesForTableView;
-
 /**
  These methods are used for controlling the data displayed in the table view.
  */
@@ -93,14 +102,18 @@
 /**
  Call reloadData before or beginUpdates and endUpdates before and after using these methods unless they are called from either commitDelete or commitInsert.
  */
-- (void)insertSectionAtIndex:(NSInteger)index animation:(UITableViewRowAnimation)animation;
-- (void)removeSectionAtIndex:(NSInteger)index animation:(UITableViewRowAnimation)animation;
+- (void)insertSectionAtIndex:(NSInteger)index;
+- (void)removeSectionAtIndex:(NSInteger)index;
 
-- (void)appendItem:(GTTableViewItem*)item toSection:(NSInteger)section animation:(UITableViewRowAnimation)animation;
-- (void)insertItem:(GTTableViewItem*)item atIndexPath:(NSIndexPath*)indexPath animation:(UITableViewRowAnimation)animation;
-- (void)insertItem:(GTTableViewItem*)item atIndexPath:(NSIndexPath*)indexPath animation:(UITableViewRowAnimation)animation onlyVisible:(BOOL)visible;
-- (void)removeItemAtIndexPath:(NSIndexPath*)indexPath animation:(UITableViewRowAnimation)animation;
-- (void)removeItemAtIndexPath:(NSIndexPath*)indexPath animation:(UITableViewRowAnimation)animation onlyVisible:(BOOL)visible;
+- (void)appendItem:(GTTableViewItem*)item section:(NSInteger)section;
+- (void)appendItems:(NSArray*)items section:(NSInteger)section;
+- (void)insertItem:(GTTableViewItem*)item atIndexPath:(NSIndexPath*)indexPath;
+- (void)insertItem:(GTTableViewItem*)item atIndexPath:(NSIndexPath*)indexPath onlyVisible:(BOOL)visible;
+
+- (void)removeItemAtIndexPath:(NSIndexPath*)indexPath;
+- (void)removeItemAtIndexPath:(NSIndexPath*)indexPath onlyVisible:(BOOL)visible;
+
+
 /* considering removing these
 - (void)insertItems:(NSArray*)items inSection:(NSInteger)section atRow:(NSInteger)row animation:(UITableViewRowAnimation)animation; **< Items should be an array of GTTableViewItem instances. *
 - (void)insertItems:(NSArray*)items inSection:(NSInteger)section atRow:(NSInteger)row animation:(UITableViewRowAnimation)animation onlyVisible:(BOOL)visible; **< Items should be an array of GTTableViewItem instances. *

@@ -10,6 +10,7 @@
 #import "GTTableViewItem.h"
 #import "GTTableViewCell.h"
 #import "GTTableViewHeaderFooterItem_.h"
+#import "NSMutableArray+PositionCompare.h"
 
 @interface GTTableViewCell (Link)
 @property (nonatomic, assign) GTTableView *tableView;
@@ -34,8 +35,14 @@
 
 
 @interface GTTableView ()
+
+- (void)commitUpdates_;
+- (void)updateInternalCachedIndexPaths_;
+
+- (void)hideItem_:(GTTableViewItem*)item;
+- (void)showItem_:(GTTableViewItem*)item;
+
 - (void)setup_;
-- (void)updateCachedIndexPaths_;
 - (void)tearDownItems_;
 - (void)tearDownHeaderItems_;
 - (void)teardownFooterItems_;
@@ -66,7 +73,9 @@
 @synthesize defaultHeaderItemHeight = defaultHeaderItemHeight_;
 @synthesize defaultFooterItemHeight = defaultFooterItemHeight_;
 @synthesize sectionIndexTitlesForTableView = sectionIndexTitlesForTableView_;
-@synthesize finishedLoading = finishLoading_;
+@synthesize updating = updating_;
+@synthesize insertAnimation = insertAnimation_;
+@synthesize deleteAnimation = deleteAnimation_;
 
 - (UIColor *)backgroundColor {
     return [super backgroundColor];
@@ -108,6 +117,8 @@
     defaultCellAccessoryType_ = UITableViewCellAccessoryNone;
     defaultCellEditingAccessoryType_ = UITableViewCellAccessoryNone;
     defaultCellSelectionStyle_ = UITableViewCellSelectionStyleBlue;
+    insertAnimation_ = UITableViewRowAnimationRight;
+    deleteAnimation_ = UITableViewRowAnimationRight;
     defaultCellIndentationLevel_ = 0;
     defaultHeaderItemHeight_ = self.sectionHeaderHeight;
     defaultFooterItemHeight_ = self.sectionFooterHeight;
@@ -121,6 +132,7 @@
     headerItems_ = [[NSMutableArray alloc] init];
     footerItems_ = [[NSMutableArray alloc] init];
     cells_ = [[NSMutableSet alloc] init];
+    updating_ = NO;
 }
 
 - (void)dealloc 
@@ -141,7 +153,13 @@
     [defaultCellSelectionBackgroundColor_  release];
     [sectionIndexTitlesForTableView_ release];
     
+    [insertedSections_ release];
+    [deletedSections_ release];
+    [itemsMadeVisible_ release];
+    [itemsMadeHidden_ release];
+    
     [items_ release];
+    [updates_ release];
     [itemsAndCachedIndexPaths_ release];
     [itemsAndCachedVisibleIndexPaths_ release];
     [cachedIndexPathsAndItems_ release];
@@ -208,7 +226,151 @@
 
 #pragma mark - GTTableView Methods -
 #pragma mark Internal
-- (void)updateCachedIndexPaths_ 
+- (void)beginUpdates {
+    updating_ = YES;
+    [super beginUpdates];
+    
+    [updates_ autorelease]; updates_ = nil;
+    updates_ = [[NSMutableArray alloc] init];
+    for (NSMutableArray *sectionItems in items_)
+    {
+        NSMutableArray *copyOfSectionItems = [[sectionItems mutableCopy] autorelease];
+        [updates_ addObject:copyOfSectionItems];
+    }
+    
+    [insertedSections_ release]; insertedSections_ = nil;
+    [deletedSections_ release]; deletedSections_ = nil;
+    insertedSections_ = [[NSMutableIndexSet alloc] init];
+    deletedSections_ = [[NSMutableIndexSet alloc] init];
+    
+    [itemsMadeVisible_ release]; itemsMadeVisible_ = nil;
+    [itemsMadeHidden_ release]; itemsMadeHidden_ = nil;
+    itemsMadeVisible_ = [[NSMutableSet alloc] init];
+    itemsMadeHidden_ = [[NSMutableSet alloc] init];
+    
+}
+- (void)endUpdates {
+    [self commitUpdates_];
+    [super endUpdates];
+    updating_ = NO;
+    
+    [insertedSections_ release]; insertedSections_ = nil;
+    [deletedSections_ release]; deletedSections_ = nil;
+    
+    [itemsMadeVisible_ release]; itemsMadeVisible_ = nil;
+    [itemsMadeHidden_ release]; itemsMadeHidden_ = nil;
+}
+- (void)commitUpdates_;
+{
+    if (!updating_)
+    {
+        [self updateInternalCachedIndexPaths_]; /**< This will update values for numberOfItems, numberOfRowsInSection, etc. */
+        return;
+    }
+ //   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    /** Update Sections. */
+
+    [self deleteSections:deletedSections_ withRowAnimation:self.deleteAnimation];
+    [self insertSections:insertedSections_ withRowAnimation:self.insertAnimation];
+    
+    /** Find out what items have been moved, inserted, or deleted. */
+
+    NSMutableArray *orderedItemsBefore = [NSMutableArray array];
+    NSMutableArray *orderedItemsAfter = [NSMutableArray array];
+    
+    for (NSArray *sectionItems in items_) [orderedItemsBefore addObjectsFromArray:sectionItems];
+    for (NSArray *sectionItems in updates_) [orderedItemsAfter addObjectsFromArray:sectionItems];
+    
+    NSSet *itemsBefore = [NSSet setWithArray:orderedItemsBefore];
+    NSSet *itemsAfter = [NSSet setWithArray:orderedItemsAfter];
+    
+    
+    NSMutableSet *insertedItems = [[itemsAfter mutableCopy] autorelease];
+    [insertedItems minusSet:itemsBefore];
+    
+    NSMutableSet *deletedItems = [[itemsBefore mutableCopy] autorelease];
+    [deletedItems minusSet:itemsAfter];
+
+    
+    NSMutableArray *unmovedItems = [NSMutableArray array];
+    
+    NSInteger beforeCount = [items_ count];
+    NSInteger afterCount = [updates_ count];
+    NSInteger minNumberOfSections = MIN(beforeCount,afterCount);
+
+    
+    for (int section = 0; section < minNumberOfSections; section++)
+    {
+        NSArray *array1 = [items_ objectAtIndex:section];
+        NSArray *array2 = [updates_ objectAtIndex:section];
+        [unmovedItems addObjectsFromArray:array1 withIdenticalObjectsAtIdenticalIndexesInArray:array2];
+    }
+    
+    NSMutableSet *movedItems = [[itemsAfter mutableCopy] autorelease];
+    [movedItems minusSet:[NSSet setWithArray:unmovedItems]];
+    [movedItems minusSet:insertedItems];
+    [movedItems minusSet:deletedItems];
+    
+    /** Notify those objects and commit changes. */
+    for (GTTableViewItem *movedItem in movedItems) [movedItem itemWillMove];
+    for (GTTableViewItem *insertedItem in insertedItems) [insertedItem itemWillInsert];
+    for (GTTableViewItem *deletedItem in deletedItems) [deletedItem itemWillRemove];
+    
+    
+
+    
+    NSMutableArray *insertIndexPaths = [NSMutableArray array];
+    NSMutableArray *deleteIndexPaths = [NSMutableArray array];
+    
+    for (GTTableViewItem *deletedItem in deletedItems)  if (deletedItem.visible) [deleteIndexPaths addObject:[self indexPathForItem:deletedItem]];
+    
+    
+    /**< The move animation is handled by the user moving the cell. */
+    [items_ autorelease]; items_ = nil;
+    items_ = [updates_ mutableCopy];
+    items_ = (items_) ? items_ :  [[NSMutableArray array] retain];
+    
+    NSMutableArray *indexPathsToHide = [NSMutableArray array]; /**< Must be done before udpating cached index paths. */
+    for (GTTableViewItem *itemToHide in itemsMadeHidden_) [indexPathsToHide addObject:[self indexPathForItem:itemToHide]];
+
+
+    [self updateInternalCachedIndexPaths_]; /**< This will update values for numberOfItems, numberOfRowsInSection, etc. */
+    
+    
+    for (GTTableViewItem *movedItem in movedItems) [movedItem itemDidMove];
+    for (GTTableViewItem *insertedItem in insertedItems) [insertedItem itemDidInsert];
+    for (GTTableViewItem *deletedItem in deletedItems) [deletedItem itemDidRemove];
+    
+    /** Update visible items. */
+    NSMutableArray *indexPathsToUnhide = [NSMutableArray array];
+    for (GTTableViewItem *itemToUnhide in itemsMadeVisible_) [indexPathsToUnhide addObject:[self indexPathForItem:itemToUnhide]];
+    for (GTTableViewItem *insertedItem in insertedItems) if (insertedItem.visible) [insertIndexPaths addObject:[self indexPathForItem:insertedItem]];
+
+    [self deleteRowsAtIndexPaths:indexPathsToHide withRowAnimation:self.deleteAnimation];
+    [self insertRowsAtIndexPaths:indexPathsToUnhide withRowAnimation:self.insertAnimation]; 
+    
+    [self insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:self.insertAnimation];
+    [self deleteRowsAtIndexPaths:deleteIndexPaths withRowAnimation:self.deleteAnimation];
+
+
+ //   [pool drain];
+    
+}
+
+- (void)showItem_:(GTTableViewItem *)item
+{
+    if (!item.visible)
+        [itemsMadeVisible_ addObject:item];
+}
+
+- (void)hideItem_:(GTTableViewItem *)item
+{
+    if (item.visible)
+        [itemsMadeHidden_ addObject:item];
+}
+
+- (void)updateInternalCachedIndexPaths_ 
 {
     [cachedIndexPaths_ removeAllObjects];
     [cachedVisibleIndexPaths_ removeAllObjects];
@@ -251,8 +413,9 @@
     [pool drain];
 }
 
+
 - (void)reloadData {
-    [self updateCachedIndexPaths_];
+    [self updateInternalCachedIndexPaths_];
     [super reloadData];
 }
 #pragma mark Retrieving Information About the Tableview
@@ -337,53 +500,35 @@
 
 #pragma mark Changing the data within the tableview.
 
-- (void)insertSectionAtIndex:(NSInteger)index animation:(UITableViewRowAnimation)animation
+- (void)insertSectionAtIndex:(NSInteger)index
 {
-    NSMutableArray *movedItems = nil;
-    if (finishLoading_)
-    {
-        movedItems = [NSMutableArray array];
-        for (int i = index; i < [items_ count]; i++)  [movedItems addObjectsFromArray:[self itemsInSection:i onlyVisible:NO]];
-        for (GTTableViewItem *item in movedItems) [item sectionWillMove];
-        [self insertSections:[NSIndexSet indexSetWithIndex:index] withRowAnimation:animation];
-    }
-    
-    [items_ insertObject:[NSMutableArray array] atIndex:index];
-    [self updateCachedIndexPaths_];
-    
-     if (finishLoading_) for (GTTableViewItem *item in movedItems) [item sectionDidMove];
+    NSMutableArray *data = (updating_) ? updates_ : items_;
+    [data insertObject:[NSMutableArray array] atIndex:index];
+    [insertedSections_ addIndex:index];
 }
 
-- (void)removeSectionAtIndex:(NSInteger)index animation:(UITableViewRowAnimation)animation
+- (void)removeSectionAtIndex:(NSInteger)index
 {
-    NSMutableArray * movedItems = nil;
-    if (finishLoading_) 
-    {
-        movedItems = [NSMutableArray array];
-        for (int i = index + 1; i < [items_ count]; i++) [movedItems addObjectsFromArray:[self itemsInSection:i onlyVisible:NO]];
-        for (GTTableViewItem *item in movedItems) [item sectionWillMove];
-        [self deleteSections:[NSIndexSet indexSetWithIndex:index] withRowAnimation:animation];
-        for (GTTableViewItem *item in [self itemsInSection:index onlyVisible:NO]) [item commitDelete];
-    }
-    
-    [items_ removeObjectAtIndex:index];
-    [self updateCachedIndexPaths_];
-    
-    if (finishLoading_) for (GTTableViewItem *item in movedItems) [item sectionDidMove];
+    NSMutableArray *data = (updating_) ? updates_ : items_;
+    [data removeObjectAtIndex:index];
+    [deletedSections_ addIndex:index];
 }
 
-- (void)appendItem:(GTTableViewItem*)item toSection:(NSInteger)section animation:(UITableViewRowAnimation)animation
+- (void)appendItem:(GTTableViewItem*)item section:(NSInteger)section
 {
     
-    [self insertItem:item atIndexPath:[NSIndexPath indexPathForRow:[[items_ objectAtIndex:section] count] inSection:section] animation:animation onlyVisible:NO];
+    [self insertItem:item atIndexPath:[NSIndexPath indexPathForRow:[[items_ objectAtIndex:section] count] inSection:section] onlyVisible:NO];
 }
-
-- (void)insertItem:(GTTableViewItem*)item atIndexPath:(NSIndexPath *)indexPath animation:(UITableViewRowAnimation)animation
+- (void)appendItems:(NSArray *)items section:(NSInteger)section
 {
-    [self insertItem:item atIndexPath:indexPath animation:animation onlyVisible:YES];
+    for (GTTableViewItem *item in items) [self appendItem:item section:section];
+}
+- (void)insertItem:(GTTableViewItem*)item atIndexPath:(NSIndexPath *)indexPath
+{
+    [self insertItem:item atIndexPath:indexPath  onlyVisible:YES];
 }
 
-- (void)insertItem:(GTTableViewItem*)item atIndexPath:(NSIndexPath *)indexPath animation:(UITableViewRowAnimation)animation onlyVisible:(BOOL)visible
+- (void)insertItem:(GTTableViewItem*)item atIndexPath:(NSIndexPath *)indexPath onlyVisible:(BOOL)visible
 {
     [item setTableView:self];
     /** Convert visible to invisible. */
@@ -412,51 +557,33 @@
         NSAssert([possibleIndexPaths count] != 0,@"GTTableView error");
     }
     /** Insert items and notify items that moved. */
-    NSMutableArray *destinationSection = (NSMutableArray*)[items_ objectAtIndex:indexPath.section];
-    NSMutableSet *itemsToNotifyOfMove = [NSMutableSet set];
-    
-    if (finishLoading_) for (int i = indexPath.row; i < [destinationSection count]; i++)  [itemsToNotifyOfMove addObject:[destinationSection objectAtIndex:i]];
-       
-    if (finishLoading_) for (GTTableViewItem *item in itemsToNotifyOfMove) [item rowWillMove];
-    
-    [destinationSection insertObject:item atIndex:indexPath.row];    
-    [self updateCachedIndexPaths_];
-    if (finishLoading_&&[item isVisible]) [self insertRowsAtIndexPaths:[NSArray arrayWithObject:[self indexPathForItem:item]] withRowAnimation:animation];
+    NSMutableArray *data = (updating_) ? updates_ : items_;
 
+    NSMutableArray *destinationSection = (NSMutableArray*)[data objectAtIndex:indexPath.section];    
     
-    if (finishLoading_) for (GTTableViewItem *item in itemsToNotifyOfMove) [item rowDidMove];
-
+    [destinationSection insertObject:item atIndex:indexPath.row];
+    [self commitUpdates_];
 }
 
-- (void)removeItemAtIndexPath:(NSIndexPath *)indexPath animation:(UITableViewRowAnimation)animation
+- (void)removeItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self removeItemAtIndexPath:indexPath animation:animation onlyVisible:YES];
+    [self removeItemAtIndexPath:indexPath onlyVisible:YES];
 }
 
-- (void)removeItemAtIndexPath:(NSIndexPath *)indexPath animation:(UITableViewRowAnimation)animation onlyVisible:(BOOL)visible
+- (void)removeItemAtIndexPath:(NSIndexPath *)indexPath onlyVisible:(BOOL)visible
 {
     /** Convert visible to invisible. */
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
     if (visible)
         indexPath = [self indexPathForItem:item onlyVisible:NO];
     
-    /** Remove items and notify items that moved. */
-    NSMutableArray *sourceSection = [items_ objectAtIndex:indexPath.section];
-    NSMutableSet *itemsToNotifyOfMove = [NSMutableSet set];
-    if (finishLoading_) 
-    {
-        for (int i = indexPath.row + 1; i < [sourceSection count]; i++) [itemsToNotifyOfMove addObject:[sourceSection objectAtIndex:i]];
-        for (GTTableViewItem *item in itemsToNotifyOfMove) [item rowWillMove];
-    }
-    
+    /** Remove items. */
+    NSMutableArray *data = (updating_) ? updates_ : items_;
+
+    NSMutableArray *sourceSection = [data objectAtIndex:indexPath.section];
     [[item retain] autorelease];
-    
     [sourceSection removeObjectAtIndex:indexPath.row];
-    if (finishLoading_&&[item isVisible]) [self deleteRowsAtIndexPaths:[NSArray arrayWithObject:[self indexPathForItem:item]] withRowAnimation:animation];
-
-    [self updateCachedIndexPaths_];
-
-    if (finishLoading_) for (GTTableViewItem *item in itemsToNotifyOfMove) [item rowDidMove];
+    [self commitUpdates_];
 }
 
 #pragma mark Header & Footer Items
@@ -565,7 +692,12 @@
 {
     switch (editingStyle) {
         case UITableViewCellEditingStyleDelete:
-            [[self itemForRowAtIndexPath:indexPath] commitDelete]; //**< The item is responsible for making itself invislbe or removing itself or its section. */
+            if ([[self itemForRowAtIndexPath:indexPath] commitDelete])
+            {
+                [self beginUpdates];
+                [self removeItemAtIndexPath:indexPath];
+                [self endUpdates];
+            }
             break;
         case UITableViewCellEditingStyleInsert:
             [[self itemForRowAtIndexPath:indexPath] commitInsert]; //**< The item is responsible for inserting a new item or section or making something visible. */
@@ -617,8 +749,6 @@
         destinationIndexPath = [possibleIndexPaths anyObject];
     }
     
-    NSAssert([possibleIndexPaths count] > 0,@"GTTableView error");
-    
     NSMutableArray *sourceSection = (NSMutableArray*)[items_ objectAtIndex:sourceIndexPath.section];
     NSMutableArray *destinationSection = (NSMutableArray*)[items_ objectAtIndex:destinationIndexPath.section];
     
@@ -638,15 +768,16 @@
         for (int i = lowest; i <= highest; i++) [itemsToNotifyOfMove addObject:[sourceSection objectAtIndex:i]];
     }
     
-    if (sourceSection != destinationSection) [movingItem sectionWillMove];
-    for (GTTableViewItem *item in itemsToNotifyOfMove) [item rowWillMove];
+    [itemsToNotifyOfMove addObject:movingItem];
+    for (GTTableViewItem *item in itemsToNotifyOfMove) [item itemWillMove];
     
     [sourceSection removeObjectAtIndex:sourceIndexPath.row];
     [destinationSection insertObject:movingItem atIndex:destinationIndexPath.row];
-    [self updateCachedIndexPaths_];
+    [self commitUpdates_];
 
-    if (sourceSection != destinationSection) [movingItem sectionDidMove];
-    for (GTTableViewItem *item in itemsToNotifyOfMove) [item rowDidMove];
+
+    if (sourceSection != destinationSection) [movingItem itemDidMove];
+    for (GTTableViewItem *item in itemsToNotifyOfMove) [item itemDidMove];
     
     
 }
@@ -678,6 +809,12 @@
 {
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
     [item accessoryButtonTapped];
+    if (item.target && item.accessoryAction)
+    {
+        if ([item.target respondsToSelector:item.accessoryAction])
+            [item.target performSelector:item.accessoryAction withObject:item];
+    }
+    
 }
 
 /**< tableView:accessoryTypeForRowWithIndexPath: deprecated in iOS 3.0. */
@@ -693,11 +830,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
+    [item didBecomeSelecected];
     if (item.target && item.action)
     {
-        [item.target performSelector:item.action withObject:item];
+        if ([item.target respondsToSelector:item.action])
+            [item.target performSelector:item.action withObject:item];
     }
-    [item didBecomeSelecected];
 }
 
 - (NSIndexPath*)tableView:(UITableView *)tableView willDeselectRowAtIndexPath:(NSIndexPath *)indexPath

@@ -12,7 +12,9 @@
 #import "UILabel+CopyStyle.h"
 
 @interface GTTableView ()
-- (void)updateCachedIndexPaths_;
+- (void)updateInternalCachedIndexPaths_;
+- (void)hideItem_:(GTTableViewItem*)item;
+- (void)showItem_:(GTTableViewItem*)item;
 @end
 
 @interface GTTableViewItem ()
@@ -38,10 +40,11 @@
 
 @implementation GTTableViewItem
 @synthesize tableView;
-@synthesize title=title_;
 @synthesize subtitle=subtitle_;
+@synthesize title=title_;
 @synthesize target;
 @synthesize action;
+@synthesize accessoryAction;
 #pragma mark - Methods -
 + (NSString*)reuseIdentifier
 {
@@ -68,73 +71,104 @@
     return [indexPaths anyObject];
 }
 
-- (void)sectionWillMove
+- (void)itemWillMove
 {
     // do nothing
+    NSLog(@"%@ will move",self);
 }
 
-- (void)sectionDidMove
+- (void)itemDidMove
 {
     // do nothing
+    NSLog(@"%@ did move",self);
+
 }
 
-- (void)rowWillMove
+- (void)itemWillInsert
 {
     // do nothing
+    NSLog(@"%@ will insert",self);
+
 }
 
-- (void)rowDidMove
+- (void)itemDidInsert
 {
     // do nothing
+    NSLog(@"%@ did insert",self);
+
+}
+- (void)itemWillRemove
+{
+    // do nothing
+    NSLog(@"%@ will remove",self);
+}
+
+- (void)itemDidRemove
+{
+    // do nothing
+    NSLog(@"%@ did remove",self);
+
 }
 
 - (BOOL)commitDelete
 {
+    NSLog(@"%@ commitDelete?",self);
     return YES;
+
 }
 - (void)commitInsert
 {
     // do nothing
+    NSLog(@"%@ commit insert",self);
+
 }
 
 - (NSIndexPath*)willBecomeSelected 
 {
+    NSLog(@"%@ will become selected",self);
     return [[[tableView indexPathForItem:self] retain] autorelease];
 }
 - (void)didBecomeSelecected
 {
     // do nothing
+    NSLog(@"%@ did become selected",self);
 }
 
 - (NSIndexPath*)willBecomeDeselected
 {
+    NSLog(@"%@ will become deselected",self);
     return [[[tableView indexPathForItem:self] retain] autorelease];     
 }
 
 - (void)didBecomeDeselected
 {
     // do nothing
+    NSLog(@"%@ did become deselected",self);
 }
 
 - (void)accessoryButtonTapped
 {
     // do nothing
+    NSLog(@"%@ accessory button tapped",self);
 }
 
 - (void)willBeginEditing
 {
     // do nothing
+    NSLog(@"%@ will begin editing",self);
 }
 
 - (void)didEndEditing
 {
     // do nothing
+    NSLog(@"%@ did end editing",self);
 }
 
 - (void)configureCell:(GTTableViewCell *)tableViewCell
 {
     [tableViewCell.textLabel setText:self.title];
     [tableViewCell.detailTextLabel setText:self.subtitle];
+    NSLog(@"%@ configuring cell:(%@)",self,tableViewCell);
 }
 
 #pragma mark - Object Lifecylce -
@@ -157,6 +191,9 @@
 
 - (void)dealloc {
     [properties_ release];
+    [title_ release];
+    [subtitle_ release];
+
     target = nil;
     action = nil;
     [super dealloc];
@@ -247,57 +284,35 @@ NSString * const kVisibleKey = @"kVisibleKey";
         return visible_;
     return [tableView defaultItemIsVisible];
 }
-- (void)setVisible:(BOOL)visible {
-    [self setVisible:visible animation:UITableViewRowAnimationNone];
-}
-- (void)setVisible:(BOOL)willBeVisible animation:(UITableViewRowAnimation)animation {
+- (void)setVisible:(BOOL)willBeVisible {
     BOOL wasVisible =  [self isVisible];
-    visibleSet_ = YES;
-
-    /**
-     We have to update the table view rows if the cells are visible. The order of setting the variable and getting the index path counts. 
-     */
     if (wasVisible && !willBeVisible) {
-        NSIndexPath *indexPath = [tableView indexPathForItem:self];
-        visible_ = NO;
-        if (tableView.finishedLoading) {
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:animation];
-            [tableView updateCachedIndexPaths_];
-        }
-        }
-    else if (!wasVisible && willBeVisible) {
-        visible_ = YES;
-        if (tableView.finishedLoading) { 
-            [tableView updateCachedIndexPaths_];
-            NSIndexPath *indexPath = [tableView indexPathForItem:self];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:animation]; 
-        }
+        [tableView hideItem_:self];
+        
     }
+    else if (!wasVisible && willBeVisible) {
+        [tableView showItem_:self];
+    }
+    visibleSet_ = YES;
+    visible_ = willBeVisible;
     
 }
-- (void) resetVisible {
-    [self resetVisibleAnimation:UITableViewRowAnimationNone];
-}
-- (void)resetVisibleAnimation:(UITableViewRowAnimation)animation {
-    BOOL wasVisible = [self isVisible];
-    BOOL willBeVisible = YES;
-    visibleSet_ = NO;
 
+- (void) resetVisible {
+    BOOL wasVisible = [self isVisible];
+    BOOL willBeVisible = [tableView defaultItemIsVisible];
+    
     if (wasVisible && !willBeVisible) {
-        NSIndexPath *indexPath = [tableView indexPathForItem:self];
-        if (tableView.finishedLoading) {
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:animation];
-            [tableView updateCachedIndexPaths_];
-        }
+        [tableView hideItem_:self];
+        
     }
     else if (!wasVisible && willBeVisible) {
-        NSIndexPath *indexPath = [tableView indexPathForItem:self];
-        if (tableView.finishedLoading) {
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:animation];
-            [tableView updateCachedIndexPaths_];
-        }   
+        [tableView showItem_:self];
+        
     }
+    visibleSet_ = NO;
 }
+
 
 
 #pragma mark height

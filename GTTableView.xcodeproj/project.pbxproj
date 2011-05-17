@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18131B571380C6BF0082B4B6 /* NSMutableArray+PositionCompare.m in Sources */ = {isa = PBXBuildFile; fileRef = 18131B561380C6BE0082B4B6 /* NSMutableArray+PositionCompare.m */; };
 		1865EAB6136EA3C8009E5CAF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1865EAB5136EA3C8009E5CAF /* UIKit.framework */; };
 		1865EAB8136EA3C8009E5CAF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1865EAB7136EA3C8009E5CAF /* Foundation.framework */; };
 		1865EABA136EA3C8009E5CAF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1865EAB9136EA3C8009E5CAF /* CoreGraphics.framework */; };
@@ -24,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		18131B551380C6BE0082B4B6 /* NSMutableArray+PositionCompare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+PositionCompare.h"; path = "GTTableView/NSMutableArray+PositionCompare.h"; sourceTree = "<group>"; };
+		18131B561380C6BE0082B4B6 /* NSMutableArray+PositionCompare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+PositionCompare.m"; path = "GTTableView/NSMutableArray+PositionCompare.m"; sourceTree = "<group>"; };
 		1865EAB1136EA3C8009E5CAF /* GTTableView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTTableView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1865EAB5136EA3C8009E5CAF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1865EAB7136EA3C8009E5CAF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -130,6 +133,8 @@
 				1865EAE9136F8DF6009E5CAF /* GTTableViewHeaderFooterItem_.m */,
 				18D3EC471378E7EF007AF9C4 /* UILabel+CopyStyle.h */,
 				18D3EC481378E7EF007AF9C4 /* UILabel+CopyStyle.m */,
+				18131B551380C6BE0082B4B6 /* NSMutableArray+PositionCompare.h */,
+				18131B561380C6BE0082B4B6 /* NSMutableArray+PositionCompare.m */,
 			);
 			name = GTTableView;
 			sourceTree = "<group>";
@@ -205,6 +210,7 @@
 				1865EAE1136F8CEA009E5CAF /* GTTableViewItem.m in Sources */,
 				1865EAEA136F8DF6009E5CAF /* GTTableViewHeaderFooterItem_.m in Sources */,
 				18D3EC491378E7EF007AF9C4 /* UILabel+CopyStyle.m in Sources */,
+				18131B571380C6BF0082B4B6 /* NSMutableArray+PositionCompare.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +288,7 @@
 				GCC_PREFIX_HEADER = "GTTableView/GTTableView-Prefix.pch";
 				INFOPLIST_FILE = "GTTableView/GTTableView-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -295,6 +302,7 @@
 				GCC_PREFIX_HEADER = "GTTableView/GTTableView-Prefix.pch";
 				INFOPLIST_FILE = "GTTableView/GTTableView-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

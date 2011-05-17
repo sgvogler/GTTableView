@@ -31,6 +31,7 @@
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *subtitle;
 
+
 + (NSString*)reuseIdentifier; /**< Subclasses should override this, will automatically use this reuse identifier to try load nibs of the same name. */
 @property (nonatomic, copy) NSString* reuseIdentifier; /**< Use this to customize the reuse identifer per cell. */
 - (GTTableViewCell*)newTableViewCell; /**< If this isn't overriden will try load nib with same name as reuseIdentifier. If this fails will init cell with style. */
@@ -41,11 +42,16 @@
 
 - (NSIndexPath*)selectNewIndexPathFromIndexPaths:(NSSet*)indexPaths; /**< Use this when invisible items are present in the tableview. This method should return the chosen index path from within a group of invisible index paths that the item should move to. If invisible items are not used just return the only index path */
 - (void)configureCell:(GTTableViewCell*)tableViewCell;
-- (void)sectionWillMove;
-- (void)sectionDidMove;
-- (void)rowWillMove;
-- (void)rowDidMove;
-- (BOOL)commitDelete; /**< This can be overriden to customize the delete behaviour. By default this is implemented with removeItem:inSection:atRow:animation:. */
+
+/** The following are only called after finishedLoading is set to YES. */
+- (void)itemWillInsert; 
+- (void)itemDidInsert;
+- (void)itemWillRemove;
+- (void)itemDidRemove; 
+- (void)itemWillMove;
+- (void)itemDidMove;
+
+- (BOOL)commitDelete; /**< Any custom behaviour after the user has pushed the delete button can be put here. If this returns NO the delete will not continue. */
 - (void)commitInsert; /**< This should be overriden to provide the insert behaviour. Usually this is implemented with insertItem:inSection:atRow:animation:. */
 
 - (NSIndexPath*)willBecomeSelected; /**< Returns an index-path object that confirms or alters the selected row. Return an NSIndexPath object other than indexPath if you want another cell to be selected. Return nil if you don't want the row selected. This method is not called until users touch a row and then lift their finger; the row isn't selected until then, although it is highlighted on touch-down. You can use UITableViewCellSelectionStyleNone to disable the appearance of the cell highlight on touch-down. This method isn’t called when the editing property of the table is set to YES (that is, the table view is in editing mode). Default returns the visible index path of self */
@@ -73,8 +79,6 @@
 - (void)resetCanMove;
 @property (nonatomic, assign, getter = isVisible) BOOL visible; /**< Be sure to call beginUpdates and endUpdates on the tableView when chaning this value. */
 - (void)resetVisible;
-- (void)setVisible:(BOOL)willBeVisible animation:(UITableViewRowAnimation)animation;
-- (void)resetVisibleAnimation:(UITableViewRowAnimation)animation;
 @property (nonatomic, assign) CGFloat height; /**< Be sure to call beginUpdates and endUpdates to get tableview to updatde height. */
 - (void)resetHeight;
 @property (nonatomic, assign) CGFloat indentationWidth; 
@@ -107,7 +111,7 @@
 - (void)resetSelectionBackgroundColor;
 
 @property (nonatomic, assign) id<NSObject> target;
-@property (nonatomic, assign) SEL action;
-
+@property (nonatomic, assign) SEL action; /**< Called on target when cell is tapped. */
+@property (nonatomic, assign) SEL accessoryAction; /**< Called on target when accessory is tapped. */
 + (id)item;
 @end

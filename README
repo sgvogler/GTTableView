@@ -1,2 +1,4 @@
 GTTableView
-It's not done yet.
+--
+
+First working version up - still a few things will probably need changing but it's now ready enough to be integrated into other projects. Will do via reference so any changes are passed onto this project.

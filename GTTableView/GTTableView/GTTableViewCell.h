@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-
 @class GTTableViewItem;
 @class GTTableView;
 @interface GTTableViewCell : UITableViewCell {

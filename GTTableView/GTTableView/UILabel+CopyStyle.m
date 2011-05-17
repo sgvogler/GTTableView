@@ -19,9 +19,12 @@
         self.font =  aLabel.font;
     if (aLabel.textColor)
         self.textColor = aLabel.textColor;
+    if (aLabel.backgroundColor)
+        self.backgroundColor = aLabel.backgroundColor;
+    if (aLabel.highlightedTextColor)
+        self.highlightedTextColor = aLabel.highlightedTextColor;
     self.textAlignment = aLabel.textAlignment;
     self.lineBreakMode = aLabel.lineBreakMode;
-    self.enabled = aLabel.enabled;
     
     /** Sizing the Label's Text. */
     self.adjustsFontSizeToFitWidth = aLabel.adjustsFontSizeToFitWidth;
@@ -39,9 +42,20 @@
         self.shadowColor = aLabel.shadowColor;
     self.shadowOffset = aLabel.shadowOffset;
     
-    /** Setting and Getting Attributes. */
+    /** View Attributes. */
     self.userInteractionEnabled = aLabel.userInteractionEnabled;
-    if (aLabel.backgroundColor)
-        self.backgroundColor = aLabel.backgroundColor;
+    self.opaque = aLabel.opaque;
+    self.alpha = aLabel.alpha;
+    self.enabled = aLabel.enabled;
+    self.highlighted = aLabel.highlighted;
+    self.autoresizingMask = aLabel.autoresizingMask;
+    self.hidden = aLabel.hidden;
+    
+    /** Accessability.
+     I've chosen not to copy the accessability hint, value, etc as it will probably be set on a per instance basis.
+     */
+    self.accessibilityTraits = aLabel.accessibilityTraits;
+    self.accessibilityFrame = aLabel.accessibilityFrame;
+    
 }
 @end
