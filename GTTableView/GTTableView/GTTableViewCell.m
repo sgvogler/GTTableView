@@ -16,6 +16,8 @@
 
 @implementation GTTableViewCell
 @synthesize tableView;
+@dynamic textLabel;
+@dynamic detailTextLabel;
 #pragma mark - Accessors -
 - (GTTableViewItem *)item {
     NSLog(@"%@ >> %@",[tableView indexPathForCell:self],[tableView itemForRowAtIndexPath:[tableView indexPathForCell:self]]);
@@ -49,6 +51,8 @@
     self.indentationWidth = item.indentationWidth;
     self.selectionStyle = item.selectionStyle;
     self.selectionBackgroundColor = item.selectionBackgroundColor;
+    self.shouldIndentWhileEditing = item.shouldIndentWhileEditing;
+    self.showsReorderControl = item.shouldShowReorderControl;
 }
 - (void)dealloc
 {

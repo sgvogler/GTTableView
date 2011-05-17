@@ -15,5 +15,7 @@
 
 @property (nonatomic, retain) UIColor *selectionBackgroundColor;
 @property (nonatomic, readonly) GTTableViewItem *item;
+@property (nonatomic, retain) IBOutlet UILabel *textLabel;
+@property (nonatomic, retain) IBOutlet UILabel *detailTextLabel;
 - (void) prepareCellForReuseForItem_:(GTTableViewItem*)item;
 @end

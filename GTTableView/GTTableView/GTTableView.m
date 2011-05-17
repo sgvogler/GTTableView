@@ -11,6 +11,18 @@
 #import "GTTableViewCell.h"
 #import "GTTableViewHeaderFooterItem_.h"
 #import "NSMutableArray+PositionCompare.h"
+#import "GradientLayer.h"
+
+@interface GTGradientView_ : UIView 
+@property (nonatomic, readonly, retain) CAGradientLayer *layer;
+@end
+@implementation GTGradientView_
+@dynamic layer;
++(Class)layerClass
+{
+    return [CAGradientLayer class];
+}
+@end
 
 @interface GTTableViewCell (Link)
 @property (nonatomic, assign) GTTableView *tableView;
@@ -38,6 +50,7 @@
 
 - (void)commitUpdates_;
 - (void)updateInternalCachedIndexPaths_;
+- (void)updateGradientFrames_;
 
 - (void)hideItem_:(GTTableViewItem*)item;
 - (void)showItem_:(GTTableViewItem*)item;
@@ -171,6 +184,10 @@
     [cachedVisibleIndexPaths_ release];
 
     [cells_ release];
+    [headerGradientTop_ release];
+    [headerGradientBottom_ release];
+    [footerGradientTop_ release];
+    [footerGradientBottom_ release];
     [super dealloc];
     
     
@@ -209,6 +226,12 @@
     {
         [cell setTableView:nil];
     }
+}
+
+- (void) layoutSubviews 
+{
+    [super layoutSubviews];
+    [self updateGradientFrames_];
 }
 
 #pragma mark - Keyboard Handling -
@@ -259,6 +282,8 @@
     
     [itemsMadeVisible_ release]; itemsMadeVisible_ = nil;
     [itemsMadeHidden_ release]; itemsMadeHidden_ = nil;
+    
+    [self updateGradientFrames_];
 }
 - (void)commitUpdates_;
 {
@@ -413,10 +438,29 @@
     [pool drain];
 }
 
+- (void)updateGradientFrames_
+{
+    headerGradientBottom_.frame = CGRectMake(0, -headerGradientBottom_.frame.size.height - headerPadding_,  self.bounds.size.width, headerGradientBottom_.frame.size.height);
+    headerGradientTop_.frame = CGRectMake(0,  self.contentOffset.y , self.bounds.size.width, MAX(MIN(-self.contentOffset.y-headerPadding_,headerGap_), 0.0));
+    footerGradientTop_.frame = CGRectMake(0, MAX(self.contentSize.height,self.bounds.size.height) + footerPadding_, self.bounds.size.width, footerGradientTop_.frame.size.height);
+    footerGradientBottom_.frame = CGRectZero;
+
+    CGFloat bottomOfPlate = MAX(self.contentSize.height,self.bounds.size.height) + footerPadding_;
+    CGFloat bottomOfContainer =  MAX(self.contentSize.height,self.bounds.size.height) + self.contentOffset.y;
+ 
+    CGFloat heightOfBottom = MAX(MIN(footerGap_, bottomOfContainer-bottomOfPlate),0.0);
+    footerGradientBottom_.frame = CGRectMake(0, bottomOfContainer-heightOfBottom,self.bounds.size.width, heightOfBottom);
+    headerGradientTop_.alpha = 1.0;
+    headerGradientBottom_.alpha = 1.0;
+    footerGradientTop_.alpha = 1.0;
+    footerGradientBottom_.alpha = 1.0;
+    
+}
 
 - (void)reloadData {
     [self updateInternalCachedIndexPaths_];
     [super reloadData];
+    [self updateGradientFrames_];
 }
 #pragma mark Retrieving Information About the Tableview
 
@@ -637,6 +681,116 @@
     }
 }
 
+#pragma mark Customising
+- (void) setBottomGradientHeaderViewWithHeight:(CGFloat)height colors:(NSArray *)colors locations:(NSArray *)locations padding:(CGFloat)padding
+{
+    if (!height)
+    {
+        [headerGradientBottom_ removeFromSuperview];
+        [headerGradientBottom_ release]; headerGradientBottom_ = nil;
+        headerPadding_ = 0;
+        return;
+    }
+    colors = (colors) ? colors : [NSArray arrayWithObjects:[UIColor colorWithWhite:0.0 alpha:0.6],[UIColor colorWithWhite:0.0 alpha:0.2],[UIColor colorWithWhite:0.0 alpha:0.0], nil];
+    locations = (locations) ? locations : [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0],[NSNumber numberWithFloat:0.1],[NSNumber numberWithFloat:1.0], nil];
+    CGRect newFrame = CGRectMake(0, 0, self.bounds.size.width, height);
+    headerGradientBottom_ = (headerGradientBottom_) ? headerGradientBottom_ : [[GTGradientView_ alloc] initWithFrame:newFrame];
+    headerGradientBottom_.opaque = NO;
+    headerGradientBottom_.backgroundColor = [UIColor clearColor];
+    
+    CAGradientLayer *layer = headerGradientBottom_.layer;
+    NSMutableArray *array = [NSMutableArray array];
+    for (UIColor *color in colors) [array addObject:(id)[color CGColor]];
+    layer.colors = array;
+    layer.locations = locations;
+    layer.endPoint = CGPointMake(0.5,0.0);
+    layer.startPoint = CGPointMake(0.5, 1.0);
+    [self insertSubview:headerGradientBottom_ belowSubview:self];
+    [self updateGradientFrames_];
+    headerPadding_ = padding;
+}
+
+- (void) setTopGradientFooterViewWithHeight:(CGFloat)height colors:(NSArray *)colors locations:(NSArray *)locations padding:(CGFloat)padding
+{
+    if (!height)
+    {
+        [footerGradientTop_ removeFromSuperview];
+        [footerGradientTop_ release]; footerGradientTop_ = nil;
+        footerPadding_ = 0;
+    }
+    colors = (colors) ? colors : [NSArray arrayWithObjects:[UIColor colorWithWhite:0.0 alpha:0.7],[UIColor colorWithWhite:0.0 alpha:0.3],[UIColor colorWithWhite:0.0 alpha:0.0], nil];
+    locations = (locations) ? locations : [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0],[NSNumber numberWithFloat:0.1],[NSNumber numberWithFloat:1.0], nil];
+    CGRect newFrame = CGRectMake(0, 0, self.bounds.size.width, height);
+    footerGradientTop_ = (footerGradientTop_) ? footerGradientTop_ : [[GTGradientView_ alloc] initWithFrame:newFrame];
+    footerGradientTop_.opaque = NO;
+    footerGradientTop_.backgroundColor = [UIColor clearColor];
+    
+    CAGradientLayer *layer = footerGradientTop_.layer;
+    NSMutableArray *array = [NSMutableArray array];
+    for (UIColor *color in colors) [array addObject:(id)[color CGColor]];
+    layer.colors = array;
+    layer.locations = locations;
+    layer.startPoint = CGPointMake(0.5,0.0);
+    layer.endPoint = CGPointMake(0.5, 1.0);
+
+    [self insertSubview:footerGradientTop_ belowSubview:self];
+    [self updateGradientFrames_];
+    footerPadding_ = padding;
+}
+- (void) setTopGradientHeaderViewWithHeight:(CGFloat)height colors:(NSArray *)colors locations:(NSArray *)locations
+{
+    if (!height)
+    {
+        [headerGradientTop_ removeFromSuperview];
+        [headerGradientTop_ release]; footerGradientTop_ = nil;
+        headerGap_ = 0;
+    }
+    colors = (colors) ? colors : [NSArray arrayWithObjects:[UIColor colorWithWhite:0.0 alpha:0.7],[UIColor colorWithWhite:0.0 alpha:0.4],[UIColor colorWithWhite:0.0 alpha:0.0], nil];
+    locations = (locations) ? locations : [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0],[NSNumber numberWithFloat:0.1],[NSNumber numberWithFloat:1.0], nil];
+    CGRect newFrame = CGRectMake(0, 0, self.bounds.size.width, height);
+    headerGradientTop_ = (headerGradientTop_) ? headerGradientTop_ : [[GTGradientView_ alloc] initWithFrame:newFrame];
+    headerGradientTop_.opaque = NO;
+    headerGradientTop_.backgroundColor = [UIColor clearColor];
+    
+    CAGradientLayer *layer = headerGradientTop_.layer;
+    NSMutableArray *array = [NSMutableArray array];
+    for (UIColor *color in colors) [array addObject:(id)[color CGColor]];
+    layer.colors = array;
+    layer.locations = locations;
+    layer.startPoint = CGPointMake(0.5,0.0);
+    layer.endPoint = CGPointMake(0.5, 1.0);
+    
+    [self insertSubview:headerGradientTop_ belowSubview:self];
+    [self updateGradientFrames_];
+    headerGap_ = height;
+}
+- (void) setBottomGradientFooterViewWithHeight:(CGFloat)height colors:(NSArray*)colors locations:(NSArray*)locations
+{
+    if (!height)
+    {
+        [footerGradientBottom_ removeFromSuperview];
+        [footerGradientBottom_ release]; footerGradientTop_ = nil;
+        footerGap_ = 0;
+    }
+    colors = (colors) ? colors : [NSArray arrayWithObjects:[UIColor colorWithWhite:0.0 alpha:0.4],[UIColor colorWithWhite:0.0 alpha:0.08],[UIColor colorWithWhite:0.0 alpha:0.0], nil];
+    locations = (locations) ? locations : [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0],[NSNumber numberWithFloat:0.1],[NSNumber numberWithFloat:1.0], nil];
+    CGRect newFrame = CGRectMake(0, 0, self.bounds.size.width, height);
+    footerGradientBottom_ = (footerGradientBottom_) ? footerGradientBottom_ : [[GTGradientView_ alloc] initWithFrame:newFrame];
+    footerGradientBottom_.opaque = NO;
+    footerGradientBottom_.backgroundColor = [UIColor clearColor];
+    
+    CAGradientLayer *layer = footerGradientBottom_.layer;
+    NSMutableArray *array = [NSMutableArray array];
+    for (UIColor *color in colors) [array addObject:(id)[color CGColor]];
+    layer.colors = array;
+    layer.locations = locations;
+    layer.endPoint = CGPointMake(0.5,0.0);
+    layer.startPoint = CGPointMake(0.5, 1.0);
+    
+    [self insertSubview:footerGradientBottom_ belowSubview:self];
+    [self updateGradientFrames_];
+    footerGap_ = height;
+}
 #pragma mark - TableView Datasource -
 #pragma mark Configuring a TableView
 
@@ -658,11 +812,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
 {
+    NSLog(@"%i sections in tableview",[self numberOfItemSections]);
     return [self numberOfItemSections];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"%i rows in section %i",[self numberOfItemsInSection:section],section);
     return [self numberOfItemsInSection:section];
 }
 

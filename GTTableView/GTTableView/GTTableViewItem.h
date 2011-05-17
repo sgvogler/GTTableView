@@ -113,5 +113,6 @@
 @property (nonatomic, assign) id<NSObject> target;
 @property (nonatomic, assign) SEL action; /**< Called on target when cell is tapped. */
 @property (nonatomic, assign) SEL accessoryAction; /**< Called on target when accessory is tapped. */
+@property (nonatomic, readonly) UINavigationController *navigationController;
 + (id)item;
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 
 
@@ -17,6 +18,7 @@
 @end
 
 @class GTTableViewItem;
+@class GTGradientView_;
 @class GTTableViewHeaderItem;
 @class GTTableViewFooterItem;
 @interface GTTableView : UITableView <UITableViewDelegate,UITableViewDataSource> 
@@ -33,6 +35,15 @@
     NSMutableArray *footerItems_;
     NSMutableSet *cells_;
     
+   // GTGradientView_ *
+    GTGradientView_ *headerGradientTop_;
+    GTGradientView_ *headerGradientBottom_;
+    GTGradientView_ *footerGradientTop_;
+    GTGradientView_ *footerGradientBottom_;
+    CGFloat headerPadding_;
+    CGFloat footerPadding_;
+    CGFloat headerGap_;
+    CGFloat footerGap_;
     /** These are used for managing items inbetween beginUpdates and endUpdates. */
     NSMutableArray *updates_;
     NSMutableSet *itemsMadeVisible_;
@@ -48,6 +59,14 @@
 @property (nonatomic, retain) UIColor *backgroundColor; /**< This sets the backgroundView color. */
 @property (nonatomic, assign) UITableViewRowAnimation insertAnimation; /**< default is UITableViewRowAnimationRight. */
 @property (nonatomic, assign) UITableViewRowAnimation deleteAnimation; /**< default is UITTableViewRowAnimationRight. */
+
+/** The minimum required field is height, all others just allow customizaiton. */
+- (void) setBottomGradientHeaderViewWithHeight:(CGFloat)height colors:(NSArray*)colors locations:(NSArray*)locations padding:(CGFloat)padding; 
+- (void) setTopGradientFooterViewWithHeight:(CGFloat)height colors:(NSArray*)colors locations:(NSArray*)locations padding:(CGFloat)padding;
+
+- (void) setTopGradientHeaderViewWithHeight:(CGFloat)height colors:(NSArray *)colors locations:(NSArray *)locations;
+- (void) setBottomGradientFooterViewWithHeight:(CGFloat)height colors:(NSArray*)colors locations:(NSArray*)locations; 
+
 /**
  These are the default values. They can be overriden individually on each GTTableViewItem. They should all be set prior to adding items to the tableview.
  */

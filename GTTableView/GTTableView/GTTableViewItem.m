@@ -52,12 +52,14 @@
 }
 - (GTTableViewCell*)newTableViewCell /**< If this isn't overriden will try load nib with same name as reuseIdentifier. If this fails will init cell with style. */
 {
-    if ([[NSFileManager defaultManager] fileExistsAtPath:[[NSBundle mainBundle] pathForResource:[self reuseIdentifier] ofType:@"xib"]])
+    NSString *reuseIdentifier = [self reuseIdentifier];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:reuseIdentifier ofType:@"nib"];
+    if (filePath)
     {
-        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:[self reuseIdentifier] owner:self options:nil];
-        for (id object in objects) if ([object isKindOfClass:[GTTableViewCell class]]) return object;
+        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:reuseIdentifier owner:self options:nil];
+        for (id object in objects) if ([object isKindOfClass:[GTTableViewCell class]]) return [object retain];
     }
-    return [[GTTableViewCell alloc] initWithStyle:[self style] reuseIdentifier:[self reuseIdentifier]];
+    return [[GTTableViewCell alloc] initWithStyle:[self style] reuseIdentifier:reuseIdentifier];
 }
 
 
@@ -212,6 +214,12 @@
 #pragma mark - Accessors -
 - (GTTableViewCell *)cell {
     return (GTTableViewCell*)[tableView cellForRowAtIndexPath:[tableView indexPathForItem:self]];
+}
+
+#pragma mark navigationContrller
+- (UINavigationController *)navigationController 
+{
+    return [tableView.GTTableViewDelegate navigationControllerForTableView:tableView];
 }
 
 #pragma mark reuseIdentifier

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		18131B571380C6BF0082B4B6 /* NSMutableArray+PositionCompare.m in Sources */ = {isa = PBXBuildFile; fileRef = 18131B561380C6BE0082B4B6 /* NSMutableArray+PositionCompare.m */; };
+		18131BA4138236110082B4B6 /* GradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 18131BA3138236110082B4B6 /* GradientLayer.m */; };
+		18131BA7138236320082B4B6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18131BA6138236320082B4B6 /* QuartzCore.framework */; };
 		1865EAB6136EA3C8009E5CAF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1865EAB5136EA3C8009E5CAF /* UIKit.framework */; };
 		1865EAB8136EA3C8009E5CAF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1865EAB7136EA3C8009E5CAF /* Foundation.framework */; };
 		1865EABA136EA3C8009E5CAF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1865EAB9136EA3C8009E5CAF /* CoreGraphics.framework */; };
@@ -27,6 +29,9 @@
 /* Begin PBXFileReference section */
 		18131B551380C6BE0082B4B6 /* NSMutableArray+PositionCompare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+PositionCompare.h"; path = "GTTableView/NSMutableArray+PositionCompare.h"; sourceTree = "<group>"; };
 		18131B561380C6BE0082B4B6 /* NSMutableArray+PositionCompare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+PositionCompare.m"; path = "GTTableView/NSMutableArray+PositionCompare.m"; sourceTree = "<group>"; };
+		18131BA2138236110082B4B6 /* GradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientLayer.h; sourceTree = "<group>"; };
+		18131BA3138236110082B4B6 /* GradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientLayer.m; sourceTree = "<group>"; };
+		18131BA6138236320082B4B6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1865EAB1136EA3C8009E5CAF /* GTTableView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTTableView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1865EAB5136EA3C8009E5CAF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1865EAB7136EA3C8009E5CAF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -58,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18131BA7138236320082B4B6 /* QuartzCore.framework in Frameworks */,
 				1865EAB6136EA3C8009E5CAF /* UIKit.framework in Frameworks */,
 				1865EAB8136EA3C8009E5CAF /* Foundation.framework in Frameworks */,
 				1865EABA136EA3C8009E5CAF /* CoreGraphics.framework in Frameworks */,
@@ -87,6 +93,7 @@
 		1865EAB4136EA3C8009E5CAF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				18131BA6138236320082B4B6 /* QuartzCore.framework */,
 				1865EAB5136EA3C8009E5CAF /* UIKit.framework */,
 				1865EAB7136EA3C8009E5CAF /* Foundation.framework */,
 				1865EAB9136EA3C8009E5CAF /* CoreGraphics.framework */,
@@ -131,6 +138,8 @@
 				1865EADD136F8BD8009E5CAF /* GTTableViewCell.m */,
 				1865EAE8136F8DF6009E5CAF /* GTTableViewHeaderFooterItem_.h */,
 				1865EAE9136F8DF6009E5CAF /* GTTableViewHeaderFooterItem_.m */,
+				18131BA2138236110082B4B6 /* GradientLayer.h */,
+				18131BA3138236110082B4B6 /* GradientLayer.m */,
 				18D3EC471378E7EF007AF9C4 /* UILabel+CopyStyle.h */,
 				18D3EC481378E7EF007AF9C4 /* UILabel+CopyStyle.m */,
 				18131B551380C6BE0082B4B6 /* NSMutableArray+PositionCompare.h */,
@@ -211,6 +220,7 @@
 				1865EAEA136F8DF6009E5CAF /* GTTableViewHeaderFooterItem_.m in Sources */,
 				18D3EC491378E7EF007AF9C4 /* UILabel+CopyStyle.m in Sources */,
 				18131B571380C6BF0082B4B6 /* NSMutableArray+PositionCompare.m in Sources */,
+				18131BA4138236110082B4B6 /* GradientLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
