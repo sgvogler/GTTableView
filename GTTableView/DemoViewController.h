@@ -7,13 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GTTableView.h"
-@interface DemoViewController : UIViewController <GTTableViewDelegate> {
+#import "GTTableViewController.h"
+@interface DemoViewController : GTTableViewController  {
     
-    GTTableView *tableView;
     UILabel *titleLabel;
 }
-@property (nonatomic, retain) IBOutlet GTTableView *tableView;
 @property (nonatomic, retain) IBOutlet UILabel *titleLabel;
 
 @end

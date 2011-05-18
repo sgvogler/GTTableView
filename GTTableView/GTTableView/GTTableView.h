@@ -6,6 +6,13 @@
 //  Copyright 2011 mackross.net. All rights reserved.
 //
 
+/**
+ ** TODO
+ * Move tableview to support keyboard
+ * If tableview is scrolled dismiss keyboard
+ * Pull-to-something top and  Pull-to-something bottom support
+ * Refactor the internal indexing system for performance
+ */
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
@@ -60,10 +67,10 @@
 @property (nonatomic, assign) UITableViewRowAnimation insertAnimation; /**< default is UITableViewRowAnimationRight. */
 @property (nonatomic, assign) UITableViewRowAnimation deleteAnimation; /**< default is UITTableViewRowAnimationRight. */
 
+
 /** The minimum required field is height, all others just allow customizaiton. */
 - (void) setBottomGradientHeaderViewWithHeight:(CGFloat)height colors:(NSArray*)colors locations:(NSArray*)locations padding:(CGFloat)padding; 
 - (void) setTopGradientFooterViewWithHeight:(CGFloat)height colors:(NSArray*)colors locations:(NSArray*)locations padding:(CGFloat)padding;
-
 - (void) setTopGradientHeaderViewWithHeight:(CGFloat)height colors:(NSArray *)colors locations:(NSArray *)locations;
 - (void) setBottomGradientFooterViewWithHeight:(CGFloat)height colors:(NSArray*)colors locations:(NSArray*)locations; 
 

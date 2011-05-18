@@ -106,7 +106,7 @@
 
 - (id)initWithFrame:(CGRect)frame style:(UITableViewStyle)style 
 {
-    self = [super init];
+    self = [super initWithFrame:frame style:style];
     if (self) {
         [self setup_];
     }
@@ -446,7 +446,7 @@
     footerGradientBottom_.frame = CGRectZero;
 
     CGFloat bottomOfPlate = MAX(self.contentSize.height,self.bounds.size.height) + footerPadding_;
-    CGFloat bottomOfContainer =  MAX(self.contentSize.height,self.bounds.size.height) + self.contentOffset.y;
+    CGFloat bottomOfContainer =  MAX(self.contentSize.height,self.bounds.size.height+ self.contentOffset.y) ;
  
     CGFloat heightOfBottom = MAX(MIN(footerGap_, bottomOfContainer-bottomOfPlate),0.0);
     footerGradientBottom_.frame = CGRectMake(0, bottomOfContainer-heightOfBottom,self.bounds.size.width, heightOfBottom);
