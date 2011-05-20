@@ -16,7 +16,12 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
-
+typedef enum {
+    GTTableViewAutoFocusScrollPositionProportional, // another optoin
+    GTTableViewAutoFocusScrollPositionBottom, // this is the default
+    GTTableViewAutoFocusScrollPositionTop, // this forces the first responder even if the content offset is out of bounds
+    GTTableViewAutoFocusScrollPositionNone, // this doesn't change the content offset but still does change the scroll views frame.
+} GTTableViewAutoFocusScrollPosition;
 
 @class GTTableView;
 @protocol GTTableViewDelegate <NSObject>
@@ -28,7 +33,7 @@
 @class GTGradientView_;
 @class GTTableViewHeaderItem;
 @class GTTableViewFooterItem;
-@interface GTTableView : UITableView <UITableViewDelegate,UITableViewDataSource> 
+@interface GTTableView : UITableView <UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate> 
 {
 @private
     NSMutableArray *items_;
@@ -42,7 +47,6 @@
     NSMutableArray *footerItems_;
     NSMutableSet *cells_;
     
-   // GTGradientView_ *
     GTGradientView_ *headerGradientTop_;
     GTGradientView_ *headerGradientBottom_;
     GTGradientView_ *footerGradientTop_;
@@ -57,16 +61,27 @@
     NSMutableSet *itemsMadeHidden_;
     NSMutableIndexSet *deletedSections_;
     NSMutableIndexSet *insertedSections_;
+    
+    
+    // keyboard handling
+    UITapGestureRecognizer *tapGestureRecognizer_;
 }
 @property (nonatomic, assign) IBOutlet id<GTTableViewDelegate> GTTableViewDelegate;
-@property (nonatomic, readonly, getter=isUpdating) BOOL updating; /**< This responds to beginUpdates and endUpdates */
+@property (nonatomic, readonly, getter=isUpdating) BOOL updating; /**< This responds to beginItemUpdates and endItemUpdats */
+
+@property (nonatomic, assign, getter = isMonitoringKeyboard) BOOL monitoringKeyboard; /**< default is NO. */
+@property (nonatomic, assign) GTTableViewAutoFocusScrollPosition autoFocusScrollPosition;
+@property (nonatomic, assign) BOOL dismissKeyboardOnTouchOutside;
+@property (nonatomic, assign) BOOL dismissKeyboardOnScroll;
+- (void)autoFocusOnView:(UIView*)view WithAutoScrollPosition:(GTTableViewAutoFocusScrollPosition)scrollPosition;
+
+
 - (void) viewDidAppear:(BOOL)animated; /**< Monitors for first responders and flashes scroll bars. */
 - (void) viewWillDisappear:(BOOL)animated; /**< Stops keyboard monitoring. */
 
 @property (nonatomic, retain) UIColor *backgroundColor; /**< This sets the backgroundView color. */
 @property (nonatomic, assign) UITableViewRowAnimation insertAnimation; /**< default is UITableViewRowAnimationRight. */
 @property (nonatomic, assign) UITableViewRowAnimation deleteAnimation; /**< default is UITTableViewRowAnimationRight. */
-
 
 /** The minimum required field is height, all others just allow customizaiton. */
 - (void) setBottomGradientHeaderViewWithHeight:(CGFloat)height colors:(NSArray*)colors locations:(NSArray*)locations padding:(CGFloat)padding; 

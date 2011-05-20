@@ -60,6 +60,19 @@
 - (void)tearDownHeaderItems_;
 - (void)teardownFooterItems_;
 - (void)tearDownCells_;
+
+- (void)setup_;
+- (void)beginKeyboardMonitoring_;
+- (void)endKeyboardMonitoring_;
+- (void)keyboardWillShow_:(NSNotification*)notification;
+- (void)keyboardWillHide_:(NSNotification*)notification;
+- (UIView*)findFirstResponderWithinView_:(UIView*)view;
+- (void)hideKeyboard_:(UIGestureRecognizer*)gestureRecognizer;
+- (void)addGestureRecognizers_;
+- (void)removeGestureRecognizers_;
+
+@property (nonatomic, assign, getter = isResizedForKeyboard) BOOL resizedForKeyboard;
+@property (nonatomic, assign) CGFloat frameChangeOffset;
 @end
 
 @implementation GTTableView
@@ -89,7 +102,12 @@
 @synthesize updating = updating_;
 @synthesize insertAnimation = insertAnimation_;
 @synthesize deleteAnimation = deleteAnimation_;
-
+@synthesize resizedForKeyboard=resizedForKeyboard_;
+@synthesize frameChangeOffset=frameChangeOffset_;
+@synthesize autoFocusScrollPosition=autoFocusScrollPosition_;
+@synthesize dismissKeyboardOnTouchOutside=dismissKeyboardOnTouchOutside_;
+@synthesize dismissKeyboardOnScroll=dismissKeyboardOnScroll_;
+@synthesize monitoringKeyboard=monitoringKeyboard_;
 - (UIColor *)backgroundColor {
     return [super backgroundColor];
 }
@@ -150,6 +168,7 @@
 
 - (void)dealloc 
 {
+    if (monitoringKeyboard_) [self endKeyboardMonitoring_];
     GTTableViewDelegate_ = nil;
     self.delegate = nil;
     self.dataSource = nil;
@@ -235,6 +254,7 @@
 }
 
 #pragma mark - Keyboard Handling -
+#define PADDING 5
 
 - (void)viewDidAppear:(BOOL)animated 
 {
@@ -247,11 +267,252 @@
     
 }
 
+- (void)setDismissKeyboardOnScroll:(BOOL)dismissKeyboardOnScroll 
+{
+    dismissKeyboardOnScroll_ = dismissKeyboardOnScroll;
+    [self removeGestureRecognizers_];
+    [self addGestureRecognizers_];
+}
+- (void)setDismissKeyboardOnTouchOutside:(BOOL)dismissKeyboardOnTouchOutside
+{
+    dismissKeyboardOnTouchOutside_=dismissKeyboardOnTouchOutside;
+    [self removeGestureRecognizers_];
+    [self addGestureRecognizers_];
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+// monitoring keyboard property
+
+- (BOOL)isMonitoringKeyboard 
+{
+    return monitoringKeyboard_;
+}
+
+- (void)setMonitoringKeyboard:(BOOL)monitoringKeyboard 
+{
+    if (monitoringKeyboard && !monitoringKeyboard_)
+    {
+        [self beginKeyboardMonitoring_];
+    }
+    else if (!monitoringKeyboard && monitoringKeyboard_)
+    {
+        [self endKeyboardMonitoring_];
+        
+        if (self.frameChangeOffset != 0)
+        {
+            // reverse any frame changes if monitoring is turned off
+            CGRect myFrame = [self convertRect:self.bounds toView:self.superview];
+            CGRect oldFrame = myFrame;
+            oldFrame.size.height += self.frameChangeOffset;
+            self.frame = oldFrame;
+            
+        }
+    }
+    monitoringKeyboard_ = monitoringKeyboard;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+// notification setup
+
+- (void)beginKeyboardMonitoring_ 
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow_:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide_:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)endKeyboardMonitoring_ 
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+// notification handling
+
+- (void)keyboardWillShow_:(NSNotification *)notification 
+{
+    UIView *firstResponder = [self findFirstResponderWithinView_:self];
+    
+    if (firstResponder == nil) 
+    {
+        // do nothing if no first responder in the scroll view.
+        return;
+    }
+    
+    // these are adjusted with converRect:toView: which makes origin 0,0 of the superview the reference point
+    CGRect keyboardFrame = [self.window convertRect:[[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue] toView:self.superview];
+    CGRect myFrame = [self convertRect:self.bounds toView:self.superview];
+    CGRect newFrame = myFrame;
+    self.frameChangeOffset = (myFrame.size.height + myFrame.origin.y) - keyboardFrame.origin.y;
+    
+    if (self.frameChangeOffset <= 0) 
+    {
+        // do nothing except set the frameChangeOffset to 0 otherwise it will make frame smaller when the keyboardWillHide: method is called later.
+        self.frameChangeOffset = 0;
+        return;
+    }
+    
+    // change the frame size (height) of the scroll view so that the keyboard is not covering any of the frame.
+    // we then save this value in the private property frameChangeOffset so that later we can reverse the change in the keyboardWillHide: method.
+    // we animate this change using the same settings as used by the keyboard animation. this will make everything work nicely.
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationCurve:[[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
+    [UIView setAnimationDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue]];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
+    newFrame.size.height -= self.frameChangeOffset;
+    self.frame = newFrame;
+    
+    // auto focus on first responder
+    [self autoFocusOnView:firstResponder WithAutoScrollPosition:self.autoFocusScrollPosition];
+    
+    
+    [UIView commitAnimations];
+    
+    [self addGestureRecognizers_];
+    
+}
+
+- (void)keyboardWillHide_:(NSNotification *)notification 
+{
+    
+    CGRect myFrame = [self convertRect:self.bounds toView:self.superview];
+    CGRect newFrame = myFrame;
+    
+    // we reverse the frame change that occured in the keyboardWillShow: method. 
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationCurve:[[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
+    [UIView setAnimationDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue]];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    newFrame.size.height += self.frameChangeOffset;
+    self.frame = newFrame;
+    
+    // if contentSize is same size or smaller as newFrame lets put it in the top left
+    if (self.contentSize.height <= newFrame.size.height) 
+    {
+        [self setContentOffset:CGPointMake(self.contentOffset.x, 0) animated:YES];
+    }
+    
+    [UIView commitAnimations];
+    
+    // set frameChangeOffset to 0 to reset the state of the monitor.
+    self.frameChangeOffset = 0;
+    
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+// auto focus
+
+- (void)autoFocusOnView:(UIView*)view WithAutoScrollPosition:(GTTableViewAutoFocusScrollPosition)scrollPosition
+{
+    // we now position the first responder in the location specified by AutoFocusScrollPosition
+    CGRect firstResponderFrame = [view convertRect:view.bounds toView:self];
+    CGRect myFrame = self.frame;
+    
+    if (firstResponderFrame.size.height + (PADDING*2) < myFrame.size.height) 
+    {
+        // we will only move the content offset if the first responder is smaller than the new scrollview. otherwise the user experience feels jared.
+        if (scrollPosition == GTTableViewAutoFocusScrollPositionNone) {
+            // do nothing
+        }
+        if (scrollPosition == GTTableViewAutoFocusScrollPositionTop) 
+        {
+            [self setContentOffset:CGPointMake(self.contentOffset.x, firstResponderFrame.origin.y - PADDING) animated:YES];
+        }
+        if (scrollPosition == GTTableViewAutoFocusScrollPositionBottom) 
+        {
+            CGFloat currentLocation = firstResponderFrame.origin.y + firstResponderFrame.size.height;
+            if (currentLocation > myFrame.size.height + self.contentOffset.y) {
+                CGFloat proposedLocation = firstResponderFrame.origin.y + firstResponderFrame.size.height + PADDING - myFrame.size.height;
+                [self setContentOffset:CGPointMake(self.contentOffset.x, proposedLocation) animated:YES];
+            }
+        }
+        if (scrollPosition == GTTableViewAutoFocusScrollPositionProportional)
+        {
+            // this is the default mode and it uses a factor to move the scroller to a height
+            CGFloat verticalCenterFirstResponder = firstResponderFrame.origin.y + (firstResponderFrame.size.height / 2.0);
+            CGFloat positionRatio = verticalCenterFirstResponder / self.contentSize.height;
+            
+            CGFloat flip = floor(positionRatio * 2 - 1);
+            CGFloat proposedLocation = verticalCenterFirstResponder - (myFrame.size.height * positionRatio) + (flip * PADDING) + (flip * firstResponderFrame.size.height);
+            
+            proposedLocation = floor(proposedLocation);
+            
+            // 3.0 means that anything in the top third of the new frame doesn't move.
+            CGFloat noMovePoint = myFrame.size.height / 3.0;
+            
+            if (verticalCenterFirstResponder - proposedLocation < noMovePoint)
+            {
+                proposedLocation = 0.0;
+            }
+            
+            // now we check if the content offset will push the scrollview further up than it should go.
+            if (proposedLocation < 0)
+            {
+                proposedLocation = 0.0;
+            }
+            if (proposedLocation > self.contentSize.height - myFrame.size.height)
+            {
+                proposedLocation = self.contentSize.height - myFrame.size.height;
+            }
+            
+            // commit the product of these calculations
+            [self setContentOffset:CGPointMake(self.contentOffset.x, proposedLocation) animated:YES];
+            
+        }
+    }
+}
+
+- (UIView*)findFirstResponderWithinView_:(UIView*)view 
+{
+    // search recursively for first responder
+    for ( UIView *childView in view.subviews ) 
+    {
+        if ( [childView respondsToSelector:@selector(isFirstResponder)] && [childView isFirstResponder] ) return childView;
+        UIView *result = [self findFirstResponderWithinView_:childView];
+        if ( result ) return result;
+    }
+    return nil;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+// keyboard hiding
+
+- (void) addGestureRecognizers_
+{
+    if (self.frameChangeOffset == 0) return;
+    if (!tapGestureRecognizer_&&dismissKeyboardOnTouchOutside_)
+    {
+        tapGestureRecognizer_ = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard_:)] autorelease];
+        [self addGestureRecognizer:tapGestureRecognizer_];
+    }
+
+    
+}
+
+- (void)removeGestureRecognizers_
+{
+    [self removeGestureRecognizer:tapGestureRecognizer_];
+    tapGestureRecognizer_ = nil;
+}
+- (void)hideKeyboard_:(UIGestureRecognizer*)gestureRecognizer
+{
+    if (!monitoringKeyboard_) return;
+    [self removeGestureRecognizers_];
+    [[self findFirstResponderWithinView_:self] resignFirstResponder];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if (dismissKeyboardOnScroll_)
+        [self hideKeyboard_:nil];
+}
+
 #pragma mark - GTTableView Methods -
 #pragma mark Internal
 - (void)beginItemUpdates {
-    updating_ = YES;
     [super beginUpdates];
+
+    updating_ = YES;
     
     [updates_ autorelease]; updates_ = nil;
     updates_ = [[NSMutableArray alloc] init];
@@ -275,6 +536,7 @@
 - (void)endItemUpdates {
     [self commitUpdates_];
     [super endUpdates];
+
     updating_ = NO;
     
     [insertedSections_ release]; insertedSections_ = nil;
@@ -289,7 +551,6 @@
 {
     if (!updating_)
     {
-        [self updateInternalCachedIndexPaths_]; /**< This will update values for numberOfItems, numberOfRowsInSection, etc. */
         return;
     }
  //   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -306,7 +567,9 @@
     
     for (NSArray *sectionItems in items_) [orderedItemsBefore addObjectsFromArray:sectionItems];
     for (NSArray *sectionItems in updates_) [orderedItemsAfter addObjectsFromArray:sectionItems];
-    
+    for (NSArray *sectionItems in items_) NSLog(@"%@",sectionItems);
+    for (NSArray *sectionItems in updates_) NSLog(@"%@",sectionItems);
+
     NSSet *itemsBefore = [NSSet setWithArray:orderedItemsBefore];
     NSSet *itemsAfter = [NSSet setWithArray:orderedItemsAfter];
     
@@ -363,9 +626,7 @@
     [self updateInternalCachedIndexPaths_]; /**< This will update values for numberOfItems, numberOfRowsInSection, etc. */
     
     
-    for (GTTableViewItem *movedItem in movedItems) [movedItem itemDidMove];
-    for (GTTableViewItem *insertedItem in insertedItems) [insertedItem itemDidInsert];
-    for (GTTableViewItem *deletedItem in deletedItems) [deletedItem itemDidRemove];
+
     
     /** Update visible items. */
     NSMutableArray *indexPathsToUnhide = [NSMutableArray array];
@@ -378,6 +639,10 @@
     [self insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:self.insertAnimation];
     [self deleteRowsAtIndexPaths:deleteIndexPaths withRowAnimation:self.deleteAnimation];
 
+
+    for (GTTableViewItem *movedItem in movedItems) [movedItem itemDidMove];
+    for (GTTableViewItem *insertedItem in insertedItems) [insertedItem itemDidInsert];
+    for (GTTableViewItem *deletedItem in deletedItems) [deletedItem itemDidRemove];
 
  //   [pool drain];
     
@@ -618,7 +883,6 @@
     NSMutableArray *destinationSection = (NSMutableArray*)[data objectAtIndex:indexPath.section];    
     
     [destinationSection insertObject:item atIndex:indexPath.row];
-    [self commitUpdates_];
 }
 
 - (void)removeItemAtIndexPath:(NSIndexPath *)indexPath
@@ -639,7 +903,6 @@
     NSMutableArray *sourceSection = [data objectAtIndex:indexPath.section];
     [[item retain] autorelease];
     [sourceSection removeObjectAtIndex:indexPath.row];
-    [self commitUpdates_];
 }
 
 #pragma mark Header & Footer Items
@@ -862,9 +1125,9 @@
         case UITableViewCellEditingStyleDelete:
             if ([[self itemForRowAtIndexPath:indexPath] commitDelete])
             {
-                [self beginUpdates];
+                [self beginItemUpdates];
                 [self removeItemAtIndexPath:indexPath];
-                [self endUpdates];
+                [self endItemUpdates];
             }
             break;
         case UITableViewCellEditingStyleInsert:
