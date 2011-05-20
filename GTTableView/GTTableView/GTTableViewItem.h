@@ -54,11 +54,11 @@
 - (BOOL)commitDelete; /**< Any custom behaviour after the user has pushed the delete button can be put here. If this returns NO the delete will not continue. */
 - (void)commitInsert; /**< This should be overriden to provide the insert behaviour. Usually this is implemented with insertItem:inSection:atRow:animation:. */
 
-- (NSIndexPath*)willBecomeSelected; /**< Returns an index-path object that confirms or alters the selected row. Return an NSIndexPath object other than indexPath if you want another cell to be selected. Return nil if you don't want the row selected. This method is not called until users touch a row and then lift their finger; the row isn't selected until then, although it is highlighted on touch-down. You can use UITableViewCellSelectionStyleNone to disable the appearance of the cell highlight on touch-down. This method isn’t called when the editing property of the table is set to YES (that is, the table view is in editing mode). Default returns the visible index path of self */
-- (void)didBecomeSelecected; /**< This method isn't called when a tableview is editing. This should be overriden to provide any custom behaviour expected when the cell is selected. */
+- (NSIndexPath*)itemWillBecomeSelected; /**< Returns an index-path object that confirms or alters the selected row. Return an NSIndexPath object other than indexPath if you want another cell to be selected. Return nil if you don't want the row selected. This method is not called until users touch a row and then lift their finger; the row isn't selected until then, although it is highlighted on touch-down. You can use UITableViewCellSelectionStyleNone to disable the appearance of the cell highlight on touch-down. This method isn’t called when the editing property of the table is set to YES (that is, the table view is in editing mode). Default returns the visible index path of self */
+- (void)itemDidBecomeSelected; /**< This method isn't called when a tableview is editing. This should be overriden to provide any custom behaviour expected when the cell is selected. */
 
-- (NSIndexPath*)willBecomeDeselected; /**< Works in the same way as willBecomeSelected but for deselection. */
-- (void)didBecomeDeselected;
+- (NSIndexPath*)itemWillBecomeDeselected; /**< Works in the same way as itemWillBecomeSelected but for deselection. */
+- (void)itemDidBecomeDeselected;
 
 - (void)accessoryButtonTapped;
 

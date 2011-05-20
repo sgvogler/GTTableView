@@ -125,24 +125,24 @@
 
 }
 
-- (NSIndexPath*)willBecomeSelected 
+- (NSIndexPath*)itemWillBecomeSelected 
 {
     NSLog(@"%@ will become selected",self);
     return [[[tableView indexPathForItem:self] retain] autorelease];
 }
-- (void)didBecomeSelecected
+- (void)itemDidBecomeSelected
 {
     // do nothing
     NSLog(@"%@ did become selected",self);
 }
 
-- (NSIndexPath*)willBecomeDeselected
+- (NSIndexPath*)itemWillBecomeDeselected
 {
     NSLog(@"%@ will become deselected",self);
     return [[[tableView indexPathForItem:self] retain] autorelease];     
 }
 
-- (void)didBecomeDeselected
+- (void)itemDidBecomeDeselected
 {
     // do nothing
     NSLog(@"%@ did become deselected",self);
@@ -176,7 +176,7 @@
 #pragma mark - Object Lifecylce -
 + (id)item
 {
-    return [[[GTTableViewItem alloc] init] autorelease];
+    return [[[[self class] alloc] init] autorelease];
 }
 - (id)init
 {

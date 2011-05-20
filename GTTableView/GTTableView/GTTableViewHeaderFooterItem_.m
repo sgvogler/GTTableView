@@ -19,7 +19,19 @@
 @synthesize view = view_;
 @synthesize text = text_;
 @synthesize height = height_;
-
++ (GTTableViewHeaderFooterItem_*)itemWithView:(UIView*)view
+{
+    GTTableViewHeaderFooterItem_* item = [[[GTTableViewHeaderFooterItem_ alloc] init] autorelease];
+    item.view = view;
+    item.height = view.frame.size.height;
+    return item;
+}
++ (GTTableViewHeaderFooterItem_*)itemWithText:(NSString*)text
+{
+    GTTableViewHeaderFooterItem_* item = [[[GTTableViewHeaderFooterItem_ alloc] init] autorelease];
+    item.text = text;
+    return item;
+}
 - (CGFloat)height {
     if (height_ != GTTableViewHeaderFooterDefaultHeight)
         return height_;
@@ -53,5 +65,19 @@
     [text_ release];
     [super dealloc];
 }
+
+@end
+
+@implementation GTTableViewHeaderItem
+
++ (GTTableViewHeaderItem*)itemWithView:(UIView*)view { return (GTTableViewHeaderItem*)[super itemWithView:view]; }
++ (GTTableViewHeaderItem*)itemWithText:(NSString*)text { return (GTTableViewHeaderItem*)[super itemWithText:text]; }
+
+@end
+
+@implementation GTTableViewFooterItem
+
++ (GTTableViewFooterItem*)itemWithView:(UIView*)view { return (GTTableViewFooterItem*)[super itemWithView:view]; }
++ (GTTableViewFooterItem*)itemWithText:(NSString*)text { return (GTTableViewFooterItem*)[super itemWithText:text]; }
 
 @end

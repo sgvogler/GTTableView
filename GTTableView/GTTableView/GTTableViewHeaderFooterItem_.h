@@ -10,19 +10,27 @@
 static const CGFloat GTTableViewHeaderFooterDefaultHeight = DBL_MIN;
 #pragma mark Abstract Parent Class -
 @class GTTableView;
+
 @interface GTTableViewHeaderFooterItem_ : NSObject {
     GTTableView *tableView;
 }
 @property (nonatomic, retain) UIView *view;
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic, assign) CGFloat height;
++ (GTTableViewHeaderFooterItem_*)itemWithView:(UIView*)view;
++ (GTTableViewHeaderFooterItem_*)itemWithText:(NSString*)text;
 @end
 
 #pragma mark - Subclasses -
 @interface GTTableViewHeaderItem : GTTableViewHeaderFooterItem_ {
 }
++ (GTTableViewHeaderItem*)itemWithView:(UIView*)view;
++ (GTTableViewHeaderItem*)itemWithText:(NSString*)text;
+
 @end
 
 @interface GTTableViewFooterItem : GTTableViewHeaderFooterItem_ {
 }
++ (GTTableViewFooterItem*)itemWithView:(UIView*)view;
++ (GTTableViewFooterItem*)itemWithText:(NSString*)text;
 @end

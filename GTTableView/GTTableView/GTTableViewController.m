@@ -25,9 +25,7 @@
     [tableView_ release];
     [super dealloc];
 }
-- (void) loadView
-{
-    [super loadView];
+- (void) viewDidLoad {
     if (!self.tableView)
     {
         self.tableView = [[[GTTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain] autorelease];
@@ -38,6 +36,10 @@
         [self.tableView setGTTableViewDelegate:self];   
     }
     
+}
+- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [self.tableView flashScrollIndicators];
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 - (void)viewDidAppear:(BOOL)animated {
     [self.tableView viewDidAppear:animated];

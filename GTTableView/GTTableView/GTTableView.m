@@ -208,7 +208,7 @@
 {
     for (GTTableViewHeaderItem *headerItem in headerItems_) 
     {
-        [headerItem setTableView:nil];
+       if ((id)headerItem != [NSNull null]) [headerItem setTableView:nil];
     }
 }
 
@@ -216,7 +216,7 @@
 {
     for (GTTableViewFooterItem *footerItem in footerItems_) 
     {
-        [footerItem setTableView:nil];
+       if ((id)footerItem != [NSNull null]) [footerItem setTableView:nil];
     }
 }
 
@@ -249,7 +249,7 @@
 
 #pragma mark - GTTableView Methods -
 #pragma mark Internal
-- (void)beginUpdates {
+- (void)beginItemUpdates {
     updating_ = YES;
     [super beginUpdates];
     
@@ -272,7 +272,7 @@
     itemsMadeHidden_ = [[NSMutableSet alloc] init];
     
 }
-- (void)endUpdates {
+- (void)endItemUpdates {
     [self commitUpdates_];
     [super endUpdates];
     updating_ = NO;
@@ -558,6 +558,18 @@
     [deletedSections_ addIndex:index];
 }
 
+- (void)removeAllSections
+{
+    if (updating_) 
+    {
+        for (int i = 0; i < [self numberOfItemSections]; i++) [deletedSections_ addIndex:i];
+        [updates_ removeAllObjects];
+    }
+    else
+    {
+        [items_ removeAllObjects];
+    }
+}
 - (void)appendItem:(GTTableViewItem*)item section:(NSInteger)section
 {
     
@@ -890,9 +902,9 @@
     GTTableViewItem *itemForCellAtNewLocation = [self itemForRowAtIndexPath:destinationVisibleIndexPath onlyVisible:YES];    
     
     NSMutableSet *possibleIndexPaths = [NSMutableSet set];
-    NSInteger realRowAboveNewLocationRow = (itemForCellAboveNewLocation) ? [self indexPathForItem:itemForCellAboveNewLocation onlyVisible:NO].row  + 1 : 0;
+    NSInteger realRowAboveNewLocationRow = (itemForCellAboveNewLocation) ? [self indexPathForItem:itemForCellAboveNewLocation onlyVisible:NO].row  : 0;
     NSInteger realRowAtNewLocationRow = (itemForCellAtNewLocation) ? [self indexPathForItem:itemForCellAtNewLocation onlyVisible:NO].row : [[items_ objectAtIndex:destinationVisibleIndexPath.section] count] + 1;
-    for (int i = realRowAboveNewLocationRow; i < realRowAtNewLocationRow; i++) {
+    for (int i = realRowAboveNewLocationRow + 1 ; i < realRowAtNewLocationRow + 1 ; i++) {
         [possibleIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:destinationVisibleIndexPath.section]];
     }
     if ([possibleIndexPaths count] > 1)
@@ -980,13 +992,13 @@
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath 
 {
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
-    return [item willBecomeSelected];
+    return [item itemWillBecomeSelected];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
-    [item didBecomeSelecected];
+    [item itemDidBecomeSelected];
     if (item.target && item.action)
     {
         if ([item.target respondsToSelector:item.action])
@@ -997,13 +1009,13 @@
 - (NSIndexPath*)tableView:(UITableView *)tableView willDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
-    return [item willBecomeDeselected];
+    return [item itemWillBecomeDeselected];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
-    [item didBecomeDeselected];
+    [item itemDidBecomeDeselected];
 }
 
 #pragma mark Modifying the Header and Footer of Sections

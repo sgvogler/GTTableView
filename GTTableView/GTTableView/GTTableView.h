@@ -126,10 +126,13 @@
 - (NSIndexPath*) indexPathForItem:(GTTableViewItem*)item onlyVisible:(BOOL)visible;
 
 /**
- Call reloadData before or beginUpdates and endUpdates before and after using these methods unless they are called from either commitDelete or commitInsert.
+ Call reloadData before or beginChanges and endChanges before and after using these methods unless they are called from either commitDelete or commitInsert.
  */
+- (void)beginItemUpdates; /**< This calls beginUpdates on the UITableView and performs some of its own magic. */
+- (void)endItemUpdates; /**< This calls endUpdates on the UITableView and performs some of its own magic. */
 - (void)insertSectionAtIndex:(NSInteger)index;
 - (void)removeSectionAtIndex:(NSInteger)index;
+- (void)removeAllSections;
 
 - (void)appendItem:(GTTableViewItem*)item section:(NSInteger)section;
 - (void)appendItems:(NSArray*)items section:(NSInteger)section;

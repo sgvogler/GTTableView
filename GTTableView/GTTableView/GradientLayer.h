@@ -11,5 +11,5 @@
 
 
 @interface CAGradientLayer (GradientLayer)
-- (void)setupGradientLayerWithColors:(NSArray*)uicolors;
+- (void)setupGradientLayerWithColors :(NSArray *)colors direction:(CGFloat)radians frame:(CGRect)aFrame;
 @end

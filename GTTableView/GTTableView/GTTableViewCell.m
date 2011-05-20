@@ -20,8 +20,6 @@
 @dynamic detailTextLabel;
 #pragma mark - Accessors -
 - (GTTableViewItem *)item {
-    NSLog(@"%@ >> %@",[tableView indexPathForCell:self],[tableView itemForRowAtIndexPath:[tableView indexPathForCell:self]]);
-
     return [tableView itemForRowAtIndexPath:[tableView indexPathForCell:self]];
 }
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -64,11 +62,11 @@
 }
 
 - (void)setSelectionBackgroundColor:(UIColor *)selectionBackgroundColor {
-    if (![self selectedBackgroundView])
-    {
-        self.selectedBackgroundView =  [[[UIView alloc] initWithFrame:self.backgroundView.frame] autorelease];
-    }
-    self.selectedBackgroundView.backgroundColor = selectionBackgroundColor;
+//    if (![self selectedBackgroundView])
+//    {
+//        self.selectedBackgroundView =  [[[UIView alloc] initWithFrame:self.backgroundView.frame] autorelease];
+//    }
+//    self.selectedBackgroundView.backgroundColor = selectionBackgroundColor;
 }
 
 @end
