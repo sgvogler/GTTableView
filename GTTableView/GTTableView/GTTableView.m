@@ -497,7 +497,6 @@
 }
 - (void)hideKeyboard_:(UIGestureRecognizer*)gestureRecognizer
 {
-    if (!monitoringKeyboard_) return;
     [self removeGestureRecognizers_];
     [[self findFirstResponderWithinView_:self] resignFirstResponder];
 }
