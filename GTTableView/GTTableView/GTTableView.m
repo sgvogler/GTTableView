@@ -754,7 +754,13 @@
 - (NSInteger)numberOfItemsInSection:(NSInteger)section {
     return [self numberOfItemsInSection:section onlyVisible:YES];
 }
-
+- (void) refreshVisibleCells
+{
+    for (GTTableViewItem *item in [self items])
+    {
+        [item configureCell:item.cell];
+    }
+}
 - (NSArray*)items
 {
     return [self itemsOnlyVisible:YES];

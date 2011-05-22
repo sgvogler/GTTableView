@@ -75,7 +75,7 @@ typedef enum {
 @property (nonatomic, assign) BOOL dismissKeyboardOnScroll;
 - (void)autoFocusOnView:(UIView*)view WithAutoScrollPosition:(GTTableViewAutoFocusScrollPosition)scrollPosition;
 
-
+- (void) refreshVisibleCells; /**< This calls configureCell: on each item that has a visible cell. Good for hooking a timer up to. */
 - (void) viewDidAppear:(BOOL)animated; /**< Monitors for first responders and flashes scroll bars. */
 - (void) viewWillDisappear:(BOOL)animated; /**< Stops keyboard monitoring. */
 
