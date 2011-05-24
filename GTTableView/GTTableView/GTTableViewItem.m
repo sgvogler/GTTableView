@@ -76,101 +76,101 @@
 - (void)itemWillMove
 {
     // do nothing
-    NSLog(@"%@ will move",self);
+    //NSLog(@"%@ will move",self);
 }
 
 - (void)itemDidMove
 {
     // do nothing
-    NSLog(@"%@ did move",self);
+    //NSLog(@"%@ did move",self);
 
 }
 
 - (void)itemWillInsert
 {
     // do nothing
-    NSLog(@"%@ will insert",self);
+    //NSLog(@"%@ will insert",self);
 
 }
 
 - (void)itemDidInsert
 {
     // do nothing
-    NSLog(@"%@ did insert",self);
+    //NSLog(@"%@ did insert",self);
 
 }
 - (void)itemWillRemove
 {
     // do nothing
-    NSLog(@"%@ will remove",self);
+    //NSLog(@"%@ will remove",self);
 }
 
 - (void)itemDidRemove
 {
     // do nothing
-    NSLog(@"%@ did remove",self);
+    //NSLog(@"%@ did remove",self);
 
 }
 
 - (BOOL)commitDelete
 {
-    NSLog(@"%@ commitDelete?",self);
+    //NSLog(@"%@ commitDelete?",self);
     return YES;
 
 }
 - (void)commitInsert
 {
     // do nothing
-    NSLog(@"%@ commit insert",self);
+    //NSLog(@"%@ commit insert",self);
 
 }
 
 - (NSIndexPath*)itemWillBecomeSelected 
 {
-    NSLog(@"%@ will become selected",self);
+    //NSLog(@"%@ will become selected",self);
     return [[[tableView indexPathForItem:self] retain] autorelease];
 }
 - (void)itemDidBecomeSelected
 {
     // do nothing
-    NSLog(@"%@ did become selected",self);
+    //NSLog(@"%@ did become selected",self);
 }
 
 - (NSIndexPath*)itemWillBecomeDeselected
 {
-    NSLog(@"%@ will become deselected",self);
+    //NSLog(@"%@ will become deselected",self);
     return [[[tableView indexPathForItem:self] retain] autorelease];     
 }
 
 - (void)itemDidBecomeDeselected
 {
     // do nothing
-    NSLog(@"%@ did become deselected",self);
+    //NSLog(@"%@ did become deselected",self);
 }
 
 - (void)accessoryButtonTapped
 {
     // do nothing
-    NSLog(@"%@ accessory button tapped",self);
+    //NSLog(@"%@ accessory button tapped",self);
 }
 
 - (void)willBeginEditing
 {
     // do nothing
-    NSLog(@"%@ will begin editing",self);
+    //NSLog(@"%@ will begin editing",self);
 }
 
 - (void)didEndEditing
 {
     // do nothing
-    NSLog(@"%@ did end editing",self);
+    //NSLog(@"%@ did end editing",self);
 }
 
 - (void)configureCell:(GTTableViewCell *)tableViewCell
 {
     [tableViewCell.textLabel setText:self.title];
     [tableViewCell.detailTextLabel setText:self.subtitle];
-    NSLog(@"%@ configuring cell:(%@)",self,tableViewCell);
+    //NSLog(@"%@ configuring cell:(%@)",self,tableViewCell);
 }
 
 #pragma mark - Object Lifecylce -

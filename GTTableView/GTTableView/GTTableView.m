@@ -566,8 +566,8 @@
     
     for (NSArray *sectionItems in items_) [orderedItemsBefore addObjectsFromArray:sectionItems];
     for (NSArray *sectionItems in updates_) [orderedItemsAfter addObjectsFromArray:sectionItems];
-    for (NSArray *sectionItems in items_) NSLog(@"%@",sectionItems);
-    for (NSArray *sectionItems in updates_) NSLog(@"%@",sectionItems);
+   // for (NSArray *sectionItems in items_) //NSLog(@"%@",sectionItems);
+   // for (NSArray *sectionItems in updates_) //NSLog(@"%@",sectionItems);
 
     NSSet *itemsBefore = [NSSet setWithArray:orderedItemsBefore];
     NSSet *itemsAfter = [NSSet setWithArray:orderedItemsAfter];
@@ -869,7 +869,7 @@
         for (int i = realRowAboveNewLocationRow + 1; i <= realRowAtNewLocationRow; i++) {
             [possibleIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:indexPath.section]];
         }
-        NSLog(@"%@",possibleIndexPaths);
+        //NSLog(@"%@",possibleIndexPaths);
         if ([possibleIndexPaths count] > 1)
         {
             indexPath = [item selectNewIndexPathFromIndexPaths:possibleIndexPaths];
@@ -1092,13 +1092,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
 {
-    NSLog(@"%i sections in tableview",[self numberOfItemSections]);
+    //NSLog(@"%i sections in tableview",[self numberOfItemSections]);
     return [self numberOfItemSections];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"%i rows in section %i",[self numberOfItemsInSection:section],section);
+    //NSLog(@"%i rows in section %i",[self numberOfItemsInSection:section],section);
     return [self numberOfItemsInSection:section];
 }
 

@@ -15,9 +15,9 @@
     #import <Foundation/Foundation.h>
 #define __THIS_FILE__ ((strrchr(__FILE__, '/') ?: __FILE__ - 1) + 1)
 #ifndef OPTIMIZE    
-#define NSLog(...) NSLog(@"[%s:%d]: %@", __THIS_FILE__, __LINE__, [NSString stringWithFormat:__VA_ARGS__])
+#define //NSLog(...) //NSLog(@"[%s:%d]: %@", __THIS_FILE__, __LINE__, [NSString stringWithFormat:__VA_ARGS__])
 #else
-#define NSLog(...) do {} while (0)
+#define //NSLog(...) do {} while (0)
 #endif
 
 #endif
