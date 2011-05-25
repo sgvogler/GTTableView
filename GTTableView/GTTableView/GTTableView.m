@@ -558,7 +558,7 @@
 
     [self deleteSections:deletedSections_ withRowAnimation:self.deleteAnimation];
     [self insertSections:insertedSections_ withRowAnimation:self.insertAnimation];
-    
+
     /** Find out what items have been moved, inserted, or deleted. */
 
     NSMutableArray *orderedItemsBefore = [NSMutableArray array];
@@ -819,6 +819,8 @@
     NSMutableArray *data = (updating_) ? updates_ : items_;
     [data insertObject:[NSMutableArray array] atIndex:index];
     [insertedSections_ addIndex:index];
+    if ([self isUpdating])
+    [headerItems_ insertObject:[NSNull null] atIndex:index];
 }
 
 - (void)removeSectionAtIndex:(NSInteger)index
@@ -826,6 +828,8 @@
     NSMutableArray *data = (updating_) ? updates_ : items_;
     [data removeObjectAtIndex:index];
     [deletedSections_ addIndex:index];
+    if ([self isUpdating])
+    [headerItems_ removeObjectAtIndex:index];
 }
 
 - (void)removeAllSections
