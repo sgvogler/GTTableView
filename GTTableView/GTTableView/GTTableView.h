@@ -88,7 +88,7 @@ typedef enum {
 - (void) setTopGradientFooterViewWithHeight:(CGFloat)height colors:(NSArray*)colors locations:(NSArray*)locations padding:(CGFloat)padding;
 - (void) setTopGradientHeaderViewWithHeight:(CGFloat)height colors:(NSArray *)colors locations:(NSArray *)locations;
 - (void) setBottomGradientFooterViewWithHeight:(CGFloat)height colors:(NSArray*)colors locations:(NSArray*)locations; 
-
+@property (nonatomic, assign) BOOL bottomGradientShouldStartOnLastCell; /**< default NO. if YES gradient doesn't take tableview height into consideration */
 /**
  These are the default values. They can be overriden individually on each GTTableViewItem. They should all be set prior to adding items to the tableview.
  */

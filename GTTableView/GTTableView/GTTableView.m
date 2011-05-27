@@ -108,6 +108,7 @@
 @synthesize dismissKeyboardOnTouchOutside=dismissKeyboardOnTouchOutside_;
 @synthesize dismissKeyboardOnScroll=dismissKeyboardOnScroll_;
 @synthesize monitoringKeyboard=monitoringKeyboard_;
+@synthesize bottomGradientShouldStartOnLastCell;
 - (UIColor *)backgroundColor {
     return [super backgroundColor];
 }
@@ -142,7 +143,6 @@
     defaultCellIndentationWidth_ = 10.0;
     defaultCellShouldIndentWhileEditing_ = YES;
     defaultCellShouldShowReorderControl_ = NO;
-    defaultCellBackgroundColor_ = [UIColor whiteColor];
     defaultCellStyle_ = UITableViewCellStyleDefault;
     defaultCellEditingStyle_ = UITableViewCellEditingStyleDelete;
     defaultCellAccessoryType_ = UITableViewCellAccessoryNone;
@@ -704,9 +704,10 @@
 
 - (void)updateGradientFrames_
 {
+    CGFloat topOfTopFooterGradient =  (bottomGradientShouldStartOnLastCell) ? self.contentSize.height : MAX(self.contentSize.height,self.bounds.size.height);
     headerGradientBottom_.frame = CGRectMake(0, -headerGradientBottom_.frame.size.height - headerPadding_,  self.bounds.size.width, headerGradientBottom_.frame.size.height);
     headerGradientTop_.frame = CGRectMake(0,  self.contentOffset.y , self.bounds.size.width, MAX(MIN(-self.contentOffset.y-headerPadding_,headerGap_), 0.0));
-    footerGradientTop_.frame = CGRectMake(0, MAX(self.contentSize.height,self.bounds.size.height) + footerPadding_, self.bounds.size.width, footerGradientTop_.frame.size.height);
+    footerGradientTop_.frame = CGRectMake(0, topOfTopFooterGradient + footerPadding_, self.bounds.size.width, footerGradientTop_.frame.size.height);
     footerGradientBottom_.frame = CGRectZero;
 
     CGFloat bottomOfPlate = MAX(self.contentSize.height,self.bounds.size.height) + footerPadding_;
