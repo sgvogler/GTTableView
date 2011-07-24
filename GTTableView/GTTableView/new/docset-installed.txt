@@ -1,0 +1,4 @@
+Documentation set was installed to Xcode!
+
+Path: /Users/mackross/Library/Developer/Shared/Documentation/DocSets/com.mackross.gttableview.GTTableView.docset
+Time: 2011-07-20 02:26:42 +0000

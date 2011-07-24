@@ -39,7 +39,7 @@
 }
 - (void) prepareCellForReuseForItem_:(GTTableViewItem*)item 
 {
-    /** We use this instead of prepare for reuse because the item is not known until this point. */
+    /* We use this instead of prepare for reuse because the item is not known until this point. */
     [self.textLabel copyStyleFromLabel:item.labelStyle];
     [self.detailTextLabel copyStyleFromLabel:item.subtitleLabelStyle];
     self.accessoryType = item.accessoryType;

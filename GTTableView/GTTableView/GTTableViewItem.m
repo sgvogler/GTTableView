@@ -50,7 +50,7 @@
 {
     return @"GTTableViewCell";
 }
-- (GTTableViewCell*)newTableViewCell /**< If this isn't overriden will try load nib with same name as reuseIdentifier. If this fails will init cell with style. */
+- (GTTableViewCell*)newTableViewCell /* If this isn't overriden will try load nib with same name as reuseIdentifier. If this fails will init cell with style. */
 {
     NSString *reuseIdentifier = [self reuseIdentifier];
     NSString *filePath = [[NSBundle mainBundle] pathForResource:reuseIdentifier ofType:@"nib"];
@@ -483,7 +483,7 @@ NSString * const kIndentationLevelKey = @"kIndentationLevelKey";
 }
 - (void)setIndentationLevel:(NSInteger)indentationLevel {
     [self setInt:indentationLevel ForKey_:kIndentationLevelKey];
-    /**< Not setting indentation level directly on the cell even though the method exists. The tableview delegate method will pick up this change as long as beginUpdates and endUpdates is called. This animates the change too. */
+    /* Not setting indentation level directly on the cell even though the method exists. The tableview delegate method will pick up this change as long as beginUpdates and endUpdates is called. This animates the change too. */
 }
 - (void)resetIndentationLevel {
     [self resetKey_:kIndentationLevelKey];

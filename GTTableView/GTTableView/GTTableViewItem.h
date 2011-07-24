@@ -75,6 +75,10 @@
 - (void)resetSelectedAnimated:(BOOL)animated;
 @property (nonatomic, assign) BOOL canEdit;
 - (void)resetCanEdit;
+/**
+ Whether a cell is able to move when the cell is in edit mode.
+ Default value is `YES`.
+ */
 @property (nonatomic, assign) BOOL canMove;
 - (void)resetCanMove;
 @property (nonatomic, assign, getter = isVisible) BOOL visible; /**< Be sure to call beginUpdates and endUpdates on the tableView when chaning this value. */

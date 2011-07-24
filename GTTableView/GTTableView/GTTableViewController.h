@@ -6,11 +6,14 @@
 //  Copyright 2011 mackross.net. All rights reserved.
 //
 /**
- ** A very simple UIViewController subclass it; 
- The only real constraint is you should call [super viewDidLoad] before implementing any of your own changes to the tableView if the tableview isn't already setup in a nib.
- - assigns itself as the GTTableView delegate and implments the GTTableViewDelegate protocol.
- - creates a GTTableView instance if none is already assigned in the nib and assigns it to the property tableView.
- - fowards viewDidAppear: and viewWillDisappear: messages to tableView.
+ A thin UIViewController subclass that
+ 
+ + Creates a GTTableView instance if none is already assigned in the nib and assigns it to the property tableView.
+ + Assigns itself as the GTTableView delegate and implments the GTTableViewDelegate protocol.
+ + Fowards viewDidAppear: and viewWillDisappear: messages to tableView. If these are overriden in a subclass be sure to call super.
+ 
+ @warning Call [super viewDidLoad] before implementing any of your own changes to self.tableView, if the tableview isn't already hooked up in a nib. This is where a GTTableView instance is created if none exists.
+ 
  */
 #import <UIKit/UIKit.h>
 #import "GTTableView.h"
@@ -21,5 +24,5 @@
 @interface GTTableViewController : UIViewController <GTTableViewDelegate> {
     GTTableView *tableView_;
 }
-@property (nonatomic, retain) IBOutlet GTTableView *tableView;
+@property (nonatomic, retain) IBOutlet GTTableView *tableView; /// GTTableView property that should be hooked up in a nib or prior to viewDidLoad. In viewDidLoad if no delegate is set on the tableView this class attempts to set itself as delegate.
 @end

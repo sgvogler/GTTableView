@@ -1,0 +1,1361 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>GTTableViewItem Class Reference</title>
+		<meta http-equiv="Content-Type" content="application/xhtml+xml;charset=utf-8" />
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<meta name="viewport" content="width=550" />
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" />
+		<meta name="generator" content="appledoc 2.0.4 (build 703)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">GTTableViewItem Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/accessoryAction">&nbsp;&nbsp;&nbsp;&nbsp;accessoryAction</option>
+	
+	<option value="//api/name/canMove">&nbsp;&nbsp;&nbsp;&nbsp;canMove</option>
+	
+	<option value="//api/name/cell">&nbsp;&nbsp;&nbsp;&nbsp;cell</option>
+	
+	<option value="//api/name/navigationController">&nbsp;&nbsp;&nbsp;&nbsp;navigationController</option>
+	
+	<option value="//api/name/reuseIdentifier">&nbsp;&nbsp;&nbsp;&nbsp;reuseIdentifier</option>
+	
+	<option value="//api/name/selected">&nbsp;&nbsp;&nbsp;&nbsp;selected</option>
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/commitInsert">&nbsp;&nbsp;&nbsp;&nbsp;- commitInsert</option>
+	
+	<option value="//api/name/configureCell:">&nbsp;&nbsp;&nbsp;&nbsp;- configureCell:</option>
+	
+	<option value="//api/name/itemDidBecomeDeselected">&nbsp;&nbsp;&nbsp;&nbsp;- itemDidBecomeDeselected</option>
+	
+	<option value="//api/name/itemDidBecomeSelected">&nbsp;&nbsp;&nbsp;&nbsp;- itemDidBecomeSelected</option>
+	
+	<option value="//api/name/itemWillBecomeDeselected">&nbsp;&nbsp;&nbsp;&nbsp;- itemWillBecomeDeselected</option>
+	
+	<option value="//api/name/itemWillBecomeSelected">&nbsp;&nbsp;&nbsp;&nbsp;- itemWillBecomeSelected</option>
+	
+	<option value="//api/name/itemWillInsert">&nbsp;&nbsp;&nbsp;&nbsp;- itemWillInsert</option>
+	
+	<option value="//api/name/newTableViewCell">&nbsp;&nbsp;&nbsp;&nbsp;- newTableViewCell</option>
+	
+	<option value="//api/name/resetDeleteConfirmationTitle">&nbsp;&nbsp;&nbsp;&nbsp;- resetDeleteConfirmationTitle</option>
+	
+	<option value="//api/name/resetEditingStyle">&nbsp;&nbsp;&nbsp;&nbsp;- resetEditingStyle</option>
+	
+	<option value="//api/name/resetHeight">&nbsp;&nbsp;&nbsp;&nbsp;- resetHeight</option>
+	
+	<option value="//api/name/resetIndentationLevel">&nbsp;&nbsp;&nbsp;&nbsp;- resetIndentationLevel</option>
+	
+	<option value="//api/name/resetShouldIndentWhileEditing">&nbsp;&nbsp;&nbsp;&nbsp;- resetShouldIndentWhileEditing</option>
+	
+	<option value="//api/name/resetStyle">&nbsp;&nbsp;&nbsp;&nbsp;- resetStyle</option>
+	
+	<option value="//api/name/resetVisible">&nbsp;&nbsp;&nbsp;&nbsp;- resetVisible</option>
+	
+	<option value="//api/name/selectNewIndexPathFromIndexPaths:">&nbsp;&nbsp;&nbsp;&nbsp;- selectNewIndexPathFromIndexPaths:</option>
+	
+	<option value="//api/name/shouldMoveFromVisibleIndexPath:toVisibleIndexPath:">&nbsp;&nbsp;&nbsp;&nbsp;- shouldMoveFromVisibleIndexPath:toVisibleIndexPath:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/accessoryAction">accessoryAction</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/canMove">canMove</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/cell">cell</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/navigationController">navigationController</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/reuseIdentifier">reuseIdentifier</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/selected">selected</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/commitInsert">commitInsert</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/configureCell:">configureCell:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/itemDidBecomeDeselected">itemDidBecomeDeselected</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/itemDidBecomeSelected">itemDidBecomeSelected</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/itemWillBecomeDeselected">itemWillBecomeDeselected</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/itemWillBecomeSelected">itemWillBecomeSelected</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/itemWillInsert">itemWillInsert</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/newTableViewCell">newTableViewCell</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/resetDeleteConfirmationTitle">resetDeleteConfirmationTitle</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/resetEditingStyle">resetEditingStyle</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/resetHeight">resetHeight</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/resetIndentationLevel">resetIndentationLevel</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/resetShouldIndentWhileEditing">resetShouldIndentWhileEditing</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/resetStyle">resetStyle</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/resetVisible">resetVisible</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/selectNewIndexPathFromIndexPaths:">selectNewIndexPathFromIndexPaths:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/shouldMoveFromVisibleIndexPath:toVisibleIndexPath:">shouldMoveFromVisibleIndexPath:toVisibleIndexPath:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="GTTableViewItem Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">GTTableViewItem Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value">NSObject</td>
+</tr><tr>
+	<td class="specification-title">Conforms to</td>
+	<td class="specification-value">NSCopying</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">GTTableViewItem.h<br />GTTableViewItem.m</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						
+						
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/cell">&nbsp;&nbsp;cell</a></code>
+		<span class="tooltip"><pre><code> visible property will be set with iVars as it'll be hit often when calculating index paths.
+</code></pre></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/reuseIdentifier">&nbsp;&nbsp;reuseIdentifier</a></code>
+		<span class="tooltip"><p>&lt; Subclasses should override this, will automatically use this reuse identifier to try load nibs of the same name.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/newTableViewCell">&ndash;&nbsp;newTableViewCell</a></code>
+		<span class="tooltip"><p>&lt; Use this to customize the reuse identifer per <a href="#//api/name/cell">cell</a>.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/shouldMoveFromVisibleIndexPath:toVisibleIndexPath:">&ndash;&nbsp;shouldMoveFromVisibleIndexPath:toVisibleIndexPath:</a></code>
+		<span class="tooltip"><p>&lt; If this isn&rsquo;t overriden will try load nib with same name as reuseIdentifier. If this fails will <a href="#//api/name/init">init</a> <a href="#//api/name/cell">cell</a> with <a href="#//api/name/style">style</a>.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/selectNewIndexPathFromIndexPaths:">&ndash;&nbsp;selectNewIndexPathFromIndexPaths:</a></code>
+		<span class="tooltip"><p>&lt; Return the index path that <a href="#//api/name/item">item</a> should move to. Most common implementation is to return sourceIndexPath if out of bounds and proposedIndexPath if the move should occur.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/configureCell:">&ndash;&nbsp;configureCell:</a></code>
+		<span class="tooltip"><p>&lt; Use this when in<a href="#//api/name/visible">visible</a> items are present in the tableview. This method should return the chosen index path from within a group of in<a href="#//api/name/visible">visible</a> index paths that the <a href="#//api/name/item">item</a> should move to. If in<a href="#//api/name/visible">visible</a> items are not used just return the only index path</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/itemWillInsert">&ndash;&nbsp;itemWillInsert</a></code>
+		<span class="tooltip"><p>The following are only called after finishedLoading is set to YES.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/commitInsert">&ndash;&nbsp;commitInsert</a></code>
+		<span class="tooltip"><p>&lt; Any custom behaviour after the user has pushed the delete button can be put here. If this returns NO the delete will not continue.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/itemWillBecomeSelected">&ndash;&nbsp;itemWillBecomeSelected</a></code>
+		<span class="tooltip"><p>&lt; This should be overriden to provide the insert behaviour. Usually this is implemented with insertItem:inSection:atRow:animation:.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/itemDidBecomeSelected">&ndash;&nbsp;itemDidBecomeSelected</a></code>
+		<span class="tooltip"><p>&lt; Returns an index-path object that confirms or alters the <a href="#//api/name/selected">selected</a> row. Return an NSIndexPath object other than indexPath if you want another <a href="#//api/name/cell">cell</a> to be <a href="#//api/name/selected">selected</a>. Return nil if you don&rsquo;t want the row <a href="#//api/name/selected">selected</a>. This method is not called until users touch a row and then lift their finger; the row isn&rsquo;t <a href="#//api/name/selected">selected</a> until then, although it is highlighted on touch-down. You can use UITableViewCellSelectionStyleNone to disable the appearance of the <a href="#//api/name/cell">cell</a> highlight on touch-down. This method isnât called when the editing property of the table is set to YES (that is, the table view is in editing mode). Default returns the <a href="#//api/name/visible">visible</a> index path of se</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/itemWillBecomeDeselected">&ndash;&nbsp;itemWillBecomeDeselected</a></code>
+		<span class="tooltip"><p>&lt; This method isn&rsquo;t called when a tableview is editing. This should be overriden to provide any custom behaviour expected when the <a href="#//api/name/cell">cell</a> is <a href="#//api/name/selected">selected</a>.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/itemDidBecomeDeselected">&ndash;&nbsp;itemDidBecomeDeselected</a></code>
+		<span class="tooltip"><p>&lt; Works in the same way as <a href="#//api/name/itemWillBecomeSelected">itemWillBecomeSelected</a> but for deselection.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/selected">&nbsp;&nbsp;selected</a></code>
+		<span class="tooltip"><p>Setting properteis overrides the default value set by the <a href="../Classes/GTTableView.html">GTTableView</a>.
+Resetting properties makes them take on the default value set by the <a href="../Classes/GTTableView.html">GTTableView</a>.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/canMove">&nbsp;&nbsp;canMove</a></code>
+		<span class="tooltip"><p>Whether a <a href="#//api/name/cell">cell</a> is able to move when the <a href="#//api/name/cell">cell</a> is in edit mode.
+Default value is <code>YES</code>.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/resetVisible">&ndash;&nbsp;resetVisible</a></code>
+		<span class="tooltip"><p>&lt; Be sure to call beginUpdates and endUpdates on the <a href="#//api/name/tableView">tableView</a> when chaning this value.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/resetHeight">&ndash;&nbsp;resetHeight</a></code>
+		<span class="tooltip"><p>&lt; Be sure to call beginUpdates and endUpdates to get tableview to updatde height.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/resetShouldIndentWhileEditing">&ndash;&nbsp;resetShouldIndentWhileEditing</a></code>
+		<span class="tooltip"><p>&lt; Be sure to call beginUpdates and endUpdates to get tableview to updatde height.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/resetDeleteConfirmationTitle">&ndash;&nbsp;resetDeleteConfirmationTitle</a></code>
+		<span class="tooltip"><p>&lt; Be sure to call beginUpdates and endUpdates to get tableview to updatde height.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/resetStyle">&ndash;&nbsp;resetStyle</a></code>
+		<span class="tooltip"><p>&lt; Be sure to call reloadData as all cells have to be regenerated.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/resetEditingStyle">&ndash;&nbsp;resetEditingStyle</a></code>
+		<span class="tooltip"><p>&lt; Be sure to call beginUpdates and endUpdates to get tableview to updatde height.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/resetIndentationLevel">&ndash;&nbsp;resetIndentationLevel</a></code>
+		<span class="tooltip"><p>&lt; Be sure to call beginUpdates and endUpdates to get tableview to updatde height.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/accessoryAction">&nbsp;&nbsp;accessoryAction</a></code>
+		<span class="tooltip"><p>&lt; Called on target when <a href="#//api/name/cell">cell</a> is tapped.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/navigationController">&nbsp;&nbsp;navigationController</a></code>
+		<span class="tooltip"><p>&lt; Called on target when accessory is tapped.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/accessoryAction" title="accessoryAction"></a>
+	<h3 class="subsubtitle method-title">accessoryAction</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>&lt; Called on target when <a href="#//api/name/cell">cell</a> is tapped.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) SEL accessoryAction</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>&lt; Called on target when <a href="#//api/name/cell">cell</a> is tapped.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/canMove" title="canMove"></a>
+	<h3 class="subsubtitle method-title">canMove</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Whether a <a href="#//api/name/cell">cell</a> is able to move when the <a href="#//api/name/cell">cell</a> is in edit mode.
+Default value is <code>YES</code>.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL canMove</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Whether a <a href="#//api/name/cell">cell</a> is able to move when the <a href="#//api/name/cell">cell</a> is in edit mode.
+Default value is <code>YES</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/cell" title="cell"></a>
+	<h3 class="subsubtitle method-title">cell</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<pre><code> visible property will be set with iVars as it'll be hit often when calculating index paths.
+</code></pre>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) GTTableViewCell *cell</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<pre><code> visible property will be set with iVars as it'll be hit often when calculating index paths.
+</code></pre>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/navigationController" title="navigationController"></a>
+	<h3 class="subsubtitle method-title">navigationController</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>&lt; Called on target when accessory is tapped.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) UINavigationController *navigationController</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>&lt; Called on target when accessory is tapped.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/reuseIdentifier" title="reuseIdentifier"></a>
+	<h3 class="subsubtitle method-title">reuseIdentifier</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>&lt; Subclasses should override this, will automatically use this reuse identifier to try load nibs of the same name.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, copy) NSString *reuseIdentifier</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>&lt; Subclasses should override this, will automatically use this reuse identifier to try load nibs of the same name.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/selected" title="selected"></a>
+	<h3 class="subsubtitle method-title">selected</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Setting properteis overrides the default value set by the <a href="../Classes/GTTableView.html">GTTableView</a>.
+Resetting properties makes them take on the default value set by the <a href="../Classes/GTTableView.html">GTTableView</a>.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, getter=isSelected) BOOL selected</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Setting properteis overrides the default value set by the <a href="../Classes/GTTableView.html">GTTableView</a>.
+Resetting properties makes them take on the default value set by the <a href="../Classes/GTTableView.html">GTTableView</a>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/commitInsert" title="commitInsert"></a>
+	<h3 class="subsubtitle method-title">commitInsert</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>&lt; Any custom behaviour after the user has pushed the delete button can be put here. If this returns NO the delete will not continue.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)commitInsert</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>&lt; Any custom behaviour after the user has pushed the delete button can be put here. If this returns NO the delete will not continue.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/configureCell:" title="configureCell:"></a>
+	<h3 class="subsubtitle method-title">configureCell:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>&lt; Use this when in<a href="#//api/name/visible">visible</a> items are present in the tableview. This method should return the chosen index path from within a group of in<a href="#//api/name/visible">visible</a> index paths that the <a href="#//api/name/item">item</a> should move to. If in<a href="#//api/name/visible">visible</a> items are not used just return the only index path</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)configureCell:(GTTableViewCell *)<em>tableViewCell</em></code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>&lt; Use this when in<a href="#//api/name/visible">visible</a> items are present in the tableview. This method should return the chosen index path from within a group of in<a href="#//api/name/visible">visible</a> index paths that the <a href="#//api/name/item">item</a> should move to. If in<a href="#//api/name/visible">visible</a> items are not used just return the only index path</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/itemDidBecomeDeselected" title="itemDidBecomeDeselected"></a>
+	<h3 class="subsubtitle method-title">itemDidBecomeDeselected</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>&lt; Works in the same way as <a href="#//api/name/itemWillBecomeSelected">itemWillBecomeSelected</a> but for deselection.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)itemDidBecomeDeselected</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>&lt; Works in the same way as <a href="#//api/name/itemWillBecomeSelected">itemWillBecomeSelected</a> but for deselection.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/itemDidBecomeSelected" title="itemDidBecomeSelected"></a>
+	<h3 class="subsubtitle method-title">itemDidBecomeSelected</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>&lt; Returns an index-path object that confirms or alters the <a href="#//api/name/selected">selected</a> row. Return an NSIndexPath object other than indexPath if you want another <a href="#//api/name/cell">cell</a> to be <a href="#//api/name/selected">selected</a>. Return nil if you don&rsquo;t want the row <a href="#//api/name/selected">selected</a>. This method is not called until users touch a row and then lift their finger; the row isn&rsquo;t <a href="#//api/name/selected">selected</a> until then, although it is highlighted on touch-down. You can use UITableViewCellSelectionStyleNone to disable the appearance of the <a href="#//api/name/cell">cell</a> highlight on touch-down. This method isnât called when the editing property of the table is set to YES (that is, the table view is in editing mode). Default returns the <a href="#//api/name/visible">visible</a> index path of se</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)itemDidBecomeSelected</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>&lt; Returns an index-path object that confirms or alters the <a href="#//api/name/selected">selected</a> row. Return an NSIndexPath object other than indexPath if you want another <a href="#//api/name/cell">cell</a> to be <a href="#//api/name/selected">selected</a>. Return nil if you don&rsquo;t want the row <a href="#//api/name/selected">selected</a>. This method is not called until users touch a row and then lift their finger; the row isn&rsquo;t <a href="#//api/name/selected">selected</a> until then, although it is highlighted on touch-down. You can use UITableViewCellSelectionStyleNone to disable the appearance of the <a href="#//api/name/cell">cell</a> highlight on touch-down. This method isnât called when the editing property of the table is set to YES (that is, the table view is in editing mode). Default returns the <a href="#//api/name/visible">visible</a> index path of se</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/itemWillBecomeDeselected" title="itemWillBecomeDeselected"></a>
+	<h3 class="subsubtitle method-title">itemWillBecomeDeselected</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>&lt; This method isn&rsquo;t called when a tableview is editing. This should be overriden to provide any custom behaviour expected when the <a href="#//api/name/cell">cell</a> is <a href="#//api/name/selected">selected</a>.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (NSIndexPath *)itemWillBecomeDeselected</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>&lt; This method isn&rsquo;t called when a tableview is editing. This should be overriden to provide any custom behaviour expected when the <a href="#//api/name/cell">cell</a> is <a href="#//api/name/selected">selected</a>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/itemWillBecomeSelected" title="itemWillBecomeSelected"></a>
+	<h3 class="subsubtitle method-title">itemWillBecomeSelected</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>&lt; This should be overriden to provide the insert behaviour. Usually this is implemented with insertItem:inSection:atRow:animation:.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (NSIndexPath *)itemWillBecomeSelected</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>&lt; This should be overriden to provide the insert behaviour. Usually this is implemented with insertItem:inSection:atRow:animation:.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/itemWillInsert" title="itemWillInsert"></a>
+	<h3 class="subsubtitle method-title">itemWillInsert</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The following are only called after finishedLoading is set to YES.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)itemWillInsert</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The following are only called after finishedLoading is set to YES.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/newTableViewCell" title="newTableViewCell"></a>
+	<h3 class="subsubtitle method-title">newTableViewCell</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>&lt; Use this to customize the reuse identifer per <a href="#//api/name/cell">cell</a>.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (GTTableViewCell *)newTableViewCell</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>&lt; Use this to customize the reuse identifer per <a href="#//api/name/cell">cell</a>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/resetDeleteConfirmationTitle" title="resetDeleteConfirmationTitle"></a>
+	<h3 class="subsubtitle method-title">resetDeleteConfirmationTitle</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>&lt; Be sure to call beginUpdates and endUpdates to get tableview to updatde height.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)resetDeleteConfirmationTitle</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>&lt; Be sure to call beginUpdates and endUpdates to get tableview to updatde height.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/resetEditingStyle" title="resetEditingStyle"></a>
+	<h3 class="subsubtitle method-title">resetEditingStyle</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>&lt; Be sure to call beginUpdates and endUpdates to get tableview to updatde height.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)resetEditingStyle</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>&lt; Be sure to call beginUpdates and endUpdates to get tableview to updatde height.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/resetHeight" title="resetHeight"></a>
+	<h3 class="subsubtitle method-title">resetHeight</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>&lt; Be sure to call beginUpdates and endUpdates to get tableview to updatde height.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)resetHeight</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>&lt; Be sure to call beginUpdates and endUpdates to get tableview to updatde height.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/resetIndentationLevel" title="resetIndentationLevel"></a>
+	<h3 class="subsubtitle method-title">resetIndentationLevel</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>&lt; Be sure to call beginUpdates and endUpdates to get tableview to updatde height.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)resetIndentationLevel</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>&lt; Be sure to call beginUpdates and endUpdates to get tableview to updatde height.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/resetShouldIndentWhileEditing" title="resetShouldIndentWhileEditing"></a>
+	<h3 class="subsubtitle method-title">resetShouldIndentWhileEditing</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>&lt; Be sure to call beginUpdates and endUpdates to get tableview to updatde height.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)resetShouldIndentWhileEditing</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>&lt; Be sure to call beginUpdates and endUpdates to get tableview to updatde height.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/resetStyle" title="resetStyle"></a>
+	<h3 class="subsubtitle method-title">resetStyle</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>&lt; Be sure to call reloadData as all cells have to be regenerated.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)resetStyle</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>&lt; Be sure to call reloadData as all cells have to be regenerated.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/resetVisible" title="resetVisible"></a>
+	<h3 class="subsubtitle method-title">resetVisible</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>&lt; Be sure to call beginUpdates and endUpdates on the <a href="#//api/name/tableView">tableView</a> when chaning this value.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)resetVisible</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>&lt; Be sure to call beginUpdates and endUpdates on the <a href="#//api/name/tableView">tableView</a> when chaning this value.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/selectNewIndexPathFromIndexPaths:" title="selectNewIndexPathFromIndexPaths:"></a>
+	<h3 class="subsubtitle method-title">selectNewIndexPathFromIndexPaths:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>&lt; Return the index path that <a href="#//api/name/item">item</a> should move to. Most common implementation is to return sourceIndexPath if out of bounds and proposedIndexPath if the move should occur.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (NSIndexPath *)selectNewIndexPathFromIndexPaths:(NSSet *)<em>indexPaths</em></code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>&lt; Return the index path that <a href="#//api/name/item">item</a> should move to. Most common implementation is to return sourceIndexPath if out of bounds and proposedIndexPath if the move should occur.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/shouldMoveFromVisibleIndexPath:toVisibleIndexPath:" title="shouldMoveFromVisibleIndexPath:toVisibleIndexPath:"></a>
+	<h3 class="subsubtitle method-title">shouldMoveFromVisibleIndexPath:toVisibleIndexPath:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>&lt; If this isn&rsquo;t overriden will try load nib with same name as reuseIdentifier. If this fails will <a href="#//api/name/init">init</a> <a href="#//api/name/cell">cell</a> with <a href="#//api/name/style">style</a>.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (NSIndexPath *)shouldMoveFromVisibleIndexPath:(NSIndexPath *)<em>sourceIndexPath</em> toVisibleIndexPath:(NSIndexPath *)<em>destinationIndexPath</em></code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>&lt; If this isn&rsquo;t overriden will try load nib with same name as reuseIdentifier. If this fails will <a href="#//api/name/init">init</a> <a href="#//api/name/cell">cell</a> with <a href="#//api/name/style">style</a>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">GTTableViewItem.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2011 mackross. All rights reserved. (Last updated: 2011-07-20)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.4 (build 703)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+		</script>
+	</body>
+</html>

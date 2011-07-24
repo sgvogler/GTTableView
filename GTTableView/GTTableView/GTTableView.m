@@ -258,6 +258,15 @@
 
 - (void)viewDidAppear:(BOOL)animated 
 {
+    if ([self respondsToSelector:@selector(indexPathsForSelectedRows)])
+    {
+        for (NSIndexPath *indexPath in [self indexPathsForSelectedRows])
+        [self deselectRowAtIndexPath:indexPath animated:animated];
+    }
+    else
+    {
+        [self deselectRowAtIndexPath:[self indexPathForSelectedRow] animated:animated];
+    }
     [self flashScrollIndicators];
 
 }
@@ -554,12 +563,12 @@
     }
  //   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
-    /** Update Sections. */
+    /* Update Sections. */
 
     [self deleteSections:deletedSections_ withRowAnimation:self.deleteAnimation];
     [self insertSections:insertedSections_ withRowAnimation:self.insertAnimation];
 
-    /** Find out what items have been moved, inserted, or deleted. */
+    /* Find out what items have been moved, inserted, or deleted. */
 
     NSMutableArray *orderedItemsBefore = [NSMutableArray array];
     NSMutableArray *orderedItemsAfter = [NSMutableArray array];
@@ -599,7 +608,7 @@
     [movedItems minusSet:insertedItems];
     [movedItems minusSet:deletedItems];
     
-    /** Notify those objects and commit changes. */
+    /* Notify those objects and commit changes. */
     for (GTTableViewItem *movedItem in movedItems) [movedItem itemWillMove];
     for (GTTableViewItem *insertedItem in insertedItems) [insertedItem itemWillInsert];
     for (GTTableViewItem *deletedItem in deletedItems) [deletedItem itemWillRemove];
@@ -613,21 +622,21 @@
     for (GTTableViewItem *deletedItem in deletedItems)  if (deletedItem.visible) [deleteIndexPaths addObject:[self indexPathForItem:deletedItem]];
     
     
-    /**< The move animation is handled by the user moving the cell. */
+    /* The move animation is handled by the user moving the cell. */
     [items_ autorelease]; items_ = nil;
     items_ = [updates_ mutableCopy];
     items_ = (items_) ? items_ :  [[NSMutableArray array] retain];
     
-    NSMutableArray *indexPathsToHide = [NSMutableArray array]; /**< Must be done before udpating cached index paths. */
+    NSMutableArray *indexPathsToHide = [NSMutableArray array]; /* Must be done before udpating cached index paths. */
     for (GTTableViewItem *itemToHide in itemsMadeHidden_) [indexPathsToHide addObject:[self indexPathForItem:itemToHide]];
 
 
-    [self updateInternalCachedIndexPaths_]; /**< This will update values for numberOfItems, numberOfRowsInSection, etc. */
+    [self updateInternalCachedIndexPaths_]; /* This will update values for numberOfItems, numberOfRowsInSection, etc. */
     
     
 
     
-    /** Update visible items. */
+    /* Update visible items. */
     NSMutableArray *indexPathsToUnhide = [NSMutableArray array];
     for (GTTableViewItem *itemToUnhide in itemsMadeVisible_) [indexPathsToUnhide addObject:[self indexPathForItem:itemToUnhide]];
     for (GTTableViewItem *insertedItem in insertedItems) if (insertedItem.visible) [insertIndexPaths addObject:[self indexPathForItem:insertedItem]];
@@ -862,10 +871,10 @@
 - (void)insertItem:(GTTableViewItem*)item atIndexPath:(NSIndexPath *)indexPath onlyVisible:(BOOL)visible
 {
     [item setTableView:self];
-    /** Convert visible to invisible. */
+    /* Convert visible to invisible. */
     if (visible)
     {
-        /** Find the correct row to go to. */
+        /* Find the correct row to go to. */
         GTTableViewItem *itemForCellAboveNewLocation = [self itemForRowAtIndexPath:[NSIndexPath indexPathForRow:(indexPath.row - 1) inSection:indexPath.section] onlyVisible:YES];
         GTTableViewItem *itemForCellAtNewLocation = [self itemForRowAtIndexPath:indexPath onlyVisible:YES];    
         NSMutableSet *possibleIndexPaths = [NSMutableSet set];
@@ -887,7 +896,7 @@
         
         NSAssert([possibleIndexPaths count] != 0,@"GTTableView error");
     }
-    /** Insert items and notify items that moved. */
+    /* Insert items and notify items that moved. */
     NSMutableArray *data = (updating_) ? updates_ : items_;
 
     NSMutableArray *destinationSection = (NSMutableArray*)[data objectAtIndex:indexPath.section];    
@@ -902,12 +911,12 @@
 
 - (void)removeItemAtIndexPath:(NSIndexPath *)indexPath onlyVisible:(BOOL)visible
 {
-    /** Convert visible to invisible. */
+    /* Convert visible to invisible. */
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
     if (visible)
         indexPath = [self indexPathForItem:item onlyVisible:NO];
     
-    /** Remove items. */
+    /* Remove items. */
     NSMutableArray *data = (updating_) ? updates_ : items_;
 
     NSMutableArray *sourceSection = [data objectAtIndex:indexPath.section];
@@ -916,7 +925,7 @@
 }
 
 #pragma mark Header & Footer Items
-/**
+/*
  For the header items we are using NSNull as place holders. This allows these items to be set at any time.
  Nonetheless, the following methods work just like normal accessors.
  */
@@ -1141,7 +1150,7 @@
             }
             break;
         case UITableViewCellEditingStyleInsert:
-            [[self itemForRowAtIndexPath:indexPath] commitInsert]; //**< The item is responsible for inserting a new item or section or making something visible. */
+            [[self itemForRowAtIndexPath:indexPath] commitInsert]; /* The item is responsible for inserting a new item or section or making something visible. */
             break;
         default:
             break;
@@ -1165,7 +1174,7 @@
 {
     if ([sourceVisibleIndexPath compare:destinationVisibleIndexPath] == NSOrderedSame) return;
     
-    /**
+    /*
      Calculate possible invisible indexes if they exist and ask the item its preferred destination if more than one exits.
      */
     GTTableViewItem *movingItem = [self itemForRowAtIndexPath:sourceVisibleIndexPath onlyVisible:YES];
@@ -1193,7 +1202,7 @@
     NSMutableArray *sourceSection = (NSMutableArray*)[items_ objectAtIndex:sourceIndexPath.section];
     NSMutableArray *destinationSection = (NSMutableArray*)[items_ objectAtIndex:destinationIndexPath.section];
     
-    /**
+    /*
      Remove object at source index path, insert at new index path, notify items whoms index paths changed and and update cached index paths
      */
     NSMutableSet *itemsToNotifyOfMove = [NSMutableSet set];
@@ -1241,7 +1250,7 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    /**< do nothing - because of the GTTableView design all cell setup will be done in tableView:cellForRowAtIndexPath:. */
+    /* do nothing - because of the GTTableView design all cell setup will be done in tableView:cellForRowAtIndexPath:. */
 }
 
 #pragma mark Managing Accessory Views
@@ -1258,7 +1267,7 @@
     
 }
 
-/**< tableView:accessoryTypeForRowWithIndexPath: deprecated in iOS 3.0. */
+/* tableView:accessoryTypeForRowWithIndexPath: deprecated in iOS 3.0. */
 
 #pragma mark Managing Selections
 

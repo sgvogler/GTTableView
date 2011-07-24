@@ -14,7 +14,7 @@
 {
     if (!aLabel) return;
     
-    /** Accessing the Text Attributes. */
+    /* Accessing the Text Attributes. */
     if (aLabel.font)
         self.font =  aLabel.font;
     if (aLabel.textColor)
@@ -26,23 +26,23 @@
     self.textAlignment = aLabel.textAlignment;
     self.lineBreakMode = aLabel.lineBreakMode;
     
-    /** Sizing the Label's Text. */
+    /* Sizing the Label's Text. */
     self.adjustsFontSizeToFitWidth = aLabel.adjustsFontSizeToFitWidth;
     self.baselineAdjustment = aLabel.baselineAdjustment;
     self.minimumFontSize = aLabel.minimumFontSize;
     self.numberOfLines = aLabel.numberOfLines;
     
-    /** Managing Highlight Values. */
+    /* Managing Highlight Values. */
     if (aLabel.highlightedTextColor)
         self.highlightedTextColor = aLabel.highlightedTextColor;
     self.highlighted = aLabel.highlighted;
     
-    /** Drawing a Shadow. */
+    /* Drawing a Shadow. */
     if (aLabel.shadowColor)
         self.shadowColor = aLabel.shadowColor;
     self.shadowOffset = aLabel.shadowOffset;
     
-    /** View Attributes. */
+    /* View Attributes. */
     self.userInteractionEnabled = aLabel.userInteractionEnabled;
     self.opaque = aLabel.opaque;
     self.alpha = aLabel.alpha;
@@ -51,7 +51,7 @@
     self.autoresizingMask = aLabel.autoresizingMask;
     self.hidden = aLabel.hidden;
     
-    /** Accessability.
+    /* Accessability.
      I've chosen not to copy the accessability hint, value, etc as it will probably be set on a per instance basis.
      */
     self.accessibilityTraits = aLabel.accessibilityTraits;
