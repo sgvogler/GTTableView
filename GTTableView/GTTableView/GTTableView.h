@@ -321,7 +321,7 @@ In addition subclasses of GTTableViewItem can override [selectNewIndexPathFromIn
  
  Default value is `nil`.
  */
-@property (nonatomic, retain) IBOutlet UILabel *defaultCellSubtitleLabel; /
+@property (nonatomic, retain) IBOutlet UILabel *defaultCellSubtitleLabel;
 
 /**
  This sets the default background colour for any item's cell.
