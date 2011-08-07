@@ -258,12 +258,7 @@
 
 - (void)viewDidAppear:(BOOL)animated 
 {
-    if ([self respondsToSelector:@selector(indexPathsForSelectedRows)])
-    {
-        for (NSIndexPath *indexPath in [self indexPathsForSelectedRows])
-        [self deselectRowAtIndexPath:indexPath animated:animated];
-    }
-    else
+    if ([self indexPathForSelectedRow])
     {
         [self deselectRowAtIndexPath:[self indexPathForSelectedRow] animated:animated];
     }
