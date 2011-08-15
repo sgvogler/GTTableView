@@ -1218,7 +1218,10 @@
     
     [sourceSection removeObjectAtIndex:sourceIndexPath.row];
     [destinationSection insertObject:movingItem atIndex:destinationIndexPath.row];
-    [self commitUpdates_];
+    if (!updating_)
+    {
+        [self updateInternalCachedIndexPaths_];
+    }
 
 
     if (sourceSection != destinationSection) [movingItem itemDidMove];
