@@ -488,6 +488,7 @@
     if (!tapGestureRecognizer_&&dismissKeyboardOnTouchOutside_)
     {
         tapGestureRecognizer_ = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard_:)] autorelease];
+        tapGestureRecognizer_.cancelsTouchesInView = NO;
         [self addGestureRecognizer:tapGestureRecognizer_];
     }
 
