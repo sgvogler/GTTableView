@@ -61,7 +61,6 @@
 - (void)teardownFooterItems_;
 - (void)tearDownCells_;
 
-- (void)setup_;
 - (void)beginKeyboardMonitoring_;
 - (void)endKeyboardMonitoring_;
 - (void)keyboardWillShow_:(NSNotification*)notification;

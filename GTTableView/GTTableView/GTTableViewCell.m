@@ -44,11 +44,12 @@
     [self.detailTextLabel copyStyleFromLabel:item.subtitleLabelStyle];
     self.accessoryType = item.accessoryType;
     self.editingAccessoryType = item.editingAccessoryType;
-    if (item.backgroundColor) 
+    if (item.backgroundColor) {
         if (tableView.style == UITableViewStylePlain)
             self.contentView.backgroundColor = item.backgroundColor;
         else if (tableView.style == UITableViewStyleGrouped)
             self.backgroundColor = item.backgroundColor;
+    }
     self.indentationLevel = item.indentationLevel;
     self.indentationWidth = item.indentationWidth;
     self.selectionStyle = item.selectionStyle;
