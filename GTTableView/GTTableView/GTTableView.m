@@ -1085,6 +1085,7 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath 
 {
+	indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
     NSAssert(item,@"Has to return an item...");
     GTTableViewCell *cell = (GTTableViewCell*)[self dequeueReusableCellWithIdentifier:[[item class] reuseIdentifier]];
@@ -1135,6 +1136,7 @@
 #pragma mark Inserting or Deleting Table Rows
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     switch (editingStyle) {
         case UITableViewCellEditingStyleDelete:
             if ([[self itemForRowAtIndexPath:indexPath] commitDelete])
@@ -1154,6 +1156,7 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
     return [item canEdit];
 }
@@ -1161,12 +1164,16 @@
 #pragma mark Reordering Table Rows
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
     return [item canMove];  
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceVisibleIndexPath toIndexPath:(NSIndexPath *)destinationVisibleIndexPath
 {
+	sourceVisibleIndexPath = [NSIndexPath indexPathForRow:sourceVisibleIndexPath.row inSection:sourceVisibleIndexPath.section];
+	destinationVisibleIndexPath = [NSIndexPath indexPathForRow:destinationVisibleIndexPath.row inSection:destinationVisibleIndexPath.section];
+
     if ([sourceVisibleIndexPath compare:destinationVisibleIndexPath] == NSOrderedSame) return;
     
     /*
@@ -1236,12 +1243,14 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
     return [item height];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
     return [item indentationLevel];
 }
@@ -1255,6 +1264,7 @@
 
 - (void)tableView:(UITableView*)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath 
 {
+	indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
     [item accessoryButtonTapped];
     if (item.target && item.accessoryAction)
@@ -1271,12 +1281,14 @@
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath 
 {
+	indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
     return [item itemWillBecomeSelected];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
     [item itemDidBecomeSelected];
     if (item.target && item.action)
@@ -1288,12 +1300,14 @@
 
 - (NSIndexPath*)tableView:(UITableView *)tableView willDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
     return [item itemWillBecomeDeselected];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
     [item itemDidBecomeDeselected];
 }
@@ -1331,30 +1345,35 @@
 
 - (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath 
 {
+	indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
     [item willBeginEditing];
 }
 
 - (void)tableView:(UITableView *)tableView didBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
     [item didEndEditing];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
     return [item editingStyle];
 }
 
 - (NSString*)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
     return [item deleteConfirmationTitle];
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     GTTableViewItem *item = [self itemForRowAtIndexPath:indexPath];
     return [item shouldIndentWhileEditing];
 }
@@ -1363,7 +1382,10 @@
 
 - (NSIndexPath*)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath
 {
-    GTTableViewItem *item = [self itemForRowAtIndexPath:sourceIndexPath];
+	sourceIndexPath = [NSIndexPath indexPathForRow:sourceIndexPath.row inSection:sourceIndexPath.section];
+	proposedDestinationIndexPath = [NSIndexPath indexPathForRow:proposedDestinationIndexPath.row inSection:proposedDestinationIndexPath.section];
+
+	GTTableViewItem *item = [self itemForRowAtIndexPath:sourceIndexPath];
     return [item shouldMoveFromVisibleIndexPath:sourceIndexPath toVisibleIndexPath:proposedDestinationIndexPath];
 }
 
