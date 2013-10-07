@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-static const CGFloat GTTableViewHeaderFooterDefaultHeight = DBL_MIN;
+static const CGFloat GTTableViewHeaderFooterDefaultHeight = CGFLOAT_MIN;
 #pragma mark Abstract Parent Class -
 @class GTTableView;
 
