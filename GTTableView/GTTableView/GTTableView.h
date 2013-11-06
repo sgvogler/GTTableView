@@ -29,7 +29,8 @@ typedef enum {
 @protocol GTTableViewDelegate <NSObject>
 @optional
 /** This should return the navigation controller that [GTTableViewItem](GTTableViewItem)s can push view controllers to. */
-- (UINavigationController*) navigationControllerForTableView:(GTTableView*)tableView; 
+- (UINavigationController*) navigationControllerForTableView:(GTTableView*)tableView;
+- (void)tableViewDidReorderCells:(GTTableView*)tableView;
 @end
 
 @class GTTableViewItem;

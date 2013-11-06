@@ -1234,7 +1234,8 @@
     if (sourceSection != destinationSection) [movingItem itemDidMove];
     for (GTTableViewItem *item in itemsToNotifyOfMove) [item itemDidMove];
     
-    
+    if(GTTableViewDelegate_ && [GTTableViewDelegate_ respondsToSelector:@selector(tableViewDidReorderCells:)])
+        [GTTableViewDelegate_ tableViewDidReorderCells:(GTTableView*)tableView];
 }
 
 #pragma mark - TableView Delegate -
